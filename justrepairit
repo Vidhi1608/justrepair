@@ -1,0 +1,584 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 04, 2020 at 08:06 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.28
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `justrepairit`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `areas`
+--
+
+CREATE TABLE `areas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `areas`
+--
+
+INSERT INTO `areas` (`id`, `city_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'ambawadi', 1, NULL, NULL),
+(2, 1, 'anandnagar', 1, NULL, NULL),
+(3, 1, 'ashram-road', 1, NULL, NULL),
+(4, 1, 'bopal', 1, NULL, NULL),
+(5, 1, 'bapunagar', 1, NULL, NULL),
+(6, 1, 'bodakdev', 1, NULL, NULL),
+(7, 1, 'cg-road', 1, NULL, NULL),
+(8, 1, 'new-cg-road', 1, NULL, NULL),
+(9, 1, 'chandkheda', 1, NULL, NULL),
+(10, 1, 'danilimda', 1, NULL, NULL),
+(11, 1, 'ellisbridge', 1, NULL, NULL),
+(12, 1, 'ghodasar', 1, NULL, NULL),
+(13, 1, 'gota', 1, NULL, NULL),
+(14, 1, 'gurukul', 1, NULL, NULL),
+(15, 1, 'hathijan', 1, NULL, NULL),
+(16, 1, 'isanpur', 1, NULL, NULL),
+(17, 1, 'jashodanagar', 1, NULL, NULL),
+(18, 1, 'jivrajpark', 1, NULL, NULL),
+(19, 1, 'juhapura', 1, NULL, NULL),
+(20, 1, 'kankariya', 1, NULL, NULL),
+(21, 1, 'khokhra', 1, NULL, NULL),
+(22, 1, 'khanpur', 1, NULL, NULL),
+(23, 1, 'lambha', 1, NULL, NULL),
+(24, 1, 'makarba', 1, NULL, NULL),
+(25, 1, 'maninagar', 1, NULL, NULL),
+(26, 1, 'new-maninagar', 1, NULL, NULL),
+(27, 1, 'memnagar', 1, NULL, NULL),
+(28, 1, 'motera', 1, NULL, NULL),
+(29, 1, 'naranpura', 1, NULL, NULL),
+(30, 1, 'naroda', 1, NULL, NULL),
+(31, 1, 'new-naroda', 1, NULL, NULL),
+(32, 1, 'naroda-gidc', 1, NULL, NULL),
+(33, 1, 'naroda-road', 1, NULL, NULL),
+(34, 1, 'narol', 1, NULL, NULL),
+(35, 1, 'nikol', 1, NULL, NULL),
+(36, 1, 'nirnay-nagar', 1, NULL, NULL),
+(37, 1, 'odhav', 1, NULL, NULL),
+(38, 1, 'paldi', 1, NULL, NULL),
+(39, 1, 'prahlad-nagar', 1, NULL, NULL),
+(40, 1, 'ranip', 1, NULL, NULL),
+(41, 1, 'sabarmati', 1, NULL, NULL),
+(42, 1, 'satellite', 1, NULL, NULL),
+(43, 1, 'shahibaug', 1, NULL, NULL),
+(44, 1, 'shilaj', 1, NULL, NULL),
+(45, 1, 'sola', 1, NULL, NULL),
+(46, 1, 'thaltej', 1, NULL, NULL),
+(47, 1, 'usmanpura', 1, NULL, NULL),
+(48, 1, 'sarkhej', 1, NULL, NULL),
+(49, 1, 'sattadhar', 1, NULL, NULL),
+(50, 1, 'sarangpur', 1, NULL, NULL),
+(51, 1, 'kathwada', 1, NULL, NULL),
+(52, 1, 'south-vasna', 1, NULL, NULL),
+(53, 1, 'mirjapur', 1, NULL, NULL),
+(54, 1, 'gandhinagar', 1, NULL, NULL),
+(55, 1, 'law-garden', 1, NULL, NULL),
+(56, 1, 'vasna', 1, NULL, NULL),
+(57, 1, 'adalaj', 1, NULL, NULL),
+(58, 1, 'ghatlodia', 1, NULL, NULL),
+(59, 1, 'chiloda', 1, NULL, NULL),
+(60, 1, 'amraiwadi', 1, NULL, NULL),
+(61, 1, 'iscon', 1, NULL, NULL),
+(62, 1, 'vatva', 1, NULL, NULL),
+(63, 1, 'vastral', 1, NULL, NULL),
+(64, 1, 'shivranjani', 1, NULL, NULL),
+(65, 1, 'vastrapur', 1, NULL, NULL),
+(66, 1, 'panchvati', 1, NULL, NULL),
+(67, 1, 'vejalpur', 1, NULL, NULL),
+(68, 1, 'shyamal', 1, NULL, NULL),
+(69, 1, 'navrangpura', 1, NULL, NULL),
+(70, 1, 'sp-ringroad', 1, NULL, NULL),
+(71, 1, 'science-city', 1, NULL, NULL),
+(72, 1, '132-feet-ring-road', 1, NULL, NULL),
+(73, 1, 'new-ranip', 1, NULL, NULL),
+(74, 1, 'vishala', 1, NULL, NULL),
+(75, 1, 'new-vasna', 1, NULL, NULL),
+(76, 1, 'vaishnodevi', 1, NULL, NULL),
+(77, 1, 'south-bopal', 1, NULL, NULL),
+(78, 1, 'gita-mandir', 1, NULL, NULL),
+(79, 1, 'nehrunagar', 1, NULL, NULL),
+(80, 1, 'd-colony', 1, NULL, NULL),
+(81, 1, 'ioc-road', 1, NULL, NULL),
+(82, 1, 'bhat-road', 1, NULL, NULL),
+(83, 1, 'koteshwar', 1, NULL, NULL),
+(84, 1, 'gurudwara', 1, NULL, NULL),
+(85, 1, 'sindhu-bhavan-road', 1, NULL, NULL),
+(86, 1, 'shahalam', 1, NULL, NULL),
+(87, 1, 'kabadi-market', 1, NULL, NULL),
+(88, 1, 'relief-road', 1, NULL, NULL),
+(89, 1, 'baherampura', 1, NULL, NULL),
+(90, 1, 'aslali', 1, NULL, NULL),
+(91, 1, 'vinjol-circle', 1, NULL, NULL),
+(92, 1, 'vivekanand-nagar', 1, NULL, NULL),
+(93, 1, 'ramrajyanagar', 1, NULL, NULL),
+(94, 1, 'rabari-colony', 1, NULL, NULL),
+(95, 1, 'soni-ni-chali', 1, NULL, NULL),
+(96, 1, 'virat-nagar', 1, NULL, NULL),
+(97, 1, 'income-tax', 1, NULL, NULL),
+(98, 1, 'astodia', 1, NULL, NULL),
+(99, 1, 'commerce-six-road', 1, NULL, NULL),
+(100, 1, 'vadaj', 1, NULL, NULL),
+(101, 1, 'juna-vadaj', 1, NULL, NULL),
+(102, 1, 'nava-vadaj', 1, NULL, NULL),
+(103, 1, 'jamalpur', 1, NULL, NULL),
+(105, 1, 'ramdevnagar', 1, NULL, NULL),
+(106, 1, 'prl-colony', 1, NULL, NULL),
+(107, 1, 'rajiv-nagar', 1, NULL, NULL),
+(108, 1, 'gulmahor', 1, NULL, NULL),
+(109, 1, 'gulmohar', 1, NULL, NULL),
+(111, 1, 'rajyash-city', 1, NULL, NULL),
+(112, 1, 'shrinand-nagar', 1, NULL, NULL),
+(113, 2, 'aamba-chowk', 1, NULL, NULL),
+(114, 2, 'aamba-vadi', 1, NULL, NULL),
+(115, 2, 'aanad-nagar', 1, NULL, NULL),
+(116, 2, 'aatabhai-chowk', 1, NULL, NULL),
+(117, 2, 'bhagli-gate', 1, NULL, NULL),
+(118, 2, 'bharat-nagar', 1, NULL, NULL),
+(119, 2, 'chitra', 1, NULL, NULL),
+(120, 2, 'desainagar', 1, NULL, NULL),
+(121, 2, 'gadhechi-vadala', 1, NULL, NULL),
+(122, 2, 'ghogha-circle', 1, NULL, NULL),
+(123, 2, 'gokul-dham', 1, NULL, NULL),
+(124, 2, 'hill-drive', 1, NULL, NULL),
+(125, 2, 'kalanala', 1, NULL, NULL),
+(126, 2, 'kaliyabid', 1, NULL, NULL),
+(127, 2, 'nilambaug', 1, NULL, NULL),
+(128, 2, 'pressquarter', 1, NULL, NULL),
+(129, 2, 'ram-mantra', 1, NULL, NULL),
+(130, 2, 'sanskar-mandal', 1, NULL, NULL),
+(131, 2, 'sardar-nagar', 1, NULL, NULL),
+(132, 2, 'shivaji-circle', 1, NULL, NULL),
+(133, 2, 'sidsar', 1, NULL, NULL),
+(144, 3, 'adarsh-nagar', 1, NULL, NULL),
+(145, 3, 'alampur', 1, NULL, NULL),
+(146, 3, 'Ambapur', 1, NULL, NULL),
+(147, 3, 'bada-chiloda', 1, NULL, NULL),
+(148, 3, 'bhat', 1, NULL, NULL),
+(149, 3, 'bhoyan-rathod', 1, NULL, NULL),
+(150, 3, 'bhupendra-chowk', 1, NULL, NULL),
+(151, 3, 'ch-3', 1, NULL, NULL),
+(152, 3, 'chhabutra-chowk', 1, NULL, NULL),
+(153, 3, 'dabhoda', 1, NULL, NULL),
+(154, 3, 'gayatri-nagar', 1, NULL, NULL),
+(155, 3, 'gh-4', 1, NULL, NULL),
+(156, 3, 'gidc', 1, NULL, NULL),
+(157, 3, 'hiramani-society', 1, NULL, NULL),
+(158, 3, 'jamiyatpur', 1, NULL, NULL),
+(159, 3, 'kalawad-road', 1, NULL, NULL),
+(160, 3, 'karai', 1, NULL, NULL),
+(161, 3, 'karan-pada', 1, NULL, NULL),
+(162, 3, 'kenal-road', 1, NULL, NULL),
+(163, 3, 'kevada-wadi', 1, NULL, NULL),
+(164, 3, 'khoraj', 1, NULL, NULL),
+(165, 3, 'koba', 1, NULL, NULL),
+(166, 3, 'kudasan', 1, NULL, NULL),
+(167, 3, 'laxmi-wadi', 1, NULL, NULL),
+(168, 3, 'limbadia', 1, NULL, NULL),
+(169, 3, 'mahar-plot', 1, NULL, NULL),
+(170, 3, 'malavia', 1, NULL, NULL),
+(171, 3, 'milpara', 1, NULL, NULL),
+(172, 3, 'mohansa', 1, NULL, NULL),
+(173, 3, 'nava dharmpur', 1, NULL, NULL),
+(174, 3, 'palash-road', 1, NULL, NULL),
+(175, 3, 'palesh-road', 1, NULL, NULL),
+(176, 3, 'pathikashram', 1, NULL, NULL),
+(177, 3, 'piplaj', 1, NULL, NULL),
+(178, 3, 'police-bhavan', 1, NULL, NULL),
+(179, 3, 'prantiya', 1, NULL, NULL),
+(180, 3, 'raipur', 1, NULL, NULL),
+(181, 3, 'rajpur', 1, NULL, NULL),
+(182, 3, 'ranasan', 1, NULL, NULL),
+(183, 3, 'randesan', 1, NULL, NULL),
+(184, 3, 'ransan', 1, NULL, NULL),
+(185, 3, 'raysan', 1, NULL, NULL),
+(186, 3, 'sargasan', 1, NULL, NULL),
+(187, 3, 'sector-10', 1, NULL, NULL),
+(188, 3, 'sector-11', 1, NULL, NULL),
+(189, 3, 'sector-12', 1, NULL, NULL),
+(190, 3, 'sector-13', 1, NULL, NULL),
+(191, 3, 'sector-14', 1, NULL, NULL),
+(192, 3, 'sector-15', 1, NULL, NULL),
+(193, 3, 'sector-16', 1, NULL, NULL),
+(194, 3, 'sector-17', 1, NULL, NULL),
+(195, 3, 'sector-18', 1, NULL, NULL),
+(196, 3, 'sector-19', 1, NULL, NULL),
+(197, 3, 'sector-20', 1, NULL, NULL),
+(198, 3, 'sector-21', 1, NULL, NULL),
+(199, 3, 'sector-22', 1, NULL, NULL),
+(200, 3, 'sector-23', 1, NULL, NULL),
+(201, 3, 'sector-24', 1, NULL, NULL),
+(202, 3, 'sector-25', 1, NULL, NULL),
+(203, 3, 'sector-26', 1, NULL, NULL),
+(204, 3, 'sector-28', 1, NULL, NULL),
+(205, 3, 'sector-9', 1, NULL, NULL),
+(206, 3, 'shahpur', 1, NULL, NULL),
+(207, 3, 'shashtri-nagar', 1, NULL, NULL),
+(208, 3, 'sugad', 1, NULL, NULL),
+(209, 3, 'tarapur', 1, NULL, NULL),
+(210, 3, 'unava', 1, NULL, NULL),
+(211, 3, 'valad', 1, NULL, NULL),
+(212, 3, 'vavol', 1, NULL, NULL),
+(213, 3, 'vidhan-sabha', 1, NULL, NULL),
+(214, 3, 'viteos-city', 1, NULL, NULL),
+(215, 3, 'zundal', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cities`
+--
+
+CREATE TABLE `cities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(255) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cities`
+--
+
+INSERT INTO `cities` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'ahmedabad', 1, NULL, NULL),
+(2, 'Bhavnagar', 1, NULL, NULL),
+(3, 'Gandhinagar', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `city_product`
+--
+
+CREATE TABLE `city_product` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `city_product`
+--
+
+INSERT INTO `city_product` (`id`, `city_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL),
+(2, 1, 2, NULL, NULL),
+(3, 1, 3, NULL, NULL),
+(4, 1, 4, NULL, NULL),
+(6, 2, 2, NULL, NULL),
+(7, 2, 3, NULL, NULL),
+(8, 3, 1, NULL, NULL),
+(11, 1, 5, NULL, NULL),
+(12, 3, 2, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `companies`
+--
+
+CREATE TABLE `companies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `companies`
+--
+
+INSERT INTO `companies` (`id`, `product_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'bosch', 1, NULL, NULL),
+(2, 1, 'bpl', 1, NULL, NULL),
+(3, 1, 'godrej', 1, NULL, NULL),
+(4, 1, 'haier', 1, NULL, NULL),
+(5, 1, 'ifb', 1, NULL, NULL),
+(6, 1, 'lg', 1, NULL, NULL),
+(7, 1, 'onida', 1, NULL, NULL),
+(8, 1, 'panasonic', 1, NULL, NULL),
+(9, 1, 'Samsung', 1, NULL, NULL),
+(10, 1, 'sansui', 1, NULL, NULL),
+(11, 1, 'siemens', 1, NULL, NULL),
+(12, 1, 'videocon', 1, NULL, NULL),
+(13, 1, 'whirlpool', 1, NULL, NULL),
+(16, 2, 'blue-star', 1, NULL, NULL),
+(17, 2, 'carrier', 1, NULL, NULL),
+(18, 2, 'daikin', 1, NULL, NULL),
+(19, 2, 'godrej', 1, NULL, NULL),
+(20, 2, 'haier', 1, NULL, NULL),
+(21, 2, 'hitachi', 1, NULL, NULL),
+(22, 2, 'lg', 1, NULL, NULL),
+(23, 2, 'lloyd', 1, NULL, NULL),
+(24, 2, 'mitsubishi', 1, NULL, NULL),
+(25, 2, 'o-general', 1, NULL, NULL),
+(26, 2, 'onida', 1, NULL, NULL),
+(27, 2, 'samsung', 1, NULL, NULL),
+(28, 2, 'videocon', 1, NULL, NULL),
+(29, 2, 'voltas', 1, NULL, NULL),
+(31, 3, 'haier', 1, NULL, NULL),
+(32, 3, 'lg', 1, NULL, NULL),
+(33, 3, 'onida', 1, NULL, NULL),
+(34, 3, 'panasonic', 1, NULL, NULL),
+(35, 3, 'samsung', 1, NULL, NULL),
+(36, 3, 'sony', 1, NULL, NULL),
+(37, 3, 'videocon', 1, NULL, NULL),
+(38, 3, 'vu', 1, NULL, NULL),
+(39, 3, 'whirlpool', 1, NULL, NULL),
+(46, 4, 'lg', 1, NULL, NULL),
+(47, 4, 'onida', 1, NULL, NULL),
+(48, 4, 'panasonic', 1, NULL, NULL),
+(49, 4, 'samsung', 1, NULL, NULL),
+(50, 4, 'sony', 1, NULL, NULL),
+(51, 4, 'vu', 1, NULL, NULL),
+(53, 5, 'apple', 1, NULL, NULL),
+(54, 5, 'asus', 1, NULL, NULL),
+(55, 5, 'google', 1, NULL, NULL),
+(56, 5, 'htc', 1, NULL, NULL),
+(57, 5, 'huawei', 1, NULL, NULL),
+(58, 5, 'intex', 1, NULL, NULL),
+(59, 5, 'iphone', 1, NULL, NULL),
+(60, 5, 'karbonn', 1, NULL, NULL),
+(61, 5, 'lava', 1, NULL, NULL),
+(62, 5, 'lenovo', 1, NULL, NULL),
+(63, 5, 'lg', 1, NULL, NULL),
+(64, 5, 'mi', 1, NULL, NULL),
+(65, 5, 'micromax', 1, NULL, NULL),
+(66, 5, 'motorola', 1, NULL, NULL),
+(67, 5, 'nokia', 1, NULL, NULL),
+(68, 5, 'oneplus', 1, NULL, NULL),
+(69, 5, 'oppo', 1, NULL, NULL),
+(70, 5, 'realme', 1, NULL, NULL),
+(71, 5, 'samsung', 1, NULL, NULL),
+(72, 5, 'spice', 1, NULL, NULL),
+(73, 5, 'vivo', 1, NULL, NULL),
+(74, 5, 'xolo', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2019_08_19_000000_create_failed_jobs_table', 1),
+(3, '2020_05_18_090803_create_cities_table', 2),
+(4, '2020_05_18_091221_create_products_table', 2),
+(5, '2020_05_18_103430_create_city_product_table', 3),
+(6, '2020_05_18_183841_create_areas_table', 4),
+(7, '2020_05_21_125531_create_companies_table', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(255) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Washing Machine', 1, NULL, NULL),
+(2, 'AC', 1, NULL, NULL),
+(3, 'fridge', 1, NULL, NULL),
+(4, 'tv', 1, NULL, NULL),
+(5, 'mobile', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'dhruv', 'dhruvvala17@gmail.com', NULL, '$2y$10$wRrpxIsP6ZaEp2.Ka.KdCOPpYNbw8up4OvvBYHqSwWOyV7wm598CC', NULL, '2020-05-28 13:41:10', '2020-05-28 13:41:10');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `areas`
+--
+ALTER TABLE `areas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `areas_status_index` (`status`);
+
+--
+-- Indexes for table `cities`
+--
+ALTER TABLE `cities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `city_product`
+--
+ALTER TABLE `city_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `companies`
+--
+ALTER TABLE `companies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `areas`
+--
+ALTER TABLE `areas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+
+--
+-- AUTO_INCREMENT for table `cities`
+--
+ALTER TABLE `cities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `city_product`
+--
+ALTER TABLE `city_product`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `companies`
+--
+ALTER TABLE `companies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
