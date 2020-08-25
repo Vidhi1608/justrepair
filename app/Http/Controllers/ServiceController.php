@@ -11,6 +11,8 @@ class ServiceController extends Controller
     public function view()
     {
         $cities = City::all();
-        return view('services', compact('cities'));
+        
+        $products=Product::all();
+        return view('services', compact('cities','products'));
     }
 }

@@ -14,6 +14,8 @@ class ServiceLandingController extends Controller
         $product = Str::before($request, '-repairing-service');
         $city = Str::after($request, 'repairing-service-in-');
         $areas = City::whereName($city)->first()->areas->all();
-        return view('landing',compact('product', 'city', 'areas'));
+        $cities=City::all();
+        $products=Product::all();
+        return view('landing',compact('product', 'city', 'areas','cities','products'));
     }
 }

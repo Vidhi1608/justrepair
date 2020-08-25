@@ -17,10 +17,10 @@ class City extends Model
     {
         return $this->belongsToMany('App\Product');
     }
-    // public function areas()
-    // {
-    //     return $this->hasMany('App\Area');
-    // }
+    public function areas()
+    {
+        return $this->hasMany('App\Area');
+    }
     public function users()
     {
         return $this->hasMany('App\User');

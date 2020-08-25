@@ -36,7 +36,11 @@ class ComplaintsController extends Controller
 
             
         // }
+
+        $user=Auth::user();
+        return $user->products->name;
         $complaints=Complaint::all();
+        
         return view('admin.template.home.layout.showcomplaint',compact('complaints'));
     }
 

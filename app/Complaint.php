@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Complaint extends Model
 {
-    protected $fillable = ['name','mobile','address','product','status'];
+    protected $fillable = ['name','mobile','address','city_id','product_id','product','status'];
     protected $table = 'complaints';
 
     public function city()

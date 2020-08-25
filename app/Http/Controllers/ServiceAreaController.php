@@ -16,13 +16,18 @@ class ServiceAreaController extends Controller
             $area = Str::after($area, 'repair-service-');
             $companies = Product::whereName(str_replace('-', ' ', $product))->first()->companies;
             $from = Area::whereName($area)->first()->city->name;
-            return view('area', compact('product', 'area', 'companies','from'));
+            $cities=City::all();
+            $products=Product::all();
+            
+            return view('area', compact('product', 'area', 'companies','from','cities','products'));
         }
         if (Str::contains($area, 'service-center')) {
             $company = Str::before($area, '-service-center');
             $product = Str::before($request, '-repairing-service');
             $area = Str::after($area, 'service-center-');
-            return view('company', compact('company', 'product', 'area'));
+            $cities=City::all();
+            $products=Product::all();
+            return view('company', compact('company', 'product', 'area','cities','products'));
         }
     }
 }

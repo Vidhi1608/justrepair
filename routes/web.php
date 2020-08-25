@@ -24,17 +24,29 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// 
 Route::get('/', 'LinkController@footer');
-Route::view('dashboard', 'layouts.admin');
-Route::view('techdashboard', 'admin.template.home.layout.technician');
-Route::view('managerdashboard', 'admin.template.home.layout.manager');
-Route::view('admindashboard', 'admin.template.home.layout.admin');
-Route::view('get-in-touch', 'contact');
-Route::view('who-we-are', 'about');
+
+Route::get('get-in-touch', function(){
+   $cities=City::all();
+   $products=Product::all();
+   return view ('contact',compact('cities','products'));
+});
+Route::get('who-we-are', function(){
+   $cities=City::all();
+   $products=Product::all();
+   return view('about',compact('cities','products'));  
+});
 Route::get('services', 'ServiceController@view');
 Route::get('services/{landing}', 'ServiceLandingController@view');
 Route::get('services/{landing}/{area}', 'ServiceAreaController@view');
 
+Route::group(['middleware'=>'authenticated'],function(){
+
+Route::view('techdashboard', 'admin.template.home.layout.technician');
+Route::view('managerdashboard', 'admin.template.home.layout.manager');
+Route::view('admindashboard', 'admin.template.home.layout.admin');
 Route::get('showproduct','LinkController@product');
 Route::get('showarea','LinkController@area');
 Route::get('showbrand','LinkController@brand');
@@ -73,14 +85,17 @@ Route::resource('admin','AdminController');
 Route::resource('data','AssignController');
 Route::get('logout', function(){
    Auth::logout();
-   return redirect()->route('home');
+   return redirect()->route('login');
+});
+
 });
 
 
 
-
-
 Auth::routes();
+
+ 
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 //  Route::get('/admin',function(){
