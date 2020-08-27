@@ -8,11 +8,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
   @include('admin.template.home.link')
 </head>
 <body class="hold-transition sidebar-mini over">
-<div class="wrapper">
+<div class="wrapper" style="overflow-y: hidden">
 
   @include('admin.template.home.section.navbar')
 
-  @include('admin.template.home.section.sidebar')
+  @if (Auth::check())
+
+
+    {{-- // return Auth::user()->role->name; --}}
+    {{ $role = Auth::user()->role->name }}
+
+    @switch($role)
+        @case('Manager')
+            @include('admin.template.home.section.sidebar2')
+            @break
+        @case('Technician')
+            @include('admin.template.home.section.sidebar3')
+            @break
+        @default
+            @include('admin.template.home.section.sidebar')
+    @endswitch
+    @endif
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -58,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>     
       </div>
         <!-- /.card-header -->
-        <div class="card-body">
+        <div class="card-body table-responsive">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>

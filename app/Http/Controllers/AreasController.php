@@ -38,9 +38,15 @@ class AreasController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $area= new Area;
         $area->city_id=$request->city_id;
         $area->name=$request->name;
+=======
+    
+        $area= Area::firstOrNew(['name'=>$request->name]);
+        $area->name=ucfirst($request->name);
+>>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
         $area->save();
         return redirect('areas');
     }

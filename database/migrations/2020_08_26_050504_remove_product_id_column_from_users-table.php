@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProductIdColumnToUsersTables extends Migration
+class RemoveProductIdColumnFromUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddProductIdColumnToUsersTables extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('product_id');
+            $table->dropColumn('product_id');
         });
     }
 
@@ -26,7 +26,7 @@ class AddProductIdColumnToUsersTables extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('product_id');
+            $table->integer('product_id')->unsigned();
         });
     }
 }

@@ -33,11 +33,13 @@ class LinkController extends Controller
     {
         $cities=City::all();
         $products=Product::all();
+       
         return view('admin.template.home.layout.assignproduct',compact('cities','products'));
     }
     public function showassignproduct()
     {
         $products=Product::all();
+        
         return view('admin.template.home.layout.showassignproduct',compact('products'));
     }
     public function addcity()

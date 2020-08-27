@@ -17,7 +17,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.sidebar2')
 
-
+  @if (Auth::check())
+  {{$role = Auth::user()->role->name}}
+  @switch($role)
+      @case('Manager')
+      
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -65,6 +69,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
+  @break
+  @default
+  @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif
   
 </div>
 <!-- ./wrapper -->

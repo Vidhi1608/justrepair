@@ -37,7 +37,7 @@ class ManagersController extends Controller
     public function store(Request $request)
     {
         $manager= new Manager;
-        $manager->name=$request->name;
+        $manager->name=ucfirst($request->name);
         $manager->mobile=$request->mobile;
         $manager->status=$request->status;
         $manager->save();

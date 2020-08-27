@@ -36,8 +36,8 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $product= new Product;
-        $product->name=$request->name;
+        $product= Product::firstOrNew(['name' => $request->name]);
+        $product->name=ucfirst($request->name);
         $product->save();
         return redirect('products');
     }

@@ -6,13 +6,57 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
   @include('admin.template.home.link')
+  <style>
+    div.ex2 {
+      
+      height: 60px;
+      width: 100%;  
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini over">
 <div class="wrapper">
 
   @include('admin.template.home.section.navbar')
 
-  @include('admin.template.home.section.sidebar')
+
+  @if (Auth::check())
+
+
+    {{-- // return Auth::user()->role->name; --}}
+    {{ $role = Auth::user()->role->name }}
+
+    @switch($role)
+        @case('Manager')
+            @include('admin.template.home.section.sidebar2')
+            @break
+        @case('Technician')
+            @include('admin.template.home.section.sidebar3')
+            @break
+        @default
+            @include('admin.template.home.section.sidebar')
+    @endswitch
+    @endif
+        {{-- switch ($role) {
+            case 'Admin':
+               return redirect('admindashboard');
+                break;
+            case 'Technician':
+                return redirect('techdashboard');
+                break;
+            case 'Manager':
+                return redirect('managerdashboard');
+                break;
+        }
+    // return redirect()->route('chcking');
+} --}}
+
+  {{-- @include('admin.template.home.section.sidebar') --}}
+  @if (Auth::check())
+  {{$role = Auth::user()->role->name}}
+  @switch($role)
+      @case('Admin')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -51,26 +95,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="form-group">
                 {!! Form::hidden('role_id', 2) !!}
                 {!! Form::label('fname', 'First Name') !!}
-                {!! Form::text('fname', null, ['class'=>'form-control', 'placeholder'=>'Enter your First Name']) !!}
+                {!! Form::text('fname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your First Name']) !!}
                 {!! Form::label('lname', 'Last Name') !!}
-                {!! Form::text('lname', null, ['class'=>'form-control', 'placeholder'=>'Enter your Last Name']) !!}
+                {!! Form::text('lname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your Last Name']) !!}
                 {!! Form::label('mobile', 'Contact Number') !!}
                 {!! Form::text('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
                 {!! Form::label('email', 'Email') !!}
                 {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                 {!! Form::label('password', 'Password') !!}
                 {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
-                {!! Form::label('name', 'Select City') !!}
                 <br>
-                @foreach ($cities as $city)
-                
-                {!! Form::label('name', $city->name) !!}
-                {!! Form::checkbox('city_id', $city->id) !!}
-                    
-                @endforeach
+                <div class="row">
+                  <div class="col-md-2">
+                    {!! Form::label('name', 'Select City') !!}
+                  </div>
+                  
+                  <div class="col-md-10">
+                    <div class="row ex2">
+                      @foreach ($cities as $city)
+                      <div class="col-md-4">
+                      {!! Form::checkbox('city_id', $city->id) !!}
+
+                      {!! Form::label('name', $city->name) !!}
+                    </div>
+                      @endforeach
+                    </div>
+
+                  </div>
+                  
+                  
+                </div>
+                <hr>
+
+              
             </div>
-            <div class="form-group">
-                {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
+            <div class="form-group text-center">
+                {!! Form::submit('Submit', ['class'=>'btn btn-success text-right']) !!}
             </div>    
             {!! Form::close() !!}
           </div>
@@ -94,6 +154,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
+  @break
+               @default
+               @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif
 </div>
 <!-- ./wrapper -->
 

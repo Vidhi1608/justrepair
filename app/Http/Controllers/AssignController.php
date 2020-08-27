@@ -38,7 +38,15 @@ class AssignController extends Controller
     {
         $city = City::find($request->city_id);
         $product = Product::find($request->product_id);
-        $city->products()->attach($product);
+        
+        $cities=City::find($request->city_id)->products;
+        $data=$cities->find($product);
+        // return $data;
+        if (is_null($data)) {
+            $city->products()->attach($product);
+        }
+        
+       
         return redirect('showcities');
     }
 

@@ -37,7 +37,7 @@ class TechniciansController extends Controller
     public function store(Request $request)
     {
         $technician= new Technician;
-        $technician->name=$request->name;
+        $technician->name=ucfirst($request->name);
         $technician->mobile=$request->mobile;
         $technician->status=$request->status;
         $technician->save();

@@ -46,30 +46,46 @@ Route::get('services/{landing}/{area}', 'ServiceAreaController@view');
 
 Route::group(['middleware'=>'authenticated'],function(){
 
-Route::view('techdashboard', 'admin.template.home.layout.technician');
-Route::view('managerdashboard', 'admin.template.home.layout.manager');
-Route::view('admindashboard', 'admin.template.home.layout.admin');
-Route::get('showproduct','LinkController@product');
-Route::get('showarea','LinkController@area');
-Route::get('showbrand','LinkController@brand');
-Route::get('showmanager','LinkController@manager');
-Route::get('showtechnician','LinkController@technician');
-Route::get('addadmin','LinkController@addadmin');
-Route::get('showadmin','LinkController@showadmin');
-Route::get('addmanager','LinkController@addmanager');
-Route::get('showmanager','LinkController@showmanager');
-Route::get('addtechnician','LinkController@addtechnician');
-Route::get('showtechnician','LinkController@showtechnician');
-Route::get('addarea','LinkController@addarea');
-Route::get('addcity','LinkController@addcity');
-Route::get('cities','LinkController@city');
-Route::get('addproduct','LinkController@addproduct');
-Route::get('addbrand','LinkController@addbrand');
+// Admin Routes:
+               Route::view('admindashboard', 'admin.template.home.layout.admin');
+               Route::get('showproduct','LinkController@product');
+               Route::get('showarea','LinkController@area');
+               Route::get('showbrand','LinkController@brand');
+               Route::get('showmanager','LinkController@manager');
+               Route::get('showtechnician','LinkController@technician');
+               Route::get('addadmin','LinkController@addadmin');
+               Route::get('showadmin','LinkController@showadmin');
+               Route::get('addmanager','LinkController@addmanager');
+               Route::get('showmanager','LinkController@showmanager');
+               Route::get('addtechnician','LinkController@addtechnician');
+               Route::get('showtechnician','LinkController@showtechnician');
+               Route::get('addarea','LinkController@addarea');
+               Route::get('addcity','LinkController@addcity');
+               Route::get('cities','LinkController@city');
+               Route::get('addproduct','LinkController@addproduct');
+               Route::get('addbrand','LinkController@addbrand');
+               Route::resource('areas','AreasController');
+               Route::resource('brands','BrandsController');
+               Route::resource('products','ProductsController');
+               Route::resource('showcities','CitiesController');
+               Route::get('assignproduct','LinkController@assignproduct');
+               Route::get('showassignproduct','LinkController@showassignproduct');
+               Route::resource('admin','AdminController');
+// Technician Routes:
+               Route::view('techdashboard', 'admin.template.home.layout.technician');
+
+// Manager Routes:
+               Route::view('managerdashboard', 'admin.template.home.layout.manager');
+               Route::resource('technicians','TechniciansController');   
+   
+
+
+
+
 Route::get('addcomplaint','LinkController@addcomplaint');
 Route::get('showcomplaint','LinkController@showcomplaint');
-Route::get('assignproduct','LinkController@assignproduct');
-Route::get('showassignproduct','LinkController@showassignproduct');
-Route::get('getdata','LinkController@getdata');
+
+
 Route::post('submit', 'ComplaintsController@store');
 Route::post('store', 'AssignController@store');
 Route::post('storearea', 'AreasController@store');
@@ -81,16 +97,13 @@ Route::post('destroybrand', 'BrandsController@destroy');
 Route::get('displayareas/{id}','LinkController@displayarea');
 
 Route::resource('data','DataController');
-Route::resource('areas','AreasController');
-Route::resource('brands','BrandsController');
-Route::resource('products','ProductsController');
-Route::resource('showcities','CitiesController');
+
 Route::get('delete/{id}','CitiesController@destroy');
 Route::resource('managers','ManagersController');
-Route::resource('technicians','TechniciansController');
+
 Route::resource('complaints','ComplaintsController');
-Route::resource('admin','AdminController');
-Route::resource('data','AssignController');
+
+// Route::resource('data','AssignController');
 Route::get('logout', function(){
    Auth::logout();
    return redirect()->route('login');
