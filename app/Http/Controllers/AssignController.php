@@ -87,7 +87,6 @@ class AssignController extends Controller
     
         $product=Product::find($request->get('product_id'));
         $city=City::find($request->get('city_id'));
-        // return $city;
         $city->products()->detach($product);
         return redirect('showcities');
         

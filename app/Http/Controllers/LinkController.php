@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
 use App\City;
 use App\Role;
 use App\User;
@@ -24,6 +25,7 @@ class LinkController extends Controller
     }
     public function city()
     {
+        
         $cities=City::all();
         return view('admin.template.home.layout.city',compact('cities'));
     }
@@ -59,8 +61,13 @@ class LinkController extends Controller
     }
     public function addarea()
     {
-        
-        return view('admin.template.home.layout.addarea');
+        $cities=City::all();
+        return view('admin.template.home.layout.addarea',compact('cities'));
+    }
+    public function displayarea($id)
+    {   $city=City::find($id);
+        $area=$city->areas;
+        return view('admin.template.home.layout.displayarea',compact('area','city'));
     }
     public function brand()
     {

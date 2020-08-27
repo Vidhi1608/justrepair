@@ -74,6 +74,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <tr>
                     <td>{{$city['id']}}</td>
                     <td>{{$city['name']}}</td>
+                    <form action="/destroycity" method="Post">
+                      @csrf
+                      <input type="hidden" name="city_id" value="{{$city->id}}">
+                      @foreach ($city->products as $product) 
+                      <input type="hidden" name="product_id[]" value="{{$product->id}}">
+                      @endforeach 
+                    <td>
+                    <a href="{{action('CitiesController@edit',$city['id'])}}" class="btn btn-success btn-sm">Edit</a>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                    
+                    </form>
                     
                 </tr>
                 @endforeach

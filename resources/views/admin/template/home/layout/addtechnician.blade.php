@@ -50,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             {!! Form::open(['method'=>'post','action'=>'AdminController@store']) !!}
 
             <div class="form-group">
-                {!! Form::hidden('role_id', 2) !!}
+                {!! Form::hidden('role_id', 3) !!}
                 {!! Form::label('fname', 'First Name') !!}
                 {!! Form::text('fname', null, ['class'=>'form-control', 'placeholder'=>'Enter your First Name']) !!}
                 {!! Form::label('lname', 'Last Name') !!}

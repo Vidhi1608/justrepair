@@ -44,8 +44,6 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-        
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = $request->fname . " " . $request->lname;
@@ -59,8 +57,8 @@ class AdminController extends Controller
         }
         if ($request->role_id ==3) {
             
-            return $request->product_id;
-            exit();
+            $admin->product_id=$request->product_id;
+        
         }
         
         $admin->save();

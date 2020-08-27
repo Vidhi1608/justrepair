@@ -14,6 +14,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.sidebar')
 
+  
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -21,12 +23,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">New Manager</h1>
+            <h1 class="m-0 text-dark">Update Product</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add Manager</li>
+              <li class="breadcrumb-item active"></li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -34,9 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
-    </div>
-
-    
+    </div>  
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -45,34 +45,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="card shadow p-3 mt-3 mb-5 ">
+             
             
-            {!! Form::open(['method'=>'post','action'=>'AdminController@store']) !!}
-
+            <form method="POST" action="{{action('BrandsController@update',$id)}}">
+            @csrf
             <div class="form-group">
-                {!! Form::hidden('role_id', 2) !!}
-                {!! Form::label('fname', 'First Name') !!}
-                {!! Form::text('fname', null, ['class'=>'form-control', 'placeholder'=>'Enter your First Name']) !!}
-                {!! Form::label('lname', 'Last Name') !!}
-                {!! Form::text('lname', null, ['class'=>'form-control', 'placeholder'=>'Enter your Last Name']) !!}
-                {!! Form::label('mobile', 'Contact Number') !!}
-                {!! Form::text('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
-                {!! Form::label('email', 'Email') !!}
-                {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
-                {!! Form::label('password', 'Password') !!}
-                {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
-                {!! Form::label('name', 'Select City') !!}
-                <br>
-                @foreach ($cities as $city)
-                
-                {!! Form::label('name', $city->name) !!}
-                {!! Form::checkbox('city_id', $city->id) !!}
-                    
-                @endforeach
+                <label>Brand Name</label>
+                <input type="text" name="name" class="form-control" value="{{$brand->name}}">
             </div>
-            <div class="form-group">
-                {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
-            </div>    
-            {!! Form::close() !!}
+                @method('PUT')
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+            
           </div>
           </div>
       </div>

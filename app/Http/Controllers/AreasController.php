@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Area;
+use App\City;
 use Illuminate\Http\Request;
 
 class AreasController extends Controller
@@ -14,8 +15,9 @@ class AreasController extends Controller
      */
     public function index()
     {
-        $area=Area::all();
-        return view('admin.template.home.layout.area',compact('area'));
+        $cities=City::all();
+        
+        return view('admin.template.home.layout.area',compact('cities'));
     }
 
     /**
@@ -37,6 +39,7 @@ class AreasController extends Controller
     public function store(Request $request)
     {
         $area= new Area;
+        $area->city_id=$request->city_id;
         $area->name=$request->name;
         $area->save();
         return redirect('areas');
@@ -61,7 +64,9 @@ class AreasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $area=Area::find($id);
+        
+        return view('admin.template.home.layout.editarea',compact('area','id'));
     }
 
     /**
@@ -73,7 +78,17 @@ class AreasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required',
+        ]);
+        
+        $area=Area::find($id);
+        $city=Area::find($id)->city->id;
+        
+        
+        $area->name=$request->name;
+        $area->save();
+        return redirect('displayareas/'.$city);
     }
 
     /**
@@ -82,8 +97,10 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        // 
+        $area=Area::find($request->get('area_id'))->delete();
+        return redirect('/areas');
     }
 }

@@ -155,32 +155,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="card">
       <div class="card-header">
-        <div class="row float-right">
-          
-           <div class="col">
-               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
-           {{-- <form class="form-inline ml-3 float-right" role="search">
-            @csrf --}}
-               <div class="input-group input-group-sm">
-                 <input class="form-control form-control-navbar" name="search" id="myInput" type="text" placeholder="Search" aria-label="Search">
-                 {{-- <div class="input-group-append">
+        <div class="row">
+          <div class="col-md-6">
+            {{-- <form class="form-inline ml-3">
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
-                </div> --}}
-                {{-- <div class="table-responsive">
-                   <h3 class="text-center">Total Data :<span id="total_records"></span></h3>
-                </div> --}}
+                </div>
+              </div>
+           </form> --}}
+          </div>
+           <div class="col-md-6">
+               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
+               <form class="form-inline ml-3 float-right">
+               <div class="input-group input-group-sm">
+                 <input class="form-control form-control-navbar" name="search" id="search" type="search" placeholder="Search Data" aria-label="Search">
+                 <div class="input-group-append">
+                   <button class="btn btn-cyan" type="submit">
+                     <i class="fas fa-search"></i>
+                   </button>
+                 </div>
+                 <div class="table-responsive">
+                    <h3 class="text-center">Total Data :<span id="total_records"></span></h3>
+                 </div>
                </div>
-              {{-- </form> --}}
+              <form>
           </div> 
         </div>     
       </div>
         <!-- /.card-header -->
-       
-
         <div class="card-body">
-          <table class="table table-bordered table-striped">
+          <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th>Id</th>
@@ -197,7 +205,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </tr>
             </thead>
            
-            <tbody id="myTable">
+            
+            {{-- <tr>
+              @foreach($users as $user)
+              {{-- @foreach ($roles as $role) --}}
+                {{-- <td>{{$user->id}}</td>
+                <td>{{$user->created_at}}</td>
+                <td>{{$user->name}}</td> --}}
+                {{-- <td>{{$role->name}}</td>  --}}
+                {{-- <td>{{$user->mobile}}</td>
+                <td>{{$user->email}}</td> --}}
+                {{-- <$user['password']}}<d> --}}
+                {{-- <td>{{$user->city->name}}</td>
+                <td>{{$user->product->name}}</td> --}}
+                {{-- <td>{{$user->status}}</td> --}} 
+                {{-- @endforeach --}}
+                {{-- @endforeach --}}
+            {{-- </tr> --}} 
             @foreach($users as $user)
             <tr>
                 <td>{{$user['id']}}</td>
@@ -221,12 +245,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
             </tr>
             @endforeach
-          </tbody>
             
          
             </table>
           </div>
-          
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
@@ -249,16 +271,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<script>
-  $(document).ready(function(){
-    $("#myInput").on("keyup",function(){
-      var value=$(this).val().toLowerCase();
-      $("#myTable tr").filter(function(){
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-  });
-</script>
 @include('admin.template.home.script')
 </body>
 </html>
