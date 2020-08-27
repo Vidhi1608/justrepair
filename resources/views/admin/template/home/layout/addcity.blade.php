@@ -12,9 +12,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
-  @include('admin.template.home.section.sidebar')
+  @if (Auth::check())
 
-  
+
+  {{-- // return Auth::user()->role->name; --}}
+  {{ $role = Auth::user()->role->name }}
+
+  @switch($role)
+      @case('Manager')
+          @include('admin.template.home.section.sidebar2')
+          @break
+      @case('Technician')
+          @include('admin.template.home.section.sidebar3')
+          @break
+      @default
+          @include('admin.template.home.section.sidebar')
+  @endswitch
+  @endif
+
+  @if (Auth::check())
+            {{$role = Auth::user()->role->name}}
+            @switch($role)
+                @case('Admin')
+        
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -53,7 +73,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 
                 {!! Form::label('name', 'City Name') !!}
-                {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter your City Name']) !!}
+                {!! Form::text('name', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your City Name']) !!}
+                {!! Form::label('name', 'Mobile Number') !!}
+                {!! Form::tel('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
                 <br>
                 
             </div>
@@ -82,6 +104,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
+  @break
+               @default
+               @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif
 </div>
 <!-- ./wrapper -->
 

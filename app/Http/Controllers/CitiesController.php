@@ -18,7 +18,7 @@ class CitiesController extends Controller
     {
         $cities=City::all();
         $products=Product::all();
-
+        
         return view('admin.template.home.layout.showassignproduct',compact('cities','products'));
     }
 
@@ -40,8 +40,9 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
-        $city= new City;
-        $city->name=$request->name;
+        $city= City::firstOrNew(['name' => $request->name]);
+        $city->name=ucfirst($request->name);
+        $city->mobile=$request->mobile;
         $city->save();
         return redirect('cities');
     }

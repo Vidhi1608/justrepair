@@ -59,5 +59,10 @@
       color: white!important;
       background-color: rgb(236, 16, 16)
      }
+     .page-item.active .page-link {
+    z-index: 3;
+    color: #fcc71f;
+    background-color: #419eaa;
+    border-color: #419eaa;
     </style>
   

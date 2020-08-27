@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +18,8 @@ class AdminController extends Controller
     public function index()
     {
         
-        $users=User::all();
+        $users=User::paginate(5);
+        
         
         foreach ($users as $value) {
             $roles[]= $value->role;
@@ -44,26 +46,29 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        
         
         $admin= new User;
         $admin->role_id = $request->role_id;
-        $admin->name = $request->fname . " " . $request->lname;
+        $admin->name = ucfirst($request->fname . " " . $request->lname);
         $admin->mobile=$request->mobile;
         $admin->email=$request->email;
         $admin->password= Hash::make($request->password);
         
-
-        if ($request->role_id !=1) {
+        
+        if ($request->role_id!== 'Admin') {
             $admin->city_id=$request->city_id;
         }
-        if ($request->role_id ==3) {
-            
-            return $request->product_id;
-            exit();
-        }
+       
         
         $admin->save();
+        $users =User::find($admin->id);
+        $products=Product::find($request->product_id);
+        
+        foreach ($products as $product) {
+            
+          $users->products()->attach($product);  
+        }
         return redirect('admin');
     }
 

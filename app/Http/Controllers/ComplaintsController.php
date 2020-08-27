@@ -37,9 +37,8 @@ class ComplaintsController extends Controller
             
         // }
 
-        $user=Auth::user();
-        return $user->products->name;
-        $complaints=Complaint::all();
+        
+        $complaints=Complaint::paginate(5);
         
         return view('admin.template.home.layout.showcomplaint',compact('complaints'));
     }
@@ -64,7 +63,7 @@ class ComplaintsController extends Controller
     {
       
         $complaint= new Complaint;
-        $complaint->name=$request->name;
+        $complaint->name=ucfirst($request->name);
         $complaint->mobile=$request->mobile;
         $complaint->address=$request->address;
         $complaint->city_id=$request->city_id;
@@ -72,7 +71,7 @@ class ComplaintsController extends Controller
         // $complaint->status=$request->status;
         $complaint->comment=$request->comment;
         $complaint->save();
-        return redirect('/');
+        return redirect('complaints');
     }
 
     /**

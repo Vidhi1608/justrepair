@@ -12,7 +12,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
-  @include('admin.template.home.section.sidebar')
+  @if (Auth::check())
+
+
+    {{-- // return Auth::user()->role->name; --}}
+    {{ $role = Auth::user()->role->name }}
+
+    @switch($role)
+        @case('Manager')
+            @include('admin.template.home.section.sidebar2')
+            @break
+        @case('Technician')
+            @include('admin.template.home.section.sidebar3')
+            @break
+        @default
+            @include('admin.template.home.section.sidebar')
+    @endswitch
+    @endif
 
   
 
@@ -48,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <form action="/submit" method="post">
                   <div class="form-group">
                     <label>Name</label>
-                     <input type="text" name="name" class="form-control" placeholder="Enter your name">
+                     <input type="text" name="name" class="form-control text-capitalize" placeholder="Enter your name">
                      <label>Contact Number</label>
                      <input type="tel" name="mobile" class="form-control" placeholder="Enter your Mobile Number">
                      <label>Select City</label>
@@ -70,8 +86,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       
                         <label>Address</label>
                         <input type="text" name="address" class="form-control" placeholder="Enter Your Address">
-                         <label>Status</label>
-                         <input type="text" name="status" class="form-control">
+                         {{-- <label>Status</label>
+                         <input type="text" name="status" class="form-control"> --}}
                         <label>Comment</label>
                          <input type="text" name="comment" class="form-control" placeholder="Message"> 
                   </div>  

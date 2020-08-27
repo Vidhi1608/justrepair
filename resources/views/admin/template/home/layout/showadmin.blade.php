@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
 </head>
 <body class="hold-transition sidebar-mini over">
-<div class="wrapper">
+<div class="wrapper" style="overflow-y: hidden">
 
   {{-- @include('admin.template.home.section.navbar') --}}
 
@@ -125,7 +125,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- /.navbar -->
 
 
-  @include('admin.template.home.section.sidebar')
+@if (Auth::check())
+
+
+{{-- // return Auth::user()->role->name; --}}
+{{ $role = Auth::user()->role->name }}
+
+@switch($role)
+    @case('Manager')
+        @include('admin.template.home.section.sidebar2')
+        @break
+    @case('Technician')
+        @include('admin.template.home.section.sidebar3')
+        @break
+    @default
+        @include('admin.template.home.section.sidebar')
+@endswitch
+@endif
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -184,7 +200,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>     
       </div>
         <!-- /.card-header -->
-        <div class="card-body">
+        <div class="card-body table-responsive">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -196,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <th>Email</th>
               {{-- <th>Password</th> --}}
               <th>City</th>
-              <th>Product_id</th>
+              <th>Product</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -228,7 +244,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{$user['mobile']}}</td>
                 <td>{{$user['email']}}</td>
                 <td>{{$user->city['name']}}</td>
-                <td>{{$user['product']}}</td>
+                <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
                 <td>{{$user['status']}}</td>
                 <td>
                   {{-- <div class="btn-group" aria-label="Basic example">
@@ -245,10 +261,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
          
             </table>
+            
           </div>
           <!-- /.card-body -->
+          
         </div>
         <!-- /.card -->
+        <div class="row float-right">
+          <div class="col-sm-6 col-sm-offset-5">
+            {{ $users->render() }}
+          </div>
+        </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

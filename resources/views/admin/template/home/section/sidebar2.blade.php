@@ -23,7 +23,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-               <li class="nav-item has-treeview menu-open">
+               {{-- <li class="nav-item has-treeview menu-open">
                 <a href="{{url('areas')}}" class="nav-link">
                   <i class="fas fa-chart-area"></i>
                   <p>
@@ -68,12 +68,12 @@
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> --}}
           <li class="nav-item has-treeview menu-open">
             <a href="{{url('managers')}}" class="nav-link">
               <i class="fas fa-user"></i>
               <p>
-                Users
+                Technicians
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -87,7 +87,7 @@
               <li class="nav-item">
                 <a href="{{URL::to('admin')}}" class="nav-link">
                   <i class="far fa-eye nav-icon icon"></i>
-                  <p class="p-cont">Show Users</p>
+                  <p class="p-cont">Show Technicians</p>
                 </a>
               </li>
             </ul>

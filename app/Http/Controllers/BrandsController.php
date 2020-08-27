@@ -36,8 +36,8 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        $brand= new Brand;
-        $brand->name=$request->name;
+        $brand= Brand::firstOrNew(['name' => $request->name]);
+        $brand->name=ucfirst($request->name);
         $brand->save();
         return redirect('brands');
     }

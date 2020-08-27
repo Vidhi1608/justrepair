@@ -39,7 +39,7 @@ class DataController extends Controller
     public function store(Request $request)
     {
         $complaint= new Complaint;
-        $complaint->name=$request->name;
+        $complaint->name=ucfirst($request->name);
         $complaint->mobile=$request->mobile;
         $complaint->product=$request->product;
         $complaint->address=$request->address;
