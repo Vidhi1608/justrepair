@@ -4,6 +4,7 @@ namespace App;
 
 use App\City;
 use App\User;
+use App\Brand;
 use App\Complaint;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,8 @@ public function users()
     {
         return $this->hasMany('App\Complaint');
     }
- 
+    public function brands()
+    {
+        return $this->hasMany('App\Brand');
+    }
 }

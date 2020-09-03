@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="card shadow p-3 mt-3 mb-5 ">
              
             
-            {!! Form::open(['method'=>'post','action'=>'AreasController@store']) !!}
+            {{-- {!! Form::open(['method'=>'post','action'=>'AreasController@store']) !!}
 
             <div class="form-group">
                 
@@ -78,7 +78,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="form-group">
                 {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
             </div>    
-            {!! Form::close() !!}
+            {!! Form::close() !!} --}}
+            <form method="POST" action="/storearea">
+              @csrf
+              <div class="form-group">
+                <label>Select City</label>
+                     <br>
+                     <select class="form-control" name="city_id">
+                      @foreach ($cities as $city)
+                
+                     <option value="{{$city->id}}" >{{$city->name}}</option>
+                     @endforeach
+                     </select>
+                <br>
+                <label>Area Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter your Area Name">
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+
+            </form>
           </div>
           </div>
       </div>

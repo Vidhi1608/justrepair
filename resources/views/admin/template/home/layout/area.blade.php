@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Area List</h1>
+            <h1 class="m-0 text-dark">Show Area</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -86,15 +86,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Name</th>
-                  <th>Action</th>
+                  <th>City</th>
+                  <th>Area</th>
+                  
                 </tr>
                 </thead>
-                @foreach($area as $value)
+                @foreach($cities as $value)
                 <tr>
-                    <td>{{$value['id']}}</td>
-                    <td>{{$value['name']}}</td>
-                    
+                    <td>{{$value->id}}</td>
+                    <td>{{$value->name}}</td>
+                    <td>
+                      <a href="{{url('displayareas/'.$value->id)}}" class="btn btn-success btn-sm">Areas</a>
+                    </td>
                 </tr>
                 @endforeach
              

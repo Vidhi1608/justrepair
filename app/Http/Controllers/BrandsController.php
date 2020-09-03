@@ -61,7 +61,9 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand=Brand::find($id);
+        
+        return view('admin.template.home.layout.editbrand',compact('brand','id'));
     }
 
     /**
@@ -73,7 +75,13 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required',
+        ]);
+        $brand=Brand::find($id);
+        $brand->name=$request->name;
+        $brand->save();
+        return redirect('brands'); 
     }
 
     /**
@@ -82,8 +90,9 @@ class BrandsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $brand=Brand::find($request->get('brand_id'))->delete();
+        return redirect('/brands');
     }
 }

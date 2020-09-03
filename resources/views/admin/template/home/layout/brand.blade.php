@@ -93,6 +93,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <tr>
                     <td>{{$value['id']}}</td>
                     <td>{{$value['name']}}</td>
+                    <form action="/destroybrand" method="POST">
+                      @csrf
+                    <td>
+                    <a href="{{action('BrandsController@edit',$value['id'])}}" class="btn btn-success btn-sm">Edit</a>
+                    <button name="brand_id" value="{{$value->id}}" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                  </form>
                     
                 </tr>
                 @endforeach

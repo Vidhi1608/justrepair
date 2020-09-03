@@ -66,7 +66,9 @@ class CitiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $city=City::find($id);
+        
+        return view('admin.template.home.layout.editcity',compact('city','id'));
     }
 
     /**
@@ -78,7 +80,13 @@ class CitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required',
+        ]);
+        $city=City::find($id);
+        $city->name=$request->name;
+        $city->save();
+        return redirect('cities'); 
     }
 
     /**
@@ -87,10 +95,16 @@ class CitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-            // $cities=City::find($request->$id);
-            // $cities->delete();
-            // echo "Record deleted successfully.";
+        $product=Product::find($request->get('product_id'));
+        $city=City::find($request->get('city_id'));
+       
+        foreach ($product as $products) {
+        $city->products()->detach($product);
+       }
+        
+        $city->delete();
+        return redirect('/cities');
     }
 }

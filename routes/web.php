@@ -18,6 +18,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 
 
+// use Illuminate\Support\Facades\Input;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -107,7 +109,13 @@ Route::get('inquiry','LinkController@inquiry');
 
 Route::post('submit', 'ComplaintsController@store');
 Route::post('store', 'AssignController@store');
+Route::post('storearea', 'AreasController@store');
 Route::post('destroy', 'AssignController@destroy');
+Route::post('destroycity', 'CitiesController@destroy');
+Route::post('destroyarea', 'AreasController@destroy');
+Route::post('destroyproduct', 'ProductsController@destroy');
+Route::post('destroybrand', 'BrandsController@destroy');
+Route::get('displayareas/{id}','LinkController@displayarea');
 
 Route::resource('data','DataController');
 
@@ -140,20 +148,18 @@ Route::get('logout', function(){
 });
 
 
+<<<<<<< HEAD
 // Password Reset Routes...
 Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
 Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
 Route::post('password/reset', 'ResetPasswordController@reset');
+=======
+>>>>>>> b53eced6300e13c4ac3b17ece5fd23cf80d1cec7
 Auth::routes();
 
- 
-
-
 Route::get('/home', 'HomeController@index')->name('home');
-//  Route::get('/admin',function(){
-//      return view(layouts.admin);
-//  })->middleware(['auth','auth.admin']);
+
 Route::get('detail', function () {
    $detail=Detail::create([
     'user_id' => '1',
@@ -164,12 +170,6 @@ Route::get('detail', function () {
    ]);
 });
 
-// Route::get('area', function () {
-//    $area=Area::create([
-//     'name' => 'Maninagar',
-    
-//    ]);
-// });
 Route::get('manager',function(){
    $manager=Manager::create([
       'name' => 'Bhavik',
@@ -197,13 +197,13 @@ Route::get('complaint',function(){
    Route::get('save', function () {
       $user=User::create([
          
-         'name' =>'Sanket',
+         'name' =>'vidhi',
          'mobile' => '9865231450',
-         'email' =>'satgwasfeoat.tech',
-         'password' => bcrypt ('sanket12345'),
+         'email' =>'vidhi@nocat.tech',
+         'password' => bcrypt ('vidhi12345'),
          'city_id' => '1',
-         'product_id' => '3',
-         'role_id' => '3',
+         'product_id' => '0',
+         'role_id' => '1',
          'status' => 'Active',
        
       ]);

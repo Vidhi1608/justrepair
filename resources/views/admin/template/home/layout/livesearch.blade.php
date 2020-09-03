@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
 </head>
 <body class="hold-transition sidebar-mini over">
-<div class="wrapper" style="overflow-y: hidden">
+<div class="wrapper">
 
   {{-- @include('admin.template.home.section.navbar') --}}
 
@@ -125,27 +125,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- /.navbar -->
 
 
-@if (Auth::check())
+  @include('admin.template.home.section.sidebar')
 
-
-{{-- // return Auth::user()->role->name; --}}
-{{ $role = Auth::user()->role->name }}
-
-@switch($role)
-    @case('Manager')
-        @include('admin.template.home.section.sidebar2')
-        @break
-    @case('Technician')
-        @include('admin.template.home.section.sidebar3')
-        @break
-    @default
-        @include('admin.template.home.section.sidebar')
-@endswitch
-@endif
-@if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
-        @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -174,66 +155,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="card">
       <div class="card-header">
-<<<<<<< HEAD
         <div class="row">
           <div class="col-md-6">
-            <form class="form-inline ml-3" action="/search" method="POST" role="search">
-              @csrf
+            {{-- <form class="form-inline ml-3">
               <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
               </div>
-           </form>
+           </form> --}}
           </div>
-           {{-- <div class="col-md-6">
+           <div class="col-md-6">
+               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
                <form class="form-inline ml-3 float-right">
                <div class="input-group input-group-sm">
-                 <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                 <input class="form-control form-control-navbar" name="search" id="search" type="search" placeholder="Search Data" aria-label="Search">
                  <div class="input-group-append">
                    <button class="btn btn-cyan" type="submit">
                      <i class="fas fa-search"></i>
                    </button>
                  </div>
+                 <div class="table-responsive">
+                    <h3 class="text-center">Total Data :<span id="total_records"></span></h3>
+                 </div>
                </div>
               <form>
-          </div>  --}}
-=======
-        <div class="row float-right">
-          
-           <div class="col">
-               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
-           {{-- <form class="form-inline ml-3 float-right" role="search">
-            @csrf --}}
-               <div class="input-group input-group-sm">
-                 <input class="form-control form-control-navbar" name="search" id="myInput" type="text" placeholder="Search" aria-label="Search">
-                 {{-- <div class="input-group-append">
-                  <button class="btn btn-cyan" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div> --}}
-                {{-- <div class="table-responsive">
-                   <h3 class="text-center">Total Data :<span id="total_records"></span></h3>
-                </div> --}}
-               </div>
-              {{-- </form> --}}
           </div> 
->>>>>>> b53eced6300e13c4ac3b17ece5fd23cf80d1cec7
         </div>     
       </div>
         <!-- /.card-header -->
-<<<<<<< HEAD
-       
-
         <div class="card-body">
-          <table class="table table-bordered table-striped">
-=======
-        <div class="card-body table-responsive">
           <table id="example1" class="table table-bordered table-striped">
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
             <thead>
             <tr>
               <th>Id</th>
@@ -244,13 +199,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <th>Email</th>
               {{-- <th>Password</th> --}}
               <th>City</th>
-              <th>Product</th>
+              <th>Product_id</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
             </thead>
            
-            <tbody id="myTable">
+            
+            {{-- <tr>
+              @foreach($users as $user)
+              {{-- @foreach ($roles as $role) --}}
+                {{-- <td>{{$user->id}}</td>
+                <td>{{$user->created_at}}</td>
+                <td>{{$user->name}}</td> --}}
+                {{-- <td>{{$role->name}}</td>  --}}
+                {{-- <td>{{$user->mobile}}</td>
+                <td>{{$user->email}}</td> --}}
+                {{-- <$user['password']}}<d> --}}
+                {{-- <td>{{$user->city->name}}</td>
+                <td>{{$user->product->name}}</td> --}}
+                {{-- <td>{{$user->status}}</td> --}} 
+                {{-- @endforeach --}}
+                {{-- @endforeach --}}
+            {{-- </tr> --}} 
             @foreach($users as $user)
             <tr>
                 <td>{{$user['id']}}</td>
@@ -260,11 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{$user['mobile']}}</td>
                 <td>{{$user['email']}}</td>
                 <td>{{$user->city['name']}}</td>
-<<<<<<< HEAD
                 <td>{{$user->product['name']}}</td>
-=======
-                <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
                 <td>{{$user['status']}}</td>
                 <td>
                   {{-- <div class="btn-group" aria-label="Basic example">
@@ -278,22 +245,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
             </tr>
             @endforeach
-          </tbody>
             
          
             </table>
-            
           </div>
-          
           <!-- /.card-body -->
-          
         </div>
         <!-- /.card -->
-        <div class="row float-right">
-          <div class="col-sm-6 col-sm-offset-5">
-            {{ $users->render() }}
-          </div>
-        </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -309,26 +267,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
-  @break
-  @default
-  @include('admin.template.home.layout.invalid') 
-  @endswitch
-@endif
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<script>
-  $(document).ready(function(){
-    $("#myInput").on("keyup",function(){
-      var value=$(this).val().toLowerCase();
-      $("#myTable tr").filter(function(){
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-  });
-</script>
 @include('admin.template.home.script')
-@include('sweetalert::alert')
 </body>
 </html>

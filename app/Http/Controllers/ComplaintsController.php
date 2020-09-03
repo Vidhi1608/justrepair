@@ -17,7 +17,30 @@ class ComplaintsController extends Controller
     public function index()
     {
         
+
+        // $product=Complaint::findorfail(1)->product->name;
+        // return $product;
+        // $complaints=Complaint::findorfail(1);
+
+        // return $complaints->city->name;
+        // foreach ($complaint as $data) {
+        //     if($data->city_id == 2){
+        //         return view('admin.template.home.layout.showcomplaint',compact('complaint'));
+        //     }
+        //     elseif($data->city_id == 14){
+        //         return 'hello i am baroda manager';
+        //     }
+        //     elseif($data->city_id == 16){
+        //         return 'hello i am udaipur manager';
+        //     }
+        //     else{
+        //         return 'hello i am  manage';
+        //     }
+
+            
+        // }
         $complaints=Complaint::paginate(5);
+
         
         return view('admin.template.home.layout.showcomplaint',compact('complaints'));
     }

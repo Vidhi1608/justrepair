@@ -12,28 +12,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
-  @if (Auth::check())
+  @include('admin.template.home.section.sidebar')
 
 
-    {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
-
-    @switch($role)
-        @case('Manager')
-            @include('admin.template.home.section.sidebar2')
-            @break
-        @case('Technician')
-            @include('admin.template.home.section.sidebar3')
-            @break
-        @default
-            @include('admin.template.home.section.sidebar')
-    @endswitch
-    @endif
-
-    @if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
-        @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -41,12 +22,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">City List</h1>
+          <h1 class="m-0 text-dark">{{$city->name}} Area</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">City List</li>
+              <li class="breadcrumb-item active"></li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -86,30 +67,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
-                  <th>Mobile Number</th>
                   <th>Action</th>
                 </tr>
                 </thead>
-                @foreach($cities as $city)
+                @foreach($area as $value)
                 <tr>
-                    <td>{{$city['id']}}</td>
-                    <td>{{$city['name']}}</td>
-<<<<<<< HEAD
-                    <form action="/destroycity" method="Post">
+                    <td>{{$value['id']}}</td>
+                    <td>{{$value['name']}}</td>
+                    <form action="/destroyarea" method="POST">
                       @csrf
-                      <input type="hidden" name="city_id" value="{{$city->id}}">
-                      @foreach ($city->products as $product) 
-                      <input type="hidden" name="product_id[]" value="{{$product->id}}">
-                      @endforeach 
                     <td>
-                    <a href="{{action('CitiesController@edit',$city['id'])}}" class="btn btn-success btn-sm">Edit</a>
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <a href="{{action('AreasController@edit',$value['id'])}}" class="btn btn-success btn-sm">Edit</a>
+                    <button name="area_id" value="{{$value->id}}" class="btn btn-danger btn-sm">Delete</button>
                     </td>
-                    
-                    </form>
-=======
-                    <td>{{$city['mobile']}}</td>
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
+                  </form>
                     
                 </tr>
                 @endforeach
@@ -134,13 +105,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </aside>
   <!-- /.control-sidebar -->
-
   @include('admin.template.home.section.footer')
-  @break
-  @default
-  @include('admin.template.home.layout.invalid') 
-  @endswitch
-@endif
+ 
 </div>
 <!-- ./wrapper -->
 
