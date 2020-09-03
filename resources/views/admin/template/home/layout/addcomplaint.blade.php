@@ -6,6 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
   @include('admin.template.home.link')
+   
 </head>
 <body class="hold-transition sidebar-mini over">
 <div class="wrapper">
@@ -67,23 +68,60 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      <input type="text" name="name" class="form-control text-capitalize" placeholder="Enter your name">
                      <label>Contact Number</label>
                      <input type="tel" name="mobile" class="form-control" placeholder="Enter your Mobile Number">
-                     <label>Select City</label>
-                     <br>
-                     <select class="form-control" name="city_id">
+                     
+                     <hr>
+                     {{-- ------------FOR MANAGER------------ --}}
+                     
                       @foreach ($cities as $city)
-                
-                     <option value="{{$city->id}}" >{{$city->name}}</option>
-                     @endforeach
-                     </select>
-                     <br>
-                     <label>Select Product</label>
-                       <br>
-                       @foreach ($products as $product)
-                       <label>{{$product->name}}</label>
-                       <input type="checkbox" name="product_id" value="{{$product->id}}"> 
-                       @endforeach
-                       <br>
+                      @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $city->name)
+                       
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                          <input type="hidden" name="city_id" value="{{$city->id}}">
+                          <input type="text" class="form-control" placeholder="{{$city->name}}" readonly>
+                        </div>
+                          
+                        <div class="col-md-6">
+                          <select class="form-control" name="product_id">
+                            {{-- @foreach ($cities as $city) --}}
+                            
+                            @foreach ($city->products as $product)
+                            
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                           @endforeach
+                           
+                           </select>
+                        </div>
+                       
                       
+                      </div> 
+                      @endif
+                      @endforeach
+                      
+               {{-- -----------FOR ADMIN----------- --}}
+                     <div class="row text-center">
+                      @foreach ($cities as $city)
+                      @if (Auth::user()->role->name == 'Admin')
+                      <div class="col"> 
+                        <label>
+                          <input type="radio" name="city_id" value="{{$city->id}}"> {{$city->name}}
+                        </label>
+                       <select class="form-control" name="product_id">
+                        {{-- @foreach ($cities as $city) --}}
+                        
+                        @foreach ($city->products as $product)
+                        
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                       @endforeach
+                       
+                       </select>
+                      
+                      </div>
+                      @endif
+                      @endforeach
+                     </div> 
+                       <hr>
+
                         <label>Address</label>
                         <input type="text" name="address" class="form-control" placeholder="Enter Your Address">
                          {{-- <label>Status</label>
@@ -120,6 +158,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
 @include('admin.template.home.script')
 </body>
 </html>

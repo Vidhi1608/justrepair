@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header text-uppercase">Login</div>
+                <div class="card-header text-uppercase" id="particles-js">Login</div>
 
                 <div class="card-body mt-2">
                     <form method="POST" action="{{ route('login') }}">

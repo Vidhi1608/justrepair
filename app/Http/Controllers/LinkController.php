@@ -2,20 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Bill;
 use App\City;
 use App\Role;
 use App\User;
 use App\Product;
 use App\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LinkController extends Controller
 {
     public function addcomplaint()
     {
+        // $arr_ip = geoip()->getLocation('103.85.8.126');
+        // dd($arr_ip);
+
         $cities=City::all();
         $products=Product::all();
         return view('admin.template.home.layout.addcomplaint',compact('cities','products'));
+    }
+    public function report()
+    {
+        $report=Bill::all();
+        // $array=json_decode($report, true);
+        // foreach ($report as $key => $value) {
+        //     $value['items_price'];
+        //     $divide = array_sum($value['items_price'])-array_sum($value['items_expense']); 
+        //     return $divide /2;
+        // }
+        
+        $complaints=Complaint::all();
+        return view('admin.template.home.layout.report', compact('report','complaints'));
+    }
+
+    public function inquiry() 
+    {
+        $cities=City::all();
+        $products=Product::all();
+        return view('admin.template.home.layout.businessinquiry', compact('cities','products'));
     }
 
     public function showcomplaint()

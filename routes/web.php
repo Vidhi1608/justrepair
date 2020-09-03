@@ -13,6 +13,10 @@ use App\Complaint;
 use App\Technician;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +73,20 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::get('assignproduct','LinkController@assignproduct');
                Route::get('showassignproduct','LinkController@showassignproduct');
                Route::resource('admin','AdminController');
+               Route::any( '/search', function () {
+                  $q = Input::get ( 'q' );
+                  if($q != ""){
+                  $users = User::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'email', 'LIKE', '%' . $q . '%' )->orWhere ( 'mobile', 'LIKE', '%' . $q . '%' )->orWhere ( 'status', 'LIKE', '%' . $q . '%' )->paginate(5)->setPath ( '' );
+                  $pagination = $users->appends ( array (
+                              'q' => Input::get ( 'q' ) 
+                      ) );
+                  if (count ( $users ) > 0)
+                  return view('admin.template.home.layout.showadmin',compact('users'))->withQuery($q);
+                     //  return view ( 'welcome' )->withDetails ( $user )->withQuery ( $q );
+                  }
+                     Alert::error('Sorry', 'User Not Exist');
+                      return redirect('admin');
+              } );
 // Technician Routes:
                Route::view('techdashboard', 'admin.template.home.layout.technician');
 
@@ -81,7 +99,10 @@ Route::group(['middleware'=>'authenticated'],function(){
 
 
 Route::get('addcomplaint','LinkController@addcomplaint');
+
 Route::get('showcomplaint','LinkController@showcomplaint');
+Route::get('report','LinkController@report');
+Route::get('inquiry','LinkController@inquiry');
 
 
 Route::post('submit', 'ComplaintsController@store');
@@ -94,6 +115,21 @@ Route::get('delete/{id}','CitiesController@destroy');
 Route::resource('managers','ManagersController');
 
 Route::resource('complaints','ComplaintsController');
+Route::any( '/find', function () {
+   $q = Input::get ( 'q' );
+   if($q != ""){
+   $complaints = Complaint::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'mobile', 'LIKE', '%' . $q . '%' )->orWhere ( 'status', 'LIKE', '%' . $q . '%' )->paginate(5)->setPath ( '' );
+   $pagination = $complaints->appends ( array (
+               'q' => Input::get ( 'q' ) 
+       ) );
+   if (count ( $complaints ) > 0)
+   return view('admin.template.home.layout.showcomplaint',compact('complaints'))->withQuery($q);
+      //  return view ( 'welcome' )->withDetails ( $user )->withQuery ( $q );
+   }
+   
+   Alert::error('Sorry', 'Complaint not Found.!');
+       return redirect('complaints');
+} );
 
 // Route::resource('data','AssignController');
 Route::get('logout', function(){
@@ -104,7 +140,11 @@ Route::get('logout', function(){
 });
 
 
-
+// Password Reset Routes...
+Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
+Route::post('password/reset', 'ResetPasswordController@reset');
 Auth::routes();
 
  

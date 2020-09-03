@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Product;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AssignController extends Controller
 {
@@ -41,12 +42,14 @@ class AssignController extends Controller
         
         $cities=City::find($request->city_id)->products;
         $data=$cities->find($product);
+        
         // return $data;
         if (is_null($data)) {
+            Alert::success('Product Added Successfully.!');
             $city->products()->attach($product);
         }
         
-       
+        
         return redirect('showcities');
     }
 
@@ -97,6 +100,7 @@ class AssignController extends Controller
         $city=City::find($request->get('city_id'));
         // return $city;
         $city->products()->detach($product);
+        Alert::success('Product Deleted.!');
         return redirect('showcities');
         
             // City::where($request->id)->get()->each(function ($city) {

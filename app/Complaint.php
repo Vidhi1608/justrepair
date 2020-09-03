@@ -22,5 +22,9 @@ class Complaint extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+    public function bill()
+    {
+        return $this->hasOne('App\Bill', 'foreign_key');
+    }
 }
 

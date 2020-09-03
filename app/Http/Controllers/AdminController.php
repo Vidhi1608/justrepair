@@ -6,8 +6,9 @@ use App\Role;
 use App\User;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class AdminController extends Controller
 {
     /**
@@ -15,17 +16,33 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+
         $users=User::paginate(5);
-        
-        
-        foreach ($users as $value) {
-            $roles[]= $value->role;
-        }
-         $roles;
-        return view('admin.template.home.layout.showadmin',compact('users','roles'));
+            
+            foreach ($users as $value) {
+                $roles[]= $value->role;
+            }
+             $roles;
+            return view('admin.template.home.layout.showadmin',compact('users','roles'));
+        // if (empty($request->all())) {
+         
+        //     $users=User::paginate(5);
+            
+        //     foreach ($users as $value) {
+        //         $roles[]= $value->role;
+        //     }
+        //      $roles;
+        //     return view('admin.template.home.layout.showadmin',compact('users','roles'));
+        // } else {
+        //     $users=DB::table('users')->where('name','LIKE','%'.$request->search.'%')->orWhere('mobile','LIKE','%'.$request->search.'%')->paginate(2);
+        //     foreach ($users as $value) {
+        //         $roles[]= $value->role;
+        //     }
+        //      $roles;
+        //     return view('admin.template.home.layout.showadmin',compact('users','roles'));
+        // }
     }
 
     /**

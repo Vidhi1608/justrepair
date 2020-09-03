@@ -119,6 +119,7 @@
         
         <!-- REQUIRED SCRIPTS -->
         @include('admin.template.home.script')
+        @include('sweetalert::alert')
         </body>
         </html>
             

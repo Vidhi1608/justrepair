@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper" style="overflow-y: hidden">
 
   @include('admin.template.home.section.navbar')
+  
 
   @if (Auth::check())
 
@@ -59,10 +60,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="card">
       <div class="card-header">
         <div class="row">
-          <div class="col-md-12 searchbar-corner">
-            <form class="form-inline ml-3">
+          <div class="col-md-6">
+            <form class="form-inline ml-3" action="/find" method="POST" role="search">
+              @csrf
               <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
@@ -122,12 +124,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               
           </tr>
           @endif
+          
           @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->products->first()->name ==  $complaint->product->name && Auth::user()->city->name == $complaint->city->name)
           <tr>
             <td>{{$complaint->id}}</td>
             <td>{{$complaint->created_at}}</td>
+            <td>{{$complaint->name}}</td>
             <td>{{$complaint->mobile}}</td>
-            <td>>{{$complaint->name}}</td>
             <td>{{$complaint->address}}</td>
             <td>{{$complaint->city_id}}</td>
             <td>{{$complaint->product_id}}</td>
@@ -146,6 +149,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
+        <div class="row float-right">
+          <div class="col-sm-6 col-sm-offset-5">
+            {{ $complaints->render() }}
+          </div>
+        </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -166,5 +174,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 @include('admin.template.home.script')
+@include('sweetalert::alert')
 </body>
 </html>

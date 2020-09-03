@@ -142,7 +142,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @include('admin.template.home.section.sidebar')
 @endswitch
 @endif
-
+@if (Auth::check())
+    {{$role = Auth::user()->role->name}}
+    @switch($role)
+        @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -173,19 +176,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="card-header">
         <div class="row">
           <div class="col-md-6">
-            {{-- <form class="form-inline ml-3">
+            <form class="form-inline ml-3" action="/search" method="POST" role="search">
+              @csrf
               <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
               </div>
-           </form> --}}
+           </form>
           </div>
-           <div class="col-md-6">
-               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
+           {{-- <div class="col-md-6">
                <form class="form-inline ml-3 float-right">
                <div class="input-group input-group-sm">
                  <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -196,7 +199,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  </div>
                </div>
               <form>
-          </div> 
+          </div>  --}}
         </div>     
       </div>
         <!-- /.card-header -->
@@ -287,10 +290,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
+  @break
+  @default
+  @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 @include('admin.template.home.script')
+@include('sweetalert::alert')
 </body>
 </html>
