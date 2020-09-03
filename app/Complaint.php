@@ -32,5 +32,9 @@ class Complaint extends Model
     {
         return $this->hasOne('App\Bill');
     }
+    // public function bill()
+    // {
+    //     return $this->hasOne('App\Bill', 'foreign_key');
+    // }
 }
 

@@ -64,22 +64,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content">
       <div class="container-fluid">
         <div class="card">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-12 searchbar-corner">
-                  <form class="form-inline ml-3 ">
-                    <div class="input-group input-group-sm ">
-                      <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                      <div class="input-group-append">
-                        <button class="btn btn-cyan" type="submit">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                <form class="form-inline ml-3" action="/find" method="POST" role="search">
+                  @csrf
+                  <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                      <button class="btn btn-cyan" type="submit">
+                        <i class="fas fa-search"></i>
+                      </button>
                     </div>
-                 </form>
-                </div>
-              </div>     
-            </div>
+                  </div>
+               </form>
+              </div>
+            </div>     
+          </div>
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">

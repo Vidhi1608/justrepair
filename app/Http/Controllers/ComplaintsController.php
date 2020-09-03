@@ -18,6 +18,8 @@ class ComplaintsController extends Controller
      */
     public function index()
     {
+        
+
         // $product=Complaint::findorfail(1)->product->name;
         // return $product;
         // $complaints=Complaint::findorfail(1);

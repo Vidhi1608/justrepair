@@ -6,6 +6,7 @@
     <title>JRI Admin Panel</title>
   
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <!-- Google Font: Source Sans Pro -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">

@@ -82,6 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
 @include('admin.template.home.script')
 </body>
 </html>

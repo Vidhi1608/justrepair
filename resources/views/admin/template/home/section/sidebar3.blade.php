@@ -65,7 +65,7 @@
             <a href="{{url('report')}}" class="nav-link ">
               <p>
                 <i class="fas fa-coins"></i>
-                Update Financial Report
+                Show Financial Report
               </p>
             </a>
             

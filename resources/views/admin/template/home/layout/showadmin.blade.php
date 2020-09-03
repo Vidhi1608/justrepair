@@ -142,7 +142,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @include('admin.template.home.section.sidebar')
 @endswitch
 @endif
-
+@if (Auth::check())
+    {{$role = Auth::user()->role->name}}
+    @switch($role)
+        @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -171,21 +174,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="card">
       <div class="card-header">
-        <div class="row float-right">
-          
-           <div class="col">
-           {{-- <form class="form-inline ml-3 float-right" action="{{url('search')}}" method="POST" role="search">
-            @csrf --}}
-               <div class="input-group input-group-sm">
-                 <input class="form-control form-control-navbar" type="text" placeholder="Search" aria-label="Search">
-                 <div class="input-group-append">
+        <div class="row">
+          <div class="col-md-6">
+            <form class="form-inline ml-3" action="/search" method="POST" role="search">
+              @csrf
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
+              </div>
+           </form>
+          </div>
+           {{-- <div class="col-md-6">
+               <form class="form-inline ml-3 float-right">
+               <div class="input-group input-group-sm">
+                 <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                 <div class="input-group-append">
+                   <button class="btn btn-cyan" type="submit">
+                     <i class="fas fa-search"></i>
+                   </button>
+                 </div>
                </div>
-              {{-- </form> --}}
-          </div> 
+              <form>
+          </div>  --}}
         </div>     
       </div>
         <!-- /.card-header -->
@@ -264,8 +278,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
+  @break
+  @default
+  @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif
 </div>
 <!-- ./wrapper -->
 @include('admin.template.home.script')
+@include('sweetalert::alert')
 </body>
 </html>
