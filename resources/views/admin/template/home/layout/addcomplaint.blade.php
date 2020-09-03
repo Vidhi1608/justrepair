@@ -75,14 +75,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      <option value="{{$city->id}}" >{{$city->name}}</option>
                      @endforeach
                      </select>
-                     <br>
-                     <label>Select Product</label>
+                     <label>Area</label>
+                     <input type="text" name="area" class="form-control" placeholder="Enter Your Area Name">
+                     {{-- <label>Select Product</label>
                        <br>
                        @foreach ($products as $product)
                        <label>{{$product->name}}</label>
                        <input type="checkbox" name="product_id" value="{{$product->id}}"> 
-                       @endforeach
+                       @endforeach --}}
+                       <label>Select Product</label>
                        <br>
+                       <select class="form-control" name="product_id">
+                        @foreach ($products as $product)
+                  
+                       <option value="{{$product->id}}" >{{$product->name}}</option>
+                       @endforeach
+                       </select>
                       
                         <label>Address</label>
                         <input type="text" name="address" class="form-control" placeholder="Enter Your Address">

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Complaint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NotificationForComplaints;
 
 class ComplaintsController extends Controller
 {
@@ -34,12 +37,25 @@ class ComplaintsController extends Controller
         //         return 'hello i am  manage';
         //     }
 
-            
-        // }
-        $complaints=Complaint::paginate(5);
-
+        // $auth_city_id= Auth::user()->city_id;
+        // return Auth::user()->role->name;
+        // $users = User::where()->role->name->get();
+        // exit();
+        // return $auth_city_id;
         
-        return view('admin.template.home.layout.showcomplaint',compact('complaints'));
+        
+        // }
+        $complaints=Complaint::all();
+        if (Auth::user()->role->name == 'Technician') {
+            foreach(Auth::user()->products as $product) {
+                $items[] = $product->name;
+            }
+            return view('admin.template.home.layout.upcoming',compact('complaints','items'));
+        }
+         
+        
+    
+        return view('admin.template.home.layout.upcoming',compact('complaints'));
     }
 
     /**
@@ -66,10 +82,13 @@ class ComplaintsController extends Controller
         $complaint->mobile=$request->mobile;
         $complaint->address=$request->address;
         $complaint->city_id=$request->city_id;
+        $complaint->area=$request->area;
         $complaint->product_id=$request->product_id;
         // $complaint->status=$request->status;
         $complaint->comment=$request->comment;
         $complaint->save();
+
+        
         return redirect('complaints');
     }
 
@@ -79,9 +98,13 @@ class ComplaintsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        
+        $complaints = Complaint::findorFail($request->id);
+        $complaints = $request->total_amount;
+         return "$complaints";
+        return redirect('completed');
     }
 
     /**
@@ -90,9 +113,20 @@ class ComplaintsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        
+        $status = $request->complaint_status;
+        $complaints = Complaint::findOrFail($request->id);
+       
+        // $users = User::where('role_id','1')->get();
+        $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
+        
+        // Auth::user()->notify(User::all(),new NotificationForComplaints($complaints));
+        $complaints->update(["user_id"=> 0 ,"status"=> $status]);
+        $complaints->save();
+        return redirect('working');
+        // Notification::send($user, new MyFirstNotification());
     }
 
     /**
@@ -102,9 +136,15 @@ class ComplaintsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = $request->user_id;
+        $complaints = Complaint::findOrFail($request->id);
+        $complaints->update(["user_id"=> $user ,"status"=> 1]);
+        $complaints->save();
+        
+        return redirect('working');
+
     }
 
     /**

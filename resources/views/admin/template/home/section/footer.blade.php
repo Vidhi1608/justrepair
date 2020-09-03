@@ -5,5 +5,5 @@
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://justrepairit.in">Justrepairit</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; <script type="text/javascript">document.write(new Date().getFullYear());</script> <a href="https://justrepairit.in">Justrepairit</a>.</strong> All rights reserved.
   </footer>

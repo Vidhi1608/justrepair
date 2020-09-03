@@ -72,10 +72,19 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
-        <span class="badge badge-warning navbar-badge">15</span>
+        <span class="badge badge-warning navbar-badge">{{count(Auth::user()->unreadNotifications)}}</span>
       </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-header">15 Notifications</span>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+
+            @foreach (Auth::user()->all() as $notification)
+              {{-- @include('admin.template.home.layout.notifications.'.($notification->type)) --}}
+               <a href="#">{{$notification->data['user_id']}} has Cancel the Complaint!</a>
+            @endforeach
+        </li>
+      </ul>
+      {{-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <span class="dropdown-header"></span>
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item">
           <i class="fas fa-envelope mr-2"></i> 4 new messages
@@ -93,7 +102,7 @@
         </a>
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-      </div>
+      </div> --}}
     </li>
     <li class="nav-item">
       <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i

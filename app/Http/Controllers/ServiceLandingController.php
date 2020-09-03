@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Area;
 use App\City;
+use App\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 

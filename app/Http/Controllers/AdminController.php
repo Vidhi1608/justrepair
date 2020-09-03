@@ -46,11 +46,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-=======
-        
-        
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
+
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = ucfirst($request->fname . " " . $request->lname);
@@ -62,17 +58,9 @@ class AdminController extends Controller
         if ($request->role_id!== 'Admin') {
             $admin->city_id=$request->city_id;
         }
-<<<<<<< HEAD
-        if ($request->role_id ==3) {
             
-            $admin->product_id=$request->product_id;
-        
-        }
-=======
-       
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
-        
         $admin->save();
+        if ($request->role_id== 'Technician') {
         $users =User::find($admin->id);
         $products=Product::find($request->product_id);
         
@@ -80,6 +68,8 @@ class AdminController extends Controller
             
           $users->products()->attach($product);  
         }
+    }
+    
         return redirect('admin');
     }
 

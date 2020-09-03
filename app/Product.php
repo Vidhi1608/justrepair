@@ -18,10 +18,10 @@ public function cities()
 {
     return $this->hasMany('App\City');
 }
-// public function companies()
-// {
-//     return $this->hasMany('App\Company');
-// }
+public function companies()
+{
+    return $this->hasMany('App\Company');
+}
 public function users()
  {
      return $this->hasMany('App\User');
@@ -32,6 +32,6 @@ public function users()
     }
     public function brands()
     {
-        return $this->hasMany('App\Brand');
+        return $this->belongsToMany('App\Brand');
     }
 }

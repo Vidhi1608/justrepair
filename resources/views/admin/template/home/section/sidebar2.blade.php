@@ -108,9 +108,22 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{URL::to('complaints')}}" class="nav-link">
-                  <i class="far fa-eye nav-icon icon"></i>
-                  <p class="p-cont">Show Complaint</p>
+                <a href="{{url('upcoming')}}" class="nav-link">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <p class="p-cont">Upcoming Complaint</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('working')}}" class="nav-link">
+                  <i class="fas fa-tools"></i>
+                  <p class="p-cont">Working Complaint</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('completed')}}" class="nav-link">
+                  {{-- {{URL::to('complaints')}} --}}
+                  <i class="fas fa-check-circle"></i>
+                  <p class="p-cont">Complited Complaint</p>
                 </a>
               </li>
             </ul>

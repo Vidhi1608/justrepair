@@ -174,34 +174,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="row float-right">
           
            <div class="col">
-               {{-- <a href="" class="btn-add  float-right"> <i class="fas fa-plus icon2"></i> Add</a> --}}
-           {{-- <form class="form-inline ml-3 float-right" role="search">
+           {{-- <form class="form-inline ml-3 float-right" action="{{url('search')}}" method="POST" role="search">
             @csrf --}}
                <div class="input-group input-group-sm">
-                 <input class="form-control form-control-navbar" name="search" id="myInput" type="text" placeholder="Search" aria-label="Search">
-                 {{-- <div class="input-group-append">
+                 <input class="form-control form-control-navbar" type="text" placeholder="Search" aria-label="Search">
+                 <div class="input-group-append">
                   <button class="btn btn-cyan" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
-                </div> --}}
-                {{-- <div class="table-responsive">
-                   <h3 class="text-center">Total Data :<span id="total_records"></span></h3>
-                </div> --}}
+                </div>
                </div>
               {{-- </form> --}}
           </div> 
         </div>     
       </div>
         <!-- /.card-header -->
-<<<<<<< HEAD
-       
 
-        <div class="card-body">
-          <table class="table table-bordered table-striped">
-=======
+      
+
         <div class="card-body table-responsive">
-          <table id="example1" class="table table-bordered table-striped">
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
+          <table  id="myTable" class="table table-bordered table-striped">
+
             <thead>
             <tr>
               <th>Id</th>
@@ -210,7 +203,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <th>Roles</th>
               <th>Mobile</th>
               <th>Email</th>
-              {{-- <th>Password</th> --}}
               <th>City</th>
               <th>Product</th>
               <th>Status</th>
@@ -218,7 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </tr>
             </thead>
            
-            <tbody id="myTable">
+            <tbody>
             @foreach($users as $user)
             <tr>
                 <td>{{$user['id']}}</td>
@@ -228,11 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{$user['mobile']}}</td>
                 <td>{{$user['email']}}</td>
                 <td>{{$user->city['name']}}</td>
-<<<<<<< HEAD
-                <td>{{$user->product['name']}}</td>
-=======
                 <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
                 <td>{{$user['status']}}</td>
                 <td>
                   {{-- <div class="btn-group" aria-label="Basic example">
@@ -247,11 +235,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </tr>
             @endforeach
           </tbody>
-            
-         
-            </table>
-            
+             
+            </table> 
           </div>
+         
           
           <!-- /.card-body -->
           
@@ -279,18 +266,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   @include('admin.template.home.section.footer')
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-<script>
-  $(document).ready(function(){
-    $("#myInput").on("keyup",function(){
-      var value=$(this).val().toLowerCase();
-      $("#myTable tr").filter(function(){
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-  });
-</script>
 @include('admin.template.home.script')
 </body>
 </html>

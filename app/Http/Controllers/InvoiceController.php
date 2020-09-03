@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Area;
-use App\City;
+use App\Bill;
+use App\Complaint;
 use Illuminate\Http\Request;
 
-class AreasController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class AreasController extends Controller
      */
     public function index()
     {
-        $cities=City::all();
-        
-        return view('admin.template.home.layout.area',compact('cities'));
+        //
     }
 
     /**
@@ -36,15 +34,16 @@ class AreasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        
-     $area= Area::firstOrNew(['name'=>$request->name]);
-        
-     $area->city_id=($request->city_id);
-     $area->name=ucfirst($request->name);
-
-        $area->save();
-        return redirect('areas');
+    public function store(Request $request)
+    {
+        $invoice = new Bill;
+        $invoice->complaint_id=$request->complaint_id;
+        $invoice->payment_method=$request->payment;
+        $invoice->items_name=$request->product;
+        $invoice->items_price=$request->price;
+        $invoice->save();
+        $complaint=$invoice->complaint_id=$request->complaint_id;
+        return redirect('invoice/'.$complaint);
     }
 
     /**
@@ -64,11 +63,16 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $area=Area::find($id);
+        $bill = Bill::find($request->bill_id);
         
-        return view('admin.template.home.layout.editarea',compact('area','id'));
+        $expense=$request->price;
+        
+        
+        $bill->update(["items_expense" => $request->price]);
+        $bill->save();
+        return redirect('completed');
     }
 
     /**
@@ -78,19 +82,13 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $complaint)
     {
-        $this->validate($request,[
-            'name' => 'required',
-        ]);
-        
-        $area=Area::find($id);
-        $city=Area::find($id)->city->id;
-        
-        
-        $area->name=$request->name;
-        $area->save();
-        return redirect('displayareas/'.$city);
+        // return $complaint;
+        $complaints = Complaint::findOrFail($complaint);
+        $complaints->update(["status"=> 2]);
+        $complaints->save();
+        return redirect('completed');
     }
 
     /**
@@ -99,10 +97,8 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // 
-        $area=Area::find($request->get('area_id'))->delete();
-        return redirect('/areas');
+        //
     }
 }

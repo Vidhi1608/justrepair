@@ -71,16 +71,27 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::get('assignproduct','LinkController@assignproduct');
                Route::get('showassignproduct','LinkController@showassignproduct');
                Route::resource('admin','AdminController');
+               Route::resource('upcoming', 'ComplaintsController');
+               Route::get('working', 'LinkController@working');
+               Route::get('completed', 'LinkController@completed');
+
+
 // Technician Routes:
                Route::view('techdashboard', 'admin.template.home.layout.technician');
-
+               Route::post('taken','ComplaintsController@update');
+               Route::post('editstatus','ComplaintsController@edit');
+               Route::post('invoice','InvoiceController@store');
+               Route::post('invoice_update','InvoiceController@edit');
+               // Route::post('completedcomplaint','ComplaintsController@show');
+               
 // Manager Routes:
                Route::view('managerdashboard', 'admin.template.home.layout.manager');
-               Route::resource('technicians','TechniciansController');   
+               Route::resource('technicians','TechniciansController'); 
+               Route::get('bill/{id}', 'LinkController@bill');  
    
 
-
-
+Route::get('makereport/{id}', 'LinkController@makereport');
+Route::get('invoice/{complaint}','InvoiceController@update')->name('bill.update');
 
 Route::get('addcomplaint','LinkController@addcomplaint');
 Route::get('showcomplaint','LinkController@showcomplaint');
@@ -113,7 +124,6 @@ Route::get('logout', function(){
 
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('detail', function () {
@@ -158,7 +168,7 @@ Route::get('complaint',function(){
          'email' =>'vidhi@nocat.tech',
          'password' => bcrypt ('vidhi12345'),
          'city_id' => '1',
-         'product_id' => '0',
+      
          'role_id' => '1',
          'status' => 'Active',
        

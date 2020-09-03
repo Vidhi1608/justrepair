@@ -6,8 +6,10 @@ use App\City;
 use App\Role;
 use App\Detail;
 use App\Product;
+use App\Complaint;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -56,6 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\City');
     }
-    
+    public function complaint()
+    {
+        return $this->hasOne('App\Complaint');
+    }
 
 }

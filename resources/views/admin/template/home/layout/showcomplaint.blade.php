@@ -122,6 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               
           </tr>
           @endif
+  
           @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->products->first()->name ==  $complaint->product->name && Auth::user()->city->name == $complaint->city->name)
           <tr>
             <td>{{$complaint->id}}</td>

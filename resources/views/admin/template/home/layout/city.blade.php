@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <tr>
                     <td>{{$city['id']}}</td>
                     <td>{{$city['name']}}</td>
-<<<<<<< HEAD
+
                     <form action="/destroycity" method="Post">
                       @csrf
                       <input type="hidden" name="city_id" value="{{$city->id}}">
@@ -107,9 +107,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </td>
                     
                     </form>
-=======
                     <td>{{$city['mobile']}}</td>
->>>>>>> 5a8f7138af15d555dbafbd1fc0804647ac7f54a0
+
                     
                 </tr>
                 @endforeach

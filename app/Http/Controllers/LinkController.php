@@ -9,6 +9,10 @@ use App\User;
 use App\Product;
 use App\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NotificationForComplaints;
 
 class LinkController extends Controller
 {
@@ -124,5 +128,65 @@ class LinkController extends Controller
         $cities=City::all();
         $products=Product::all();
         return view('front',compact('cities','products'));
+    }
+    public function upcoming()
+    {
+        
+        return view('admin.template.home.layout.upcoming');
+    }
+    public function working()
+    {
+        $complaints=Complaint::all();
+        
+        //  $users->notify(new NotificationForComplaints($complaints));
+        // $notification =  Notification::notify($users,new NotificationForComplaints($complaints));
+       
+        if (Auth::user()->role->name  !== 'Technician') {
+           
+            // return $notifications;
+            // exit();
+            return view('admin.template.home.layout.working',compact('complaints',));
+        }
+        if (Auth::user()->role->name == 'Technician') {
+            foreach(Auth::user()->products as $product) {
+                $items[] = $product->name;
+            }
+        return view('admin.template.home.layout.working',compact('complaints','items',));
+        }
+    }
+    public function completed()
+    {
+        $complaints=Complaint::all();
+        // $bill = total_amount;
+        if (Auth::user()->role->name !== 'Technician') {
+            
+            
+        return view('admin.template.home.layout.completed',compact('complaints'));
+        }
+        
+        if (Auth::user()->role->name == 'Technician') {
+            foreach(Auth::user()->products as $product) {
+                $items[] = $product->name;
+            }
+            
+        return view('admin.template.home.layout.completed',compact('complaints','items'));
+        }
+        
+    }
+    public function bill($id)
+    {
+        $complaint=Complaint::find($id);
+        // return $complaints;
+        return view('admin.template.home.layout.bill',compact('complaint'));
+    }
+    public function makereport($id)
+    {
+        $complaint=Complaint::find($id);
+        $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
+        
+    
+        // return $complaint->bill['items_name'];
+        // return $complaints;
+        return view('admin.template.home.layout.makereport',compact('complaint','array'));
     }
 }
