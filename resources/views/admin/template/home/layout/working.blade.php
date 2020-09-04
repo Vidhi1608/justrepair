@@ -199,12 +199,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <td>{{$complaint->area}}</td>
                     <td>{{$complaint->product->name}}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">X</button>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal{{$complaint->id}}">X</button>
                         <a href="{{url('bill/'.$complaint->id)}}" class="btn btn-success btn-sm">+ Bill</a>                        
                     </td>
                   </tr> 
                   <!-- The Modal -->
-                    <div class="modal fade" id="myModal">
+                    <div class="modal fade" id="modal{{$complaint->id}}">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                         
