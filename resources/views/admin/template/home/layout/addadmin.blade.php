@@ -71,7 +71,7 @@
         
                     <div class="form-group">
                         {!! Form::hidden('role_id' , 1) !!}
-                        
+                        {!! Form::hidden('user_id', Auth::user()->id) !!}
                         {!! Form::label('fname', 'First Name') !!}
                         {!! Form::text('fname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your First Name']) !!}
                         {!! Form::label('lname', 'Last Name') !!}

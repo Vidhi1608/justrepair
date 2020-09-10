@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -176,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // \Torann\GeoIP\GeoIPServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -230,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Request::class,
         // 'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         
     ],
 

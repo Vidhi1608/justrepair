@@ -277,11 +277,150 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
 
-  @include('admin.template.home.section.footer')
+
+  @break
+  @case('Manager')
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Technician List List</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Technician List</li>
+            </ol>
+          </div><!-- /.col -->
+          <div>
+            
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+            <form class="form-inline ml-3" action="/search" method="POST" role="search">
+              @csrf
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-cyan" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+           </form>
+          </div>
+           {{-- <div class="col-md-6">
+               <form class="form-inline ml-3 float-right">
+               <div class="input-group input-group-sm">
+                 <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                 <div class="input-group-append">
+                   <button class="btn btn-cyan" type="submit">
+                     <i class="fas fa-search"></i>
+                   </button>
+                 </div>
+               </div>
+              <form>
+          </div>  --}}
+        </div>     
+      </div>
+        <!-- /.card-header -->
+
+      
+
+        <div class="card-body table-responsive">
+          <table  id="myTable" class="table table-bordered table-striped">
+
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Join Date</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Product</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+           
+            <tbody>
+            @foreach($users as $user)
+            @if (Auth::user()->city->name == $user->city->name && $user->role_id ==3)
+                
+            
+            <tr>
+                <td>{{$user['id']}}</td>
+                <td>{{$user['created_at']}}</td>
+                <td>{{$user['name']}}</td>
+                
+                <td>{{$user['mobile']}}</td>
+                <td>{{$user['email']}}</td>
+                <td>{{$user->city['name']}}</td>
+                <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
+                <td>{{$user['status']}}</td>
+                <td>
+                  {{-- <div class="btn-group" aria-label="Basic example">
+                    <button class="btn btn-cyan mr-1">Upload</button>
+                    <button class="btn btn-cyan mr-1">Update</button>
+                    <button class="btn btn-cyan">Download</button>
+                    
+                  </div> --}}
+                  
+                </td>
+                
+            </tr>
+            @endif
+            @endforeach
+          </tbody>
+             
+            </table> 
+          </div>
+         
+          
+          <!-- /.card-body -->
+          
+        </div>
+        <!-- /.card -->
+        <div class="row float-right">
+          <div class="col-sm-6 col-sm-offset-5">
+            {{ $users->render() }}
+          </div>
+        </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
   @break
   @default
   @include('admin.template.home.layout.invalid') 
   @endswitch
+  @include('admin.template.home.section.footer')
+ 
 @endif
 </div>
 <!-- ./wrapper -->

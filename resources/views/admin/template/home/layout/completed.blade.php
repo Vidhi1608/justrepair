@@ -94,6 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <th>Mobile</th>
                     <th>Product</th>
                     <th>Bill</th>
+                    
                   </tr>
                   @endif
                   @if (Auth::user()->role->name == 'Manager' )
@@ -105,6 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Mobile</th>
                   <th>product</th>
                   <th>Bill</th>
+                  <th>Action</th>
                   @endif
                   @if (Auth::user()->role->name == 'Admin' )
                   <th>Report</th>
@@ -115,15 +117,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Mobile</th>
                   <th>product</th>
                   <th>Bill</th>
+                  <th>Action</th>
                   @endif
                 </thead>
                 @foreach($complaints as $complaint)
                 
                 @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $complaint->city->name)
-                @if($complaint->status == 2 )
+                @if($complaint->status == 2 || $complaint->status == 5 || $complaint->status == 3 || $complaint->status == 7)
                 <tr>
                   <td class="text-center">
-                    @if ($complaint->bill['items_expense'] == Null)
+                    @if ($complaint->bill['items_expense'] == Null || $complaint->status == 5)
                     <a href="" class="btn btn-danger btn-sm report-bt disabled">Pending</a>
                     @else
                     {{array_sum($complaint->bill['items_price']) - array_sum($complaint->bill['items_expense'])}}
@@ -135,17 +138,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->address}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
-                  <td>{{array_sum($complaint->bill['items_price'])}}</td>
+                  <td>{{array_sum($complaint->bill['items_price'])}} <a href="{{url('billing/'.$complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
+                  <td> <form action="/taken" method="Post">
+                    @csrf
+                    <input type="hidden" name="user_id" value= "{{$complaint->user_id}}">
+                    <input type="hidden" name="id" value= "{{$complaint->id}}">
+                    <button class="btn btn-sm btn-danger" name="repeat" value="4">Repeat</button>
+                  </form>
+                      <a class="btn btn-sm btn-success" href="{{url('newcomplaint/'.$complaint->id)}}">New</a>
+                    </td>
                  
               </tr>
               @endif
               @endif
 
                 @if(Auth::user()->role->name == 'Admin')
-                @if($complaint->status == 2 )
+                @if($complaint->status == 2 || $complaint->status == 5 || $complaint->status == 3 || $complaint->status == 7)
                 <tr>
                   <td class="text-center">
-                    @if ($complaint->bill['items_expense'] == Null)
+                    @if ($complaint->bill['items_expense'] == Null || $complaint->status == 5)
                     <a href="" class="btn btn-danger btn-sm report-bt disabled">Pending</a>
                     @else
                     {{array_sum($complaint->bill['items_price']) - array_sum($complaint->bill['items_expense'])}}
@@ -157,17 +168,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->city->name}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
-                  <td>{{array_sum($complaint->bill['items_price'])}}</td>
+                  <td>{{array_sum($complaint->bill['items_price'])}} <a href="{{url('billing/'.$complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
+                  <td>
+                    <form action="/taken" method="Post">
+                      @csrf
+                      <input type="hidden" name="user_id" value= "{{$complaint->user_id}}">
+                      <input type="hidden" name="id" value= "{{$complaint->id}}">
+                      <button class="btn btn-sm btn-danger" name="repeat" value="4">Repeat</button>
+                    </form>
+                        <a class="btn btn-sm btn-success" href="{{url('newcomplaint/'.$complaint->id)}}">New</a>
+                  </td>
                   
               </tr>
               @endif
               @endif
-              @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->city->name ==  $complaint->city->name)
-                @if(in_array($complaint->product->name,$items) && $complaint->status == 2 )
-            
+              @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->city->name ==  $complaint->city->name && Auth::user()->id == $complaint->user_id)
+                @if(in_array($complaint->product->name,$items) && $complaint->status == 2 || $complaint->status == 5 || $complaint->status == 3 || $complaint->status == 7)
+                
                   <tr>
+                    
                     <td class="text-center">
-                      @if ($complaint->bill['items_expense'] == Null)
+                      @if ($complaint->bill['items_expense'] == Null || $complaint->status == 5)
                       <a href="{{url('makereport/'.$complaint->id)}}" class="btn btn-danger btn-sm report-bt">Pending</a>
                       @else
                       {{array_sum($complaint->bill['items_price']) - array_sum($complaint->bill['items_expense'])}}
@@ -180,23 +201,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <td><a class="nav-item" href="tel:{{$complaint->mobile}}">
                       <i class="fas fa-phone-alt color"></i><span class="ml-1 right badge badge-success p-1">CALL</span></a></td>
                     <td>{{$complaint->product->name}}</td>
-                    <td>{{array_sum($complaint->bill['items_price'])}}</td>
-                    
-                    {{-- <td>
-                      @if ($complaint->bill['items_expense'] == Null)
-                      <a href="" class="btn btn-sm btn-warning">Report</a>
-                      @else
-                      <a href="" class="btn btn-sm btn-outline-dark disabled">Reported</a>
-                      @endif
-                    </td> --}}
-                    {{-- <td>
-                      <form action="/taken" method="Post">
-                        @csrf
-                        <input type="hidden" name="user_id" value= "{{Auth::user()->id}}">
-                        <input type="hidden" name="id" value= "{{$complaint->id}}">
-                        <button class="btn btn-success btn-sm" value>Take</button>
-                      </form>
-                    </td> --}}
+                    <td>{{array_sum($complaint->bill['items_price'])}} <a href="{{url('billing/'.$complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
+
                   </tr>
                    
                 @endif

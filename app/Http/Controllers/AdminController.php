@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-        $users=User::paginate(5);
+        $users=User::paginate(15);
             
             foreach ($users as $value) {
                 $roles[]= $value->role;
@@ -63,20 +63,22 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = ucfirst($request->fname . " " . $request->lname);
+        $admin->added_by=$request->user_id;
         $admin->mobile=$request->mobile;
         $admin->email=$request->email;
         $admin->password= Hash::make($request->password);
         
         
-        if ($request->role_id!== 'Admin') {
+        if ($request->role_id!== 1) {
             $admin->city_id=$request->city_id;
         }
             
         $admin->save();
-        if ($request->role_id== 'Technician') {
+        if ($request->role_id== 3) {
         $users =User::find($admin->id);
         $products=Product::find($request->product_id);
         

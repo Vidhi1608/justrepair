@@ -72,15 +72,15 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
-        <span class="badge badge-warning navbar-badge">{{count(Auth::user()->unreadNotifications)}}</span>
+        {{-- <span class="badge badge-warning navbar-badge">{{count(Auth::user()->unreadNotifications)}}</span> --}}
       </a>
       <ul class="dropdown-menu" role="menu">
         <li>
 
-            @foreach (Auth::user()->all() as $notification)
+            {{-- @foreach (Auth::user()->all() as $notification) --}}
               {{-- @include('admin.template.home.layout.notifications.'.($notification->type)) --}}
-               <a href="#">{{$notification->data['user_id']}} has Cancel the Complaint!</a>
-            @endforeach
+               {{-- <a href="#">{{$notification->data['user_id']}} has Cancel the Complaint!</a>
+            @endforeach --}}
         </li>
       </ul>
       {{-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

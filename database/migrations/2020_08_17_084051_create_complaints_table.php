@@ -15,12 +15,15 @@ class CreateComplaintsTable extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->string('name');
+            $table->integer('user_id')->default(0);
             $table->string('mobile');
             $table->string('address');
             $table->integer('city_id');
+            $table->string('area');
             $table->integer('product_id');
-            $table->string('status');
+            $table->string('status')->default(0);
+            $table->longtext('comment');
             $table->timestamps();
         });
     }

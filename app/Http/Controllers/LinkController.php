@@ -20,10 +20,19 @@ class LinkController extends Controller
     {
         // $arr_ip = geoip()->getLocation('103.85.8.126');
         // dd($arr_ip);
-
         $cities=City::all();
         $products=Product::all();
         return view('admin.template.home.layout.addcomplaint',compact('cities','products'));
+    }
+    public function newaddcomplaint($id)
+    {
+        // $arr_ip = geoip()->getLocation('103.85.8.126');
+        // dd($arr_ip);
+        $complaint=Complaint::find($id);
+        // return $complaint;
+        
+        $products=Product::all();
+        return view('admin.template.home.layout.newaddcomplaint',compact('complaint','products'));
     }
     public function report()
     {
@@ -205,11 +214,29 @@ class LinkController extends Controller
     public function makereport($id)
     {
         $complaint=Complaint::find($id);
-        $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
+        
+        $expense = $complaint->bill['items_expense'];
+        $name = $complaint->bill['items_name'];
+        $price = $complaint->bill['items_price'];
+        $array = array_combine($name,$price);
+        // foreach ($array as $values)  {
+        //     foreach ($values as $value)  {
+        //    $data[]=$value;
+        //     }
+        // }
+        // return $data;
+        // $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
         
     
         // return $complaint->bill['items_name'];
         // return $complaints;
-        return view('admin.template.home.layout.makereport',compact('complaint','array'));
+        return view('admin.template.home.layout.makereport',compact('complaint','expense','name','price','array'));
+    }
+    public function repeatedbill($id)
+    {
+        $complaint=Complaint::find($id);
+        $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
+        
+        return view('admin.template.home.layout.repeatedbill',compact('complaint','array'));
     }
 }

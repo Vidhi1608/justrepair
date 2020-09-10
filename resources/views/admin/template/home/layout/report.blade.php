@@ -119,14 +119,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
               
             <tr>
               <td>{{$data->complaint_id}}</td>
-              <td>{{array_sum($data['items_price'])}}</td>
+              <td>{{array_sum($data['items_price'])}} <a href="{{url('billing/'.$data->complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
               <td>@if ($data['items_expense']!=null)
                 {{array_sum($data['items_expense'])}}
                 @else Pending @endif</td> 
                 @if ($data['items_expense']!=null)
               <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{75 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
+              <td>{{75 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}
+                <form method="POST" action="/confirmed">
+                  @csrf  
+                  <input type="hidden" name="bill_id" value="{{$data->id}}">
+                  @if ($data->confirmed_by_technician == 1 && $data->confirmed_by_manager == NULL)
+                  <button name="manager" value="1" class="btn btn-sm btn-outline-danger">Confirm</button></td>
+                  @elseif($data->confirmed_by_technician == Null)
+                  <button name="manager" value="1" class="btn btn-sm btn-danger" disabled>Pending</button></td>   
+                  @else
+                  <button name="manager" value="1" class="btn btn-sm btn-success" disabled>Confirmed</button></td>
+                  @endif
+                </form>
               <td>{{25 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
+              
               @else
               <td>0</td> 
               <td>0</td> 
@@ -138,7 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             @if(Auth::user()->role->name == 'Admin')
             <tr>
               <td>{{$data->complaint_id}}</td>
-              <td>{{array_sum($data['items_price'])}}</td>
+              <td>{{array_sum($data['items_price'])}} <a href="{{url('billing/'.$data->complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
               <td>@if ($data['items_expense']!=null)
                 {{array_sum($data['items_expense'])}}
               @else Pending @endif</td> 
@@ -146,6 +158,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
               <td>{{75 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
               <td>{{25 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
+              
               @else 
               <td>0</td>
               <td>0</td>
@@ -154,20 +167,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </tr>
           @endif
           
-          @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->city->id == $data->complaint->city_id)
+          @if( Auth::user()->role->name == 'Technician' &&  Auth::user()->city->id == $data->complaint->city_id && Auth::user()->id == $data->complaint->user_id)
           <tr>
             <td>{{$data->complaint_id}}</td>
-              <td>{{array_sum($data['items_price'])}}</td>
+              <td>{{array_sum($data['items_price'])}} <a href="{{url('billing/'.$data->complaint->id)}}"><i class="fas fa-file-pdf"></i></a></td>
               <td>@if ($data['items_expense']!=null)
                 {{array_sum($data['items_expense'])}}
-                @else Pending @endif</td> 
+                @else Pending @endif
+              </td> 
                 @if ($data['items_expense']!=null)
               <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
+              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}} 
+                <form method="POST" action="/confirmed">
+                  @csrf  
+                  <input type="hidden" name="bill_id" value="{{$data->id}}">
+                  @if ($data->confirmed_by_technician !==NULL)
+                  <button name="technician" value="1" class="btn btn-sm btn-success" disabled>Paid</button></td>   
+                  @else
+                  <button name="technician" value="1" class="btn btn-sm btn-outline-danger">Pay</button></td>
+                  @endif
+                </form>
               @else 
               <td>0</td>
               <td>0</td>
-              <td>0</td>
+              
               @endif
         </tr> 
            @endif

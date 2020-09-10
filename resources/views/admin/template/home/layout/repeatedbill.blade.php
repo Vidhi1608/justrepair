@@ -43,12 +43,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Earning Report</h1>
+            <h1 class="m-0 text-dark">Create Bill</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Earning Report</li>
+              <li class="breadcrumb-item active">Create Bill</li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -65,42 +65,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="row justify-content-center">
             <div class="col-md-10">
               <div class="card shadow p-3  mb-5">
-                  <div class="text-center"><h2><strong>Report</strong></h2></div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-md-12 col-12 text-right text-justify">
-                        <ul style="list-style-type: none">
-                            
-                            <li><strong>Date:</strong> {{$complaint->created_at->format('d-m-y')}}</li>
-                        </ul>
-                    </div>
-                  </div>
-                  <h2>Customer Details:</h2>
-                  <br>
-                  <div class="row">
-                      <div class="col-md-10 text-left">
-                        <ul style="list-style-type: none; padding-left: 1rem">
-                            <li><strong class="pr-1">Complaint Id:</strong> {{$complaint->id}}</li>
-                            <li><strong class="pr-5">Name: </strong>{{$complaint->name}}</li>                            
-                            <li><strong style="padding-right: 37px">Address:</strong>{{$complaint->address}}</li>                            
-                            <li><strong class="pr-5">Mobile:</strong>{{$complaint->mobile}}</li>                                                        
-                            <li><strong style="padding-right: 40px">Product:</strong>{{$complaint->product->name}}</li>                                                        
-                            <li><strong style="padding-right: 35px">Payment:</strong>{{$complaint->bill['payment_method']}}</li>                                                        
-                        </ul>
-                      </div>
-                      
-                  </div>
-                  <hr>
-                  <br>
-                  <h2>Personal Expence:</h2>
-                  
-              <form class="form-group p-3" action="/invoice_edit" method="POST">
+              <form class="form-group p-3" action="/repeatedbill" method="POST">
                         @csrf
                         <input type="hidden" name="bill_id" value= "{{$complaint->bill->id}}">
                         <input type="hidden" name="complaint_id" value= "{{$complaint->id}}">
-                        
-                            
-                            
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Customer Name</label>
+                                <input type="text" class="form-control" placeholder="{{$complaint->name}}" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Mobile</label>
+                                <input type="text" class="form-control" placeholder="{{$complaint->mobile}}" readonly>
+                            </div>
+                        </div>
+                            <label>Address</label>
+                            <textarea type="text" class="form-control" placeholder="{{$complaint->address}}" readonly></textarea>
+                            <label>Product</label>
+                            <input type="text" class="form-control" placeholder="{{$complaint->product->name}}" readonly>
+                            <label>Payment Method</label>
+                            <br>
+                            <select class="form-control" name="payment">
+                                <option value="cash">Cash</option>
+                                <option value="online">Online</option>
+                            </select>
+                            <label>Date</label>
+                            <input type="text" class="form-control" placeholder="{{$complaint->created_at->format('d-m-y')}}" readonly>
                             <div class="items_list" id="items_list">
                                 <table class="table table-hover" id="tab_logic" cellpadding="1">
                                     <thead>
@@ -109,55 +99,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <th class="" style="width: 60%;"> Items </th>
                                             <th class="text-center d-none"> Qty </th>
                                             <th class=""> Price </th>
-                                            <th class=""> Expense </th>
                                             <th class="text-center d-none"> Total </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      
-                                      @if ($complaint->status == 5 && $expense !== NULL)
-                                      @for($i = 0; $i < max(count($name),count($price),count($expense)); $i++)
-                                    
-                                        <tr id='addr0'> 
-
-                                            <td class="text-center"></td>
-                                            @if ($i < sizeof($name)) <td><input type="text" name="product[]" value="{{$name[$i]}}" class="form-control" readonly></td>@endif
-                                            @if ($i < sizeof($price))<td><input type="number" name="price[]" value="{{$price[$i]}}" class="form-control" readonly></td>@endif
-                                            <td class="d-none"><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" value="1" readonly></td>
-                                            <td>@if ($i < sizeof($expense))<input type="number" name='expense[]' value="{{$expense[$i]}}" class="form-control price" step="0.00" min="0" readonly>@else<input type="number" name='expense[]' value="" class="form-control price" step="0.00" min="0" required>@endif</td> 
-                                            <td class="d-none"><input type="number" name='total' placeholder='0.00' class="form-control total" readonly /></td>
-
-                                        </tr>
-
-                                      @endfor
-                                      @else
                                       @foreach ($array as $key => $value)
-
-                                        <tr id='addr0'> 
-                                        
-                                          <td class="text-center"></td>
-                                          <td><input type="text" placeholder="{{$key}}" class="form-control" disabled></td>
-                                          <td><input type="number" placeholder="{{$value}}" class="form-control" disabled></td>
-                                          <td class="d-none"><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" value="1" disabled></td>
-                                          <td><input type="number" name='price[]' placeholder="" class="form-control price" step="0.00" min="0" required> 
-                                          <td class="d-none"><input type="number" name='total' placeholder='0.00' class="form-control total" readonly /></td>
-                                        
+                                        <tr id='addr0'>
+                                            <td class="text-center"></td>
+                                            <td><input type="text" name='product[]' placeholder='Enter Item' class="form-control" required value="{{$key}}"></td>
+                                            <td class="d-none"><input type="number" name='qty[]' placeholder='Enter Qty' class="form-control qty" step="0" min="0" value="1" /></td>
+                                            <td><input type="number" name='price[]' placeholder='Enter Price' class="form-control price" step="0.00" min="0" required value="{{$value}}"></td>
+                                            <td class="d-none"><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
                                         </tr>
-                                          
-                                      @endforeach
-
-                                      @endif
-                                      
-                                        <tr id='addr1'></tr>
+                                        @endforeach
+                                        <tr id='addr1'>
+                                          <td class="text-center">1</td>
+                                            <td><input type="text" name="product[]" placeholder="Enter Item" class="form-control" required="" autocomplete="off"></td>
+                                            <td class="d-none"><input type="number" name="qty[]" placeholder="Enter Qty" class="form-control qty" step="0" min="0" value="1" autocomplete="off"></td>
+                                            <td><input type="number" name="price[]" placeholder="Enter Price" class="form-control price" step="0.00" min="0" required="" autocomplete="off"></td>
+                                            <td class="d-none"><input type="number" name="total[]" placeholder="0.00" class="form-control total" readonly="" autocomplete="off"></td>
+                                        </tr>
+                                        <tr id='addr2'></tr>
                                     </tbody>
-                                    
                                 </table>
-                               
                             </div>
-                            {{-- <div class="col-md-12">
+                            <div class="col-md-12">
                                 <button id="add_row" class="btn btn-success ml-5" type="button"><i class="fas fa-plus"></i></button>
                                 <button id='delete_row' class="float-right btn btn-danger mr-5" type="button"><i class="fas fa-minus"></i></button>
-                            </div> --}}
+                            </div>
                             <div class="row clearfix d-none" style="margin-top:20px">
                                 <div class="pull-right col-md-4">
                                     <table class="table table-hover" id="tab_logic_total">
@@ -195,11 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <hr>
                             <div class=" mt-3 text-center">
-                              @if ($complaint->status == 5)
-                                <button type="submit" class="btn btn-success px-3 shadow" name="repeatreport" value="7" style="font-size: 15px !important;">SUBMIT</button>
-                              @else
-                                <button type="submit" class="btn btn-success px-3 shadow" name="newreport" value="3" style="font-size: 15px !important;">SUBMIT</button>
-                              @endif
+                                <button type="submit" name="rrbill" value="5" class="btn btn-success px-3 shadow" style="font-size: 15px !important;">SUBMIT</button>
                             </div>
                     </form>
                 </div>
@@ -239,7 +204,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $(document).ready(function(){
       $('form').attr("autocomplete","off");
       $('input').attr("autocomplete","off");
-      var i=1;
+      var i=2;
       $("#add_row").click(function(){b=i-1;
           $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
           $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');

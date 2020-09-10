@@ -81,51 +81,72 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <div class="form-group">
                 {!! Form::hidden('role_id', 3) !!}
+                {!! Form::hidden('user_id', Auth::user()->id) !!}
                 {!! Form::label('fname', 'First Name') !!}
-                {!! Form::text('fname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your First Name']) !!}
+                {!! Form::text('fname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your First Name', 'required']) !!}
                 {!! Form::label('lname', 'Last Name') !!}
-                {!! Form::text('lname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your Last Name']) !!}
+                {!! Form::text('lname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your Last Name', 'required']) !!}
                 {!! Form::label('mobile', 'Contact Number') !!}
-                {!! Form::text('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
+                {!! Form::number('mobile',null,  ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number', 'required']) !!}
                 {!! Form::label('email', 'Email') !!}
-                {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
+                {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address', 'required']) !!}
                 {!! Form::label('password', 'Password') !!}
-                {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
-                <br>
-                <div class="row">
-                  <div class="col-md-3 pr-0">
-                    {!! Form::label('name', 'Select City') !!}
-                  </div>
-                  <div class="col-md-9">
-                    <div class="row ex2">
-                      @foreach ($cities as $city)
-                      <div class="col-md-4">   
-                      {!! Form::label('name', $city->name) !!}
-                      {!! Form::radio('city_id', $city->id) !!}
-                      </div>
-                      @endforeach
-                    </div>
-                  </div>
+                {!! Form::password('password', ['class'=>'form-control' ,'placeholder'=>'Your Password', 'required']) !!}
+             
                 </div>
-                
-                <hr>
-                <div class="row">
-                  <div class="col-md-3 pr-0">
-                    {!! Form::label('name', 'Select Product') !!}
-                  </div>
-                  <div class="col-md-9">
-                    <div class="row ex2">
-                      @foreach ($products as $product)
-                      <div class="col-md-6">      
-                      {!! Form::label('name', $product->name) !!}
-                      {!! Form::checkbox('product_id[]', $product->id) !!}
-                      </div>
-                      @endforeach
+                {{-- ------------FOR MANAGER------------ --}}
+                  @foreach ($cities as $city)
+                  @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $city->name)
+                  <div class="row">
+                    <div class="col-md-6">
+                      <input type="hidden" name="city_id" value="{{$city->id}}">
+                      <label>City</label>
+                      <input type="text" class="form-control" placeholder="{{$city->name}}" readonly>
                     </div>
+                      
+                    <div class="col-md-6">
+                      <label>Select Product</label>
+                      <select class="form-control" name="product_id">
+                        {{-- @foreach ($cities as $city) --}}
+                        
+                        @foreach ($city->products as $product)
+                        
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                       @endforeach
+                       
+                       </select>
+                    </div>
+                   
+                  
+                  </div> 
+                  @endif
+                  @endforeach
+                  
+                 {{-- -----------FOR ADMIN----------- --}}
+                 <div class="row text-center">
+                  @foreach ($cities as $city)
+                  @if (Auth::user()->role->name == 'Admin')
+                  <div class="col"> 
+                    <label>
+                      <input type="radio" name="city_id" value="{{$city->id}}"> {{$city->name}}
+                    </label>
+                   <select class="form-control" name="product_id">
+                    {{-- @foreach ($cities as $city) --}}
+                    
+                    @foreach ($city->products as $product)
+                    
+                    <option value="{{$product->id}}">{{$product->name}}</option>
+                   @endforeach
+                   
+                   </select>
+                  
                   </div>
-                </div>
+                  @endif
+                  @endforeach
+                 </div>
+                  
                 <hr>
-            </div>
+            
             <div class="form-group text-center">
                 {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
             </div>    

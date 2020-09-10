@@ -32,6 +32,6 @@ public function users()
     }
     public function brands()
     {
-        return $this->belongsToMany('App\Brand');
+        return $this->belongsToMany('App\Brand')->withTimestamps();
     }
 }

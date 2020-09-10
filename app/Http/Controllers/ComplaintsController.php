@@ -122,7 +122,7 @@ class ComplaintsController extends Controller
         $complaints = Complaint::findOrFail($request->id);
        
         // $users = User::where('role_id','1')->get();
-        $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
+        // $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
         
         // Auth::user()->notify(User::all(),new NotificationForComplaints($complaints));
         $complaints->update(["user_id"=> 0 ,"status"=> $status]);
@@ -140,9 +140,14 @@ class ComplaintsController extends Controller
      */
     public function update(Request $request)
     {
+        // return $request->all();
         $user = $request->user_id;
         $complaints = Complaint::findOrFail($request->id);
-        $complaints->update(["user_id"=> $user ,"status"=> 1]);
+        if (isset($request->repeat)) {
+            $complaints->update(["user_id"=> $user ,"status"=> $request->repeat]);   
+        }else{
+            $complaints->update(["user_id"=> $user ,"status"=> 1]);
+        }
         $complaints->save();
         
         return redirect('working');
