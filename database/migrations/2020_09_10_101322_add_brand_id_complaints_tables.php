@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddItemsExpenceToBillsTable extends Migration
+class AddBrandIdComplaintsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddItemsExpenceToBillsTable extends Migration
      */
     public function up()
     {
-        Schema::table('bills', function (Blueprint $table) {
-            $table->json('items_expense')->after('items_price');
+        Schema::table('complaints', function (Blueprint $table) {
+            $table->integer('brand_id')->after('product_id');
         });
     }
 
@@ -25,8 +25,8 @@ class AddItemsExpenceToBillsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bills', function (Blueprint $table) {
-            $table->drop('items_expense');
+        Schema::table('complaints', function (Blueprint $table) {
+            $table->dropColumn('brand_id');
         });
     }
 }

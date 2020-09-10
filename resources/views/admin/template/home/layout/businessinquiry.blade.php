@@ -241,25 +241,26 @@
 					</div>
 				</div>
 			</div>
-			<form class="pt-5 pr-4 pb-5">
+			<form class="pt-5 pr-4 pb-5" action="/business" method="POST">
+				@csrf
 				<span class="contact100-form-title">
 					Make An Inquiry 
 				</span>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 					  <label>First Name</label>
-					  <input type="text" class="form-control" placeholder="First Name">
+					  <input type="text" name="fname" class="form-control" placeholder="First Name">
 					</div>
 					<div class="form-group col-md-6">
 					  <label>Last Name</label>
-					  <input type="text" class="form-control" placeholder="Last Name">
+					  <input type="text" name="lname" class="form-control" placeholder="Last Name">
 					</div>
 				</div>
 				<label>Date of Birth of Applicant</label>
 				<div class="form-row">
 					<div class="form-group col-md-3">
 				  
-					  <select class="form-control" name="month[]">
+					  <select class="form-control" name="month">
 						  <option selected>Month</option>
 						  <option value="January">January</option>
 						  <option value="February">February</option>
@@ -278,7 +279,7 @@
 				  
 					</div>
 					<div class="form-group col-md-2">
-					  <select class="form-control" name="day[]">
+					  <select class="form-control" name="day">
 						  <option selected>Day</option>
 						  <option value="1">1</option>
 						  <option value="2">2</option>
@@ -315,7 +316,7 @@
 					</div>
 					
 					<div class="form-group col-md-3">
-					  <select class="form-control" name="year[]">
+					  <select class="form-control" name="year">
 						<option selected>Year </option>
                 		<option value="2020"> 2020 </option>
                 		<option value="2019"> 2019 </option>
@@ -421,37 +422,37 @@
 					</select>
 				</div>
 				</div>
-				  <div class="form-group">
+				<div class="form-row">
+
+				
+				  <div class="form-group col-md-6">
 					<label for="inputEmail4">Email</label>
-					<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+					<input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email">
 				  </div>
-				  <div class="form-group">
+				  <div class="form-group col-md-6">
 					<label>Phone Number</label>
-					<input type="tel" class="form-control">
+					<input type="tel" name="mobile" class="form-control">
 				  </div>
-				<div class="form-group">
-				  <label for="inputAddress">Address</label>
-				  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
 				</div>
 				<div class="form-group">
-				  <label for="inputAddress2">Address 2</label>
-				  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+				  <label for="inputAddress">Address</label>
+				  <textarea type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St"></textarea>
 				</div>
 				<div class="form-row">
 				  <div class="form-group col-md-6">
 					<label for="inputCity">City</label>
-					<input type="text" class="form-control" id="inputCity">
+					<input type="text" name="city" class="form-control" id="inputCity">
 				  </div>
 				  <div class="form-group col-md-4">
 					<label for="inputState">State</label>
-					<select id="inputState" class="form-control">
+					<select id="inputState" class="form-control" name="state">
 					  <option selected>Choose...</option>
-					  <option>...</option>
+					  <option value="gujarat">Gujarat</option>
 					</select>
 				  </div>
 				  <div class="form-group col-md-2">
 					<label for="inputZip">Zip</label>
-					<input type="text" class="form-control" id="inputZip">
+					<input type="text" name="zip" class="form-control" id="inputZip">
 				  </div>
 				</div>
 				<div class="form-group">
@@ -462,7 +463,7 @@
 					</label>
 				  </div>
 				</div>
-				<button type="submit" class="btn btn-primary">Sign in</button>
+				<button type="submit" class="btn btn-primary">Inquiry</button>
 			  </form>
 			{{-- <form class="contact100-form validate-form">
 				<span class="contact100-form-title">

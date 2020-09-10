@@ -53,6 +53,42 @@
       }
     
     }
+    .icons{
+      top: 50%;
+      left:0;
+      transform: translateY(-20%);
+      position: fixed;
+      z-index: 100;
+    }
+    .icons ul{
+      padding: initial;
+    }
+    .icons ul li{
+      height: 40px;
+      width: 40px;
+      list-style-type: none;
+      padding-left: 12px;
+      padding-top: 6px;
+      margin-top: 5px;
+      text-align: left;
+      color: #fff;
+
+    }
+    .facebook{
+      background: #3b5998;
+    }
+    .instagram{
+      background: #ff4800;
+    }
+    .business{
+      background: gray;
+    }
+    .icons ul li:hover{
+      /* position: relative; */
+      padding-left:30px;
+      width: 80px;
+      transition: 0.5s; 
+    }
     
     </style>
 @endsection
@@ -94,7 +130,7 @@
 
 @section('congrats-cards')
 <div class="container we-are-available py-5">
-
+  
     <div class="row">
 
      <div class="col-12 col-md-6 col-lg-6 card-deck mt-2">
@@ -160,7 +196,13 @@
     </div>
 
 </div>
-
+<div class="icons">
+  <ul>
+    <a href="#"><li class="facebook"><i class="fab fa-facebook"></i></li></a>
+    <a href="#"><li class="instagram"><i class="fab fa-instagram"></i></li></a>
+  <a href="{{url('inquiry')}}"><li class="business"><i class="fa fa-handshake"></i></li></a>
+  </ul>
+</div>
 @endsection
 
 @section('brands')

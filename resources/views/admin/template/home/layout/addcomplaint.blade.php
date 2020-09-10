@@ -121,7 +121,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       @endforeach
                      </div> 
                        <hr>
-
+                       <label>Brand</label>
+                       <select class="form-control" name="brand_id">
+                        @foreach ($brands as $brand)
+                  
+                       <option value="{{$brand->id}}">{{$brand->name}}</option>
+                       @endforeach
+                       </select>
+                      <label>Model</label>
+                      <input type="text" name="model" class="form-control" placeholder="Enter your Product Model">
+                       <label>Area</label>
+                       <input type="text" name="area" class="form-control" placeholder="Enter Your Area">
                         <label>Address</label>
                         <input type="text" name="address" class="form-control" placeholder="Enter Your Address">
                          {{-- <label>Status</label>

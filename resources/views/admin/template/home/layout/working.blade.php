@@ -93,6 +93,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <th>Mobile</th>
                     <th>Area</th>
                     <th>Product</th>
+                    <th>Brand(model)</th>
                     <th>Action</th>
                   </tr>
                   @endif
@@ -103,6 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Address</th>
                   <th>Mobile</th>
                   <th>product</th>
+                  <th>Brand(model)</th>
                   <th>Technician Name</th>
                   <th>Action</th>
 
@@ -114,6 +116,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>City</th>
                   <th>Mobile</th>
                   <th>product</th>
+                  <th>Brand(model)</th>
                   <th>Technician Name</th>
                   @endif
                 </thead>
@@ -128,6 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->address}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
+                  <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                   <td>{{$complaint->user->name}}</td>
                   <td>
                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2">Cancel</button>
@@ -147,6 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="modal-body">
                           <form class="form-group" action="/editstatus" method="Post">
                             @csrf
+                          <input type="hidden" name="user_id" value="{{Auth::user()->name}}">
                             <input type="hidden" name="id" value= "{{$complaint->id}}">
                             <label>Reason:</label>
                             <br>
@@ -182,6 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->city->name}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
+                  <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                   <td>{{$complaint->user->name}}</td>
                   
               </tr>
@@ -198,6 +204,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <td>{{$complaint->mobile}}</td>
                     <td>{{$complaint->area}}</td>
                     <td>{{$complaint->product->name}}</td>
+                    <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                     <td>
                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal{{$complaint->id}}">X</button>
                         <a href="{{url('bill/'.$complaint->id)}}" class="btn btn-success btn-sm">+ Bill</a>                        

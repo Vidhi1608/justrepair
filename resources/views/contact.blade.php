@@ -60,6 +60,7 @@
                           <input type="text" class="form-control" name="cust_address" id="inputAddress" placeholder="Your Area">
 
                         </div>
+                        
                         <div class="mx-auto">
                         <button type="submit" class="book-btn-desktop bg-greeen text-light text-right">Submit</button></div>
                     </form>
@@ -77,6 +78,12 @@
                     <p><a href="tel:9099880885" class=""> Tel. +91 90 99 880 885</a></p>
                 </div>
             </div>
+            <div class="card bg-light mb-3">
+              <div class="card-header bg-greeen text-white text-uppercase"><i class="fas fa-handshake"></i> Business Inquiry</div>
+              <div class="card-body text-center">
+              <a href="{{url('inquiry')}}" class="book-btn-desktop bg-greeen text-light">CLICK HERE</a>
+              </div>
+          </div>
         </div>
   </div>
 </div>

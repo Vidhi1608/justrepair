@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
-use App\Product;
+use App\Inquiry;
 use Illuminate\Http\Request;
 
-class BrandsController extends Controller
+class BusinessController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,9 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
-        
-        return view('admin.template.home.layout.brand',compact('products'));
+        $inquiries=Inquiry::all();
+        return view('admin.template.home.layout.showinquiry',compact('inquiries'));
+
     }
 
     /**
@@ -38,12 +37,18 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-    
-        $brand= Brand::firstOrNew(['name' => $request->name]);
-        // $brand->product_id=($request->product_id);
-        $brand->name=ucfirst($request->name);
-        $brand->save();
-        return redirect('brands');
+      
+        $inquiry= new Inquiry;
+        $inquiry->name = ucfirst($request->fname . " " . $request->lname);
+        $inquiry->dob = $request->day . "-" . $request->month. "-" . $request->year;
+        $inquiry->email=$request->email;
+        $inquiry->mobile=$request->mobile;
+        $inquiry->address=$request->address;
+        $inquiry->city=$request->city;
+        $inquiry->state=$request->state;
+        $inquiry->zip=$request->zip;
+        $inquiry->save();
+        return redirect('inquiry');
     }
 
     /**
@@ -65,9 +70,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        $brand=Brand::find($id);
-        
-        return view('admin.template.home.layout.editbrand',compact('brand','id'));
+        //
     }
 
     /**
@@ -79,13 +82,7 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required',
-        ]);
-        $brand=Brand::find($id);
-        $brand->name=$request->name;
-        $brand->save();
-        return redirect('brands'); 
+        //
     }
 
     /**
@@ -94,9 +91,8 @@ class BrandsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $brand=Brand::find($request->get('brand_id'))->delete();
-        return redirect('/brands');
+        //
     }
 }

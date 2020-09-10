@@ -5,11 +5,12 @@ namespace App;
 use App\Bill;
 use App\City;
 use App\User;
+use App\Brand;
 use Illuminate\Database\Eloquent\Model;
 
 class Complaint extends Model
 {
-    protected $fillable = ['name','user_id','mobile','address','city_id','product_id','product','status'];
+    protected $fillable = ['name','user_id','mobile','address','city_id','brand_id','product_id','product','status'];
     protected $table = 'complaints';
 
     public function city()
@@ -31,6 +32,10 @@ class Complaint extends Model
     public function bill()
     {
         return $this->hasOne('App\Bill');
+    }
+    public function brand()
+    {
+        return $this->belongsTo('App\Brand');
     }
     // public function bill()
     // {

@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition sidebar-mini over">
-<div class="wrapper">
+<div class="wrapper" style="overflow: hidden">
 
   @include('admin.template.home.section.navbar')
 
@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Product List</h1>
+            <h1 class="m-0 text-dark">Technician Product List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -92,35 +92,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Action</th>
                 </tr>
                 </thead>
-                @foreach($cities as $city)
-               
+              
+                @foreach($users as $user)
+               @if($user->role->name == 'Technician')
                 <tr>
-                    <td>{{$city->id}}</td>
-                    <td>{{$city->name}}</td>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->name}}</td>
                     <td> 
-                      {{-- {!! Form::open(['method'=>'post','action'=>'AssignController@destroy']) !!} --}}
+                      {{-- {!! Form::open(['method'=>'post','action'=>'TechnicianController@destroy']) !!} 
                       
-                        {{-- <div class="form-group">
-                          @foreach ($city->products as $product)
+                        <div class="form-group">
+                          @foreach ($user->products as $product)
                           {{ $product->name}}
-                          <a href="destroy/{{$product->id}}" class="btn btn-delete btn-sm">X</a>
+                            <a href="destroy/{{$product->id}}" class="btn btn-delete btn-sm">X</a>
                           @endforeach
                         </div>     --}}
-                        <form action="/destroy" method="Post">
+                         <form action="/destroytechpro" method="Post">
                           @csrf
-                          <input type="hidden" name="city_id" value="{{$city->id}}">
-                          @foreach ($city->products as $product)
+                          <input type="hidden" name="user_id" value="{{$user->id}}">
+                           @foreach ($user->products as $product)
                           {{ $product->name}}
-                          {{-- <input type="hidden" name="product_id" value="{{$product->id}}"> --}}
-                        <button type="submit" name="product_id" value="{{$product->id}}" class="btn btn-delete btn-sm">X</button>
-                          @endforeach
-                        </form>
+                           {{-- <input type="hidden" name="product_id" value="{{$product->id}}">  --}}
+                          <button type="submit" name="product_id" value="{{$product->id}}" class="btn btn-delete btn-sm">X</button>
+                          @endforeach 
+                         </form> 
                      
                     </td>
-                    <form action="/store" method="POST">
+                     <form action="/storeproduct" method="POST">
                       @csrf
                     <td> 
-                      <input type="hidden" name="city_id" value="{{$city->id}}">
+                      <input type="hidden" name="user_id" value="{{$user->id}}">
                      <select class="form-control" name="product_id">
                       @foreach ($products as $product)
                 
@@ -131,10 +132,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <td>
                       <button class="submit form-control btn btn-success btn-sm" id="confirm">submit</button>
                     </td>
-                  </form>
+                  </form> 
                 </tr>
-                
+                @endif
                 @endforeach
+                
              
                 </table>
               </div>

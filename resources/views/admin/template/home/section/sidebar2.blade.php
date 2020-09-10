@@ -13,7 +13,8 @@
           <img src="{{url('images')}}/user-logo.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{Auth::user()->name}}</a>
+          <h5><a href="#" class="d-block">{{Auth::user()->name}}</a></h5>
+          <h6><a href="#" class="d-block">({{Auth::user()->role->name}})</a></h6>
         </div>
       </div>
 
@@ -124,6 +125,12 @@
                   {{-- {{URL::to('complaints')}} --}}
                   <i class="fas fa-check-circle"></i>
                   <p class="p-cont">Complited Complaint</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('cancel')}}" class="nav-link">
+                  <i class="fas fa-times-circle"></i>
+                  <p class="p-cont">Cancel Complaint</p>
                 </a>
               </li>
             </ul>

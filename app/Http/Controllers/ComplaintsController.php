@@ -86,10 +86,11 @@ class ComplaintsController extends Controller
         $complaint->city_id=$request->city_id;
         $complaint->area=$request->area;
         $complaint->product_id=$request->product_id;
+        $complaint->brand_id=$request->brand_id;
+        $complaint->model=$request->model;
         // $complaint->status=$request->status;
         $complaint->comment=$request->comment;
         $complaint->save();
-
         
         return redirect('complaints');
     }
@@ -117,17 +118,27 @@ class ComplaintsController extends Controller
      */
     public function edit(Request $request)
     {
-        
+ 
+        if (isset($request->complaint_id)==1) {
+            $complaint=Complaint::find($request->complaint_id);
+            return view('admin.template.home.layout.editcomplaint',compact('complaint'));
+        }
         $status = $request->complaint_status;
         $complaints = Complaint::findOrFail($request->id);
        
         // $users = User::where('role_id','1')->get();
         $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
-        
+        // return $request;
+        if ($complaints->user_id == 6) { //For Cancle Complaint 
+            return redirect('cancel');
+        }
         // Auth::user()->notify(User::all(),new NotificationForComplaints($complaints));
-        $complaints->update(["user_id"=> 0 ,"status"=> $status]);
+        $complaints->update(["user_id"=> 0 ,"status"=> $status]); //For Upcoming (New) Complaint
         $complaints->save();
-        return redirect('working');
+        if (isset($request->cancelcomplaint)==1) {
+        return redirect('upcoming');
+         }
+          return redirect('working');
         // Notification::send($user, new MyFirstNotification());
     }
 
@@ -140,9 +151,18 @@ class ComplaintsController extends Controller
      */
     public function update(Request $request)
     {
+        if (isset($request->updatecomplaint)==1) {
+          
+            $complaint=Complaint::find($request->complaint_id);
+            $complaint->name=$request->name;
+            $complaint->mobile=$request->mobile;
+            $complaint->address=$request->address;
+            $complaint->save();
+            return redirect('complaints'); 
+        }
         $user = $request->user_id;
         $complaints = Complaint::findOrFail($request->id);
-        $complaints->update(["user_id"=> $user ,"status"=> 1]);
+        $complaints->update(["user_id"=> $user ,"status"=> 1]); //For Working Complaint
         $complaints->save();
         
         return redirect('working');

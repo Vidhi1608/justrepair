@@ -91,6 +91,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Complaint Id</th>
                   <th>Area</th>
                   <th>Product</th>
+                  <th>Brand(model)</th>
                   <th>Date</th>
                   <th>Action</th>
                 </tr>
@@ -102,6 +103,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <th>Address</th>
                 <th>Mobile</th>
                 <th>product</th>
+                <th>Brand(model)</th>
+                <th>Action</th>
                 @endif
                 @if (Auth::user()->role->name == 'Admin' )
                 <th>Complaint Id</th>
@@ -110,6 +113,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <th>City</th>
                 <th>Mobile</th>
                 <th>product</th>
+                <th>Brand(model)</th>
+                <th>Action</th>
              
                 @endif
                 </thead>
@@ -125,6 +130,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->address}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
+                  <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
+                  <td class="btn-group">
+                    <form action="/editstatus" method="Post">
+                      @csrf
+                    <input type="hidden" name="complaint_id" value="{{$complaint->id}}">
+                    
+                    <button name="editcomplaint" value="1" class="btn btn-success btn-sm">Edit</button>
+                    </form>
+                 
+                    <button class="btn btn-danger btn-sm ml-2" data-toggle="modal" data-target="#myModal2">Cancel</button>
+                  </td>
+                   <!-- The Modal -->
+                   <div class="modal fade" id="myModal2">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                      
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Cancel Reason</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          <form class="form-group" action="/editstatus" method="Post">
+                            @csrf
+                            <input type="hidden" name="user_name" value="{{Auth::user()->name}}">
+                            <input type="hidden" name="id" value= "{{$complaint->id}}">
+                            <label>Reason:</label>
+                            <br>
+                            <select class="form-control" name="complaint_status">
+
+                              <option value="6">Complaint canceled by Customer</option>
+                              <option value="0">Not Reachable</option>
+                            </select>
+                            <button type="submit" name="cancelcomplaint" value="1" class="btn btn-success mt-3">Submit</button>
+                          </form>
+                          </div>
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+
+                        </div>
+                      
+
+                      </div>
+                    </div>
+                  </div>
+                <!-- The Modal -->
                  
               </tr>
               @endif
@@ -139,6 +193,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->city->name}}</td>
                   <td>{{$complaint->mobile}}</td>
                   <td>{{$complaint->product->name}}</td>
+                  <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
+                  <td>
+                    <form action="/editstatus" method="Post">
+                      @csrf
+                    <input type="hidden" name="complaint_id" value="{{$complaint->id}}">
+                    
+                    <button name="editcomplaint" value="1" class="btn btn-success btn-sm">Edit</button>
+                    </form>
+                  </td>
                   
               </tr>
               @endif
@@ -149,6 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <td>{{$complaint->id}}</td>
                     <td>{{$complaint->address}}</td>
                     <td>{{$complaint->product->name}}</td>
+                    <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                     <td>{{$complaint->created_at}}</td>
                     <td>
                       <form action="/taken" method="Post">

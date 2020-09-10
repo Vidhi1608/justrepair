@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
+use App\User;
 use App\Product;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class BrandsController extends Controller
+class TechnicianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,15 @@ class BrandsController extends Controller
      */
     public function index()
     {
+        $users=User::all();
         $products=Product::all();
-        
-        return view('admin.template.home.layout.brand',compact('products'));
+        // foreach ($users as $value) {
+        //     $roles[]= $value->role;
+        // }
+        //  $roles;
+        // return $users->roles;
+    
+        return view('admin.template.home.layout.assignproducttechnician',compact('users','products'));
     }
 
     /**
@@ -38,12 +45,22 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::find($request->user_id);
+        $product = Product::find($request->product_id);
+        
+        $users=User::find($request->user_id)->products;
+        $techpro=$users->find($product);
     
-        $brand= Brand::firstOrNew(['name' => $request->name]);
-        // $brand->product_id=($request->product_id);
-        $brand->name=ucfirst($request->name);
-        $brand->save();
-        return redirect('brands');
+    
+        
+        // return $data;
+        if (is_null($techpro)) {
+            Alert::success('Product Added Successfully.!');
+            $user->products()->attach($product);
+        }
+        
+        
+        return redirect('product');
     }
 
     /**
@@ -65,9 +82,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        $brand=Brand::find($id);
-        
-        return view('admin.template.home.layout.editbrand',compact('brand','id'));
+        //
     }
 
     /**
@@ -79,13 +94,7 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required',
-        ]);
-        $brand=Brand::find($id);
-        $brand->name=$request->name;
-        $brand->save();
-        return redirect('brands'); 
+        //
     }
 
     /**
@@ -96,7 +105,11 @@ class BrandsController extends Controller
      */
     public function destroy(Request $request)
     {
-        $brand=Brand::find($request->get('brand_id'))->delete();
-        return redirect('/brands');
+    
+        $product=Product::find($request->get('product_id'));
+        $user=User::find($request->get('user_id'));
+        $user->products()->detach($product);
+        Alert::success('Product Deleted.!');
+        return redirect('product');
     }
 }

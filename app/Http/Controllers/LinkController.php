@@ -6,6 +6,8 @@ use App\Bill;
 use App\City;
 use App\Role;
 use App\User;
+use App\Brand;
+use App\Inquiry;
 use App\Product;
 use App\Complaint;
 use Illuminate\Http\Request;
@@ -20,10 +22,10 @@ class LinkController extends Controller
     {
         // $arr_ip = geoip()->getLocation('103.85.8.126');
         // dd($arr_ip);
-
+        $brands=Brand::all();
         $cities=City::all();
         $products=Product::all();
-        return view('admin.template.home.layout.addcomplaint',compact('cities','products'));
+        return view('admin.template.home.layout.addcomplaint',compact('cities','products','brands'));
     }
     public function report()
     {
@@ -98,6 +100,12 @@ class LinkController extends Controller
         $area=$city->areas;
         return view('admin.template.home.layout.displayarea',compact('area','city'));
     }
+    public function displaybrand($id)
+    {   $product=Product::find($id);
+        $brands=Brand::all();
+        // $brand=$product->brands;
+        return view('admin.template.home.layout.displaybrand',compact('product','brands'));
+    }
     public function brand()
     {
         return view('admin.template.home.layout.brand');
@@ -105,7 +113,8 @@ class LinkController extends Controller
     public function addbrand()
     {
         
-        return view('admin.template.home.layout.addbrand');
+        $products = Product::all();
+        return view('admin.template.home.layout.addbrand',compact('products'));
     }
     public function manager()
     {
@@ -145,6 +154,12 @@ class LinkController extends Controller
     {
         
         return view('admin.template.home.layout.showtechnician');
+    }
+    public function assignproducttechnician()
+    {
+        $users=User::all();
+       
+        return view('admin.template.home.layout.assignproducttechnician',compact('users'));
     }
     public function footer()
     {
@@ -196,6 +211,25 @@ class LinkController extends Controller
         }
         
     }
+    public function cancel()
+    {
+        $complaints=Complaint::all();
+        // $bill = total_amount;
+        if (Auth::user()->role->name !== 'Technician') {
+            
+            
+        return view('admin.template.home.layout.cancel',compact('complaints'));
+        }
+        
+        // if (Auth::user()->role->name == 'Technician') {
+        //     foreach(Auth::user()->products as $product) {
+        //         $items[] = $product->name;
+        //     }
+            
+        // return view('admin.template.home.layout.completed',compact('complaints','items'));
+        // }
+        
+    }
     public function bill($id)
     {
         $complaint=Complaint::find($id);
@@ -211,5 +245,11 @@ class LinkController extends Controller
         // return $complaint->bill['items_name'];
         // return $complaints;
         return view('admin.template.home.layout.makereport',compact('complaint','array'));
+    }
+    public function showinquiry()
+    {
+        $inquiry=Inquiry::all();
+    
+        return view('admin.template.home.layout.showinquiry',compact('inquiry'));
     }
 }

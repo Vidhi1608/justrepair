@@ -6,6 +6,7 @@ use App\City;
 use App\Role;
 use App\User;
 use App\Brand;
+use App\Inquiry;
 use App\Detail;
 use App\Manager;
 use App\Product;
@@ -71,6 +72,7 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::resource('areas','AreasController');
                Route::resource('brands','BrandsController');
                Route::resource('products','ProductsController');
+               Route::resource('editcomplaint','EditComplaintController');
                Route::resource('showcities','CitiesController');
                Route::get('assignproduct','LinkController@assignproduct');
                Route::get('showassignproduct','LinkController@showassignproduct');
@@ -78,6 +80,12 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::resource('upcoming', 'ComplaintsController');
                Route::get('working', 'LinkController@working');
                Route::get('completed', 'LinkController@completed');
+               Route::get('cancel', 'LinkController@cancel');
+               Route::get('showinquiry', 'LinkController@showinquiry');
+               Route::post('business', 'BusinessController@store');
+               Route::resource('business', 'BusinessController');
+               Route::post('storeproduct','TechnicianController@store');
+               Route::post('destroytechpro', 'TechnicianController@destroy');
 
 
                Route::any( '/search', function () {
@@ -98,13 +106,16 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::view('techdashboard', 'admin.template.home.layout.technician');
                Route::post('taken','ComplaintsController@update');
                Route::post('editstatus','ComplaintsController@edit');
+               Route::post('editcomplaint','ComplaintsController@edit');
                Route::post('invoice','InvoiceController@store');
                Route::post('invoice_update','InvoiceController@edit');
                // Route::post('completedcomplaint','ComplaintsController@show');
                
 // Manager Routes:
                Route::view('managerdashboard', 'admin.template.home.layout.manager');
-               Route::resource('technicians','TechniciansController'); 
+               Route::resource('product','TechnicianController'); 
+                
+               // Route::post('assignproduct','TechnicianProductController@store'); 
                Route::get('bill/{id}', 'LinkController@bill');  
    
 
@@ -121,12 +132,16 @@ Route::get('inquiry','LinkController@inquiry');
 Route::post('submit', 'ComplaintsController@store');
 Route::post('store', 'AssignController@store');
 Route::post('storearea', 'AreasController@store');
+Route::post('storebrand', 'AssignBrandController@store');
 Route::post('destroy', 'AssignController@destroy');
+Route::post('destroybrand', 'AssignBrandController@destroy');
 Route::post('destroycity', 'CitiesController@destroy');
 Route::post('destroyarea', 'AreasController@destroy');
 Route::post('destroyproduct', 'ProductsController@destroy');
-Route::post('destroybrand', 'BrandsController@destroy');
+// Route::post('destroybrand', 'BrandsController@destroy');
+Route::post('brand', 'BrandsController@store');
 Route::get('displayareas/{id}','LinkController@displayarea');
+Route::get('displaybrand/{id}','LinkController@displaybrand');
 
 Route::resource('data','DataController');
 
@@ -216,3 +231,4 @@ Route::get('complaint',function(){
       ]);
 });
 Route::get('login/{id}','UserController@login');
+
