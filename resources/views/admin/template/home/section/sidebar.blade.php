@@ -13,7 +13,9 @@
         <img src="{{url('images')}}/user-logo.png" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-      <a href="#" class="d-block">{{Auth::user()->name}}</a>
+      <h5><a href="#" class="d-block">{{Auth::user()->name}}</a></h5>
+      <h6><a href="#" class="d-block">({{Auth::user()->role->name}})</a></h6>
+      
       </div>
     </div>
 
@@ -45,6 +47,12 @@
               <a href="{{url('addtechnician')}}" class="nav-link">
                 <i class="fas fa-plus icon2"></i>
                 <p class="p-cont2">Add Technician</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('product')}}" class="nav-link">
+                <i class="fab fa-product-hunt"></i>
+                <p class="p-cont2">Product_Technician</p>
               </a>
             </li>
             <li class="nav-item">
@@ -194,6 +202,12 @@
                 <p class="p-cont">Complited Complaint</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{url('cancel')}}" class="nav-link">
+                <i class="fas fa-times-circle"></i>
+                <p class="p-cont">Cancel Complaint</p>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item has-treeview menu-open">
@@ -209,6 +223,14 @@
             <p>
               <i class="fas fa-coins"></i>
               Show Financial Report
+            </p>
+          </a>
+        </li>
+        <li class="nav-item has-treeview menu-open">
+          <a href="{{url('business')}}" class="nav-link active">
+            <p>
+              <i class="fas fa-handshake"></i>
+              Business Inquiry
             </p>
           </a>
         </li>

@@ -12,28 +12,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
-  @if (Auth::check())
+  @include('admin.template.home.section.sidebar')
 
 
-    {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
-
-    @switch($role)
-        @case('Manager')
-            @include('admin.template.home.section.sidebar2')
-            @break
-        @case('Technician')
-            @include('admin.template.home.section.sidebar3')
-            @break
-        @default
-            @include('admin.template.home.section.sidebar')
-    @endswitch
-    @endif
-
-    @if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
-        @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -41,12 +22,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Brand List</h1>
+          <h1 class="m-0 text-dark">{{$product->name}} Brand</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Brand List</li>
+              <li class="breadcrumb-item active"></li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -80,23 +61,60 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>     
           </div>
             <!-- /.card-header -->
+           
+
+            
+            <div class="col-md-12">
+              <form action="/storebrand" method="POST">
+                @csrf
+                <div class="row">
+                <div class="form-group col-md-6 pt-3">
+                <label>Select Brand</label>
+                <input type="hidden" name="product_id" value="{{$product->id}}">
+                <select class="form-control" name="brand_id">
+                  @foreach ($brands as $brand)
+            
+                 <option value="{{$brand->id}}">{{$brand->name}}</option>
+                 @endforeach
+                 </select>
+                </div>
+                <div class="form-group col-md-6 pt-5">
+                  <button class=" btn btn-success" id="confirm">submit</button>
+                </div>
+              </div>
+              </form>
+              
+            </div>
+        
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Product</th>
-                  <th>Brand</th>
+                  <th>Name</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
-                @foreach($products as $value)
+                @foreach($product->brands as $value)
                 <tr>
                     <td>{{$value['id']}}</td>
                     <td>{{$value['name']}}</td>
                     <td>
-                      <a href="{{url('displaybrand/'.$value->id)}}" class="btn btn-success btn-sm">Brands</a>
+                      <form action="/destroybrand" method="Post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        {{-- <input type="hidden" name="product_id" value="{{$product->id}}"> --}}
+                      <button type="submit" name="brand_id" value="{{$value->id}}" class="btn btn-danger btn-sm">Delete</button>
+                    
+                      </form>
                     </td>
-                  </form>
+                    {{-- <form action="/destroybrand" method="POST">
+                      @csrf
+                    <td>
+                    <a href="{{action('BrandsController@edit',$value['id'])}}" class="btn btn-success btn-sm">Edit</a>
+                    <button name="brand_id" value="{{$value->id}}" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                  </form> --}}
                     
                 </tr>
                 @endforeach
@@ -122,11 +140,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
   @include('admin.template.home.section.footer')
-  @break
-  @default
-  @include('admin.template.home.layout.invalid') 
-  @endswitch
-@endif
  
 </div>
 <!-- ./wrapper -->

@@ -41,12 +41,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Brand List</h1>
+            <h1 class="m-0 text-dark">Inquiry</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Brand List</li>
+              <li class="breadcrumb-item active">Inquiry</li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -85,18 +85,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Product</th>
-                  <th>Brand</th>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Date of Birth</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Zip</th>
                 </tr>
                 </thead>
-                @foreach($products as $value)
+                @foreach($inquiries as $inquiry)
                 <tr>
-                    <td>{{$value['id']}}</td>
-                    <td>{{$value['name']}}</td>
-                    <td>
-                      <a href="{{url('displaybrand/'.$value->id)}}" class="btn btn-success btn-sm">Brands</a>
-                    </td>
-                  </form>
+                    <td>{{$inquiry['id']}}</td>
+                    <td>{{$inquiry['created_at']}}</td>
+                    <td>{{$inquiry['name']}}</td>
+                    <td>{{$inquiry['dob']}}</td>
+                    <td>{{$inquiry['email']}}</td>
+                    <td>{{$inquiry['mobile']}}</td>
+                    <td>{{$inquiry['address']}}</td>
+                    <td>{{$inquiry['city']}}</td>
+                    <td>{{$inquiry['state']}}</td>
+                    <td>{{$inquiry['zip']}}</td>
+
                     
                 </tr>
                 @endforeach
@@ -121,13 +133,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </aside>
   <!-- /.control-sidebar -->
+
   @include('admin.template.home.section.footer')
   @break
   @default
   @include('admin.template.home.layout.invalid') 
   @endswitch
 @endif
- 
 </div>
 <!-- ./wrapper -->
 

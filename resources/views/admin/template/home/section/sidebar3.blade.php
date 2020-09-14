@@ -13,7 +13,8 @@
           <img src="{{url('images')}}/user-logo.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block user">{{Auth::user()->name}}</a>
+          <h5><a href="#" class="d-block">{{Auth::user()->name}}</a></h5>
+          <h6><a href="#" class="d-block">({{Auth::user()->role->name}})</a></h6>
         </div>
       </div>
 

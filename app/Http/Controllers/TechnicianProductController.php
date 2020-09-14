@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Technician;
 use Illuminate\Http\Request;
 
-class TechniciansController extends Controller
+class TechnicianProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class TechniciansController extends Controller
      */
     public function index()
     {
-        $technician=Technician::all();
-        return view('admin.template.home.layout.technicianadmin',compact('technician'));
+        //
     }
 
     /**
@@ -36,12 +34,7 @@ class TechniciansController extends Controller
      */
     public function store(Request $request)
     {
-        $technician= new Technician;
-        $technician->name=ucfirst($request->name);
-        $technician->mobile=$request->mobile;
-        $technician->status=$request->status;
-        $technician->save();
-        return redirect('technicians');
+        //
     }
 
     /**

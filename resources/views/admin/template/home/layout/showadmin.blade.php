@@ -220,6 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <th>City</th>
               <th>Product</th>
               <th>Status</th>
+              <th>Percentage</th>
               <th>Action</th>
             </tr>
             </thead>
@@ -236,14 +237,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{$user->city['name']}}</td>
                 <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
                 <td>{{$user['status']}}</td>
+                <td>{{$user->percentage}}</td>
+                
                 <td>
-                  {{-- <div class="btn-group" aria-label="Basic example">
-                    <button class="btn btn-cyan mr-1">Upload</button>
-                    <button class="btn btn-cyan mr-1">Update</button>
-                    <button class="btn btn-cyan">Download</button>
-                    
-                  </div> --}}
-                  
+                  <a href="{{action('AdminController@edit',$user['id'])}}" class="btn btn-success btn-sm">Edit</a>
                 </td>
                 
             </tr>
@@ -355,6 +352,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <th>City</th>
               <th>Product</th>
               <th>Status</th>
+              
               <th>Action</th>
             </tr>
             </thead>
@@ -422,6 +420,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   @include('admin.template.home.section.footer')
  
 @endif
+ 
+  {{-- @break
+  @default
+  @include('admin.template.home.layout.invalid') 
+  @endswitch
+@endif --}}
 </div>
 <!-- ./wrapper -->
 @include('admin.template.home.script')

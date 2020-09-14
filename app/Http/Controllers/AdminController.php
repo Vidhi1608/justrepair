@@ -26,6 +26,7 @@ class AdminController extends Controller
             }
              $roles;
             return view('admin.template.home.layout.showadmin',compact('users','roles'));
+            
         // if (empty($request->all())) {
          
         //     $users=User::paginate(5);
@@ -80,12 +81,13 @@ class AdminController extends Controller
         $admin->save();
         if ($request->role_id== 3) {
         $users =User::find($admin->id);
-        $products=Product::find($request->product_id);
+        // $products=Product::find($request->product_id);
         
-        foreach ($products as $product) {
+        // foreach ($products as $product) {
             
-          $users->products()->attach($product);  
-        }
+        //   $users->products()->attach($product);  
+        // }
+        $users->products()->sync($request->product_id);  
     }
     
         return redirect('admin');
@@ -110,7 +112,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=User::find($id);
+        return view('admin.template.home.layout.edituser',compact('user','id'));
     }
 
     /**
@@ -122,7 +125,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $this->validate($request,[
+            'name' => 'required',
+        ]);
+        $user=User::find($id);
+        $user->name=$request->name;
+        $user->mobile=$request->mobile;
+        $user->email=$request->email;
+        $user->status=$request->status;
+        $user->percentage=$request->percentage;
+       
+        $user->save();
+        return redirect('admin'); 
     }
 
     /**

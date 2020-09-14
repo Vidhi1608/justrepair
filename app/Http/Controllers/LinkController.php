@@ -6,6 +6,8 @@ use App\Bill;
 use App\City;
 use App\Role;
 use App\User;
+use App\Brand;
+use App\Inquiry;
 use App\Product;
 use App\Complaint;
 use Illuminate\Http\Request;
@@ -20,9 +22,10 @@ class LinkController extends Controller
     {
         // $arr_ip = geoip()->getLocation('103.85.8.126');
         // dd($arr_ip);
+        $brands=Brand::all();
         $cities=City::all();
         $products=Product::all();
-        return view('admin.template.home.layout.addcomplaint',compact('cities','products'));
+        return view('admin.template.home.layout.addcomplaint',compact('cities','products','brands'));
     }
     public function newaddcomplaint($id)
     {
@@ -37,13 +40,15 @@ class LinkController extends Controller
     public function report()
     {
         $report=Bill::all();
-        // $array=json_decode($report, true);
-        // foreach ($report as $key => $value) {
-        //     $value['items_price'];
-        //     $divide = array_sum($value['items_price'])-array_sum($value['items_expense']); 
-        //     return $divide /2;
-        // }
-        
+        // // $array=json_decode($report, true);
+        // foreach ($report as $data) {
+        //     echo $data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage;
+        //     echo '<br>';
+            // $percentage = User::where('city_id','=',$data->complaint->city->id)->where('role_id','=',2)->get('percentage');
+            
+        //  }
+        // return $percentage;
+        // exit();
         $complaints=Complaint::all();
         return view('admin.template.home.layout.report', compact('report','complaints'));
     }
@@ -107,6 +112,12 @@ class LinkController extends Controller
         $area=$city->areas;
         return view('admin.template.home.layout.displayarea',compact('area','city'));
     }
+    public function displaybrand($id)
+    {   $product=Product::find($id);
+        $brands=Brand::all();
+        // $brand=$product->brands;
+        return view('admin.template.home.layout.displaybrand',compact('product','brands'));
+    }
     public function brand()
     {
         return view('admin.template.home.layout.brand');
@@ -114,7 +125,8 @@ class LinkController extends Controller
     public function addbrand()
     {
         
-        return view('admin.template.home.layout.addbrand');
+        $products = Product::all();
+        return view('admin.template.home.layout.addbrand',compact('products'));
     }
     public function manager()
     {
@@ -154,6 +166,12 @@ class LinkController extends Controller
     {
         
         return view('admin.template.home.layout.showtechnician');
+    }
+    public function assignproducttechnician()
+    {
+        $users=User::all();
+       
+        return view('admin.template.home.layout.assignproducttechnician',compact('users'));
     }
     public function footer()
     {
@@ -205,6 +223,25 @@ class LinkController extends Controller
         }
         
     }
+    public function cancel()
+    {
+        $complaints=Complaint::all();
+        // $bill = total_amount;
+        if (Auth::user()->role->name !== 'Technician') {
+            
+            
+        return view('admin.template.home.layout.cancel',compact('complaints'));
+        }
+        
+        // if (Auth::user()->role->name == 'Technician') {
+        //     foreach(Auth::user()->products as $product) {
+        //         $items[] = $product->name;
+        //     }
+            
+        // return view('admin.template.home.layout.completed',compact('complaints','items'));
+        // }
+        
+    }
     public function bill($id)
     {
         $complaint=Complaint::find($id);
@@ -238,5 +275,11 @@ class LinkController extends Controller
         $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
         
         return view('admin.template.home.layout.repeatedbill',compact('complaint','array'));
+    }
+    public function showinquiry()
+    {
+        $inquiry=Inquiry::all();
+    
+        return view('admin.template.home.layout.showinquiry',compact('inquiry'));
     }
 }

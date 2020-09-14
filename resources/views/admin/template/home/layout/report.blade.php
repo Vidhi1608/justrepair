@@ -80,29 +80,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>Customer_Id</th>
+              <th>Complaint_Id</th>
               <th>Billed Amount</th>
               <th>Expence Amount</th>
              
               @if (Auth::user()->role->name == 'Admin')
               
-              <th>Technician Income Amount</th>
-              <th>Manager Income Amount</th>
-              <th>Self Income Amount</th>
+              <th>Technician Income</th>
+              <th>Manager Income</th>
+              <th>Self Income</th>
 
               @endif
               
               @if (Auth::user()->role->name == 'Manager')
               
-              <th>Technician Income Amount</th>
-              <th>Self Income Amount</th>
+              <th>Technician Income</th>
+              <th>Incoming Income</th>
+              <th>Self Income</th>
               <th>Payable Amount</th>
               
               @endif
               
               @if (Auth::user()->role->name == 'Technician')
                   
-              <th>Self Income Amount</th>
+              <th>Self Income</th>
               <th>Payable Amount</th>
               
               @endif
@@ -124,21 +125,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {{array_sum($data['items_expense'])}}
                 @else Pending @endif</td> 
                 @if ($data['items_expense']!=null)
-              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{75 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}
-                <form method="POST" action="/confirmed">
-                  @csrf  
-                  <input type="hidden" name="bill_id" value="{{$data->id}}">
-                  @if ($data->confirmed_by_technician == 1 && $data->confirmed_by_manager == NULL)
-                  <button name="manager" value="1" class="btn btn-sm btn-outline-danger">Confirm</button></td>
-                  @elseif($data->confirmed_by_technician == Null)
-                  <button name="manager" value="1" class="btn btn-sm btn-danger" disabled>Pending</button></td>   
-                  @else
-                  <button name="manager" value="1" class="btn btn-sm btn-success" disabled>Confirmed</button></td>
-                  @endif
-                </form>
-              <td>{{25 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              
+                <td>{{$data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))}}</td>
+                <td>{{((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))))}}
+                  <form method="POST" action="/confirmed">
+                    @csrf  
+                    <input type="hidden" name="bill_id" value="{{$data->id}}">
+                    @if ($data->confirmed_by_technician == 1 && $data->confirmed_by_manager == NULL)
+                    <button name="manager" value="1" class="btn btn-sm btn-outline-danger">Confirm</button></td>
+                    @elseif($data->confirmed_by_technician == Null)
+                    <button name="manager" value="1" class="btn btn-sm btn-danger" disabled>Pending</button></td>   
+                    @else
+                    <button name="manager" value="1" class="btn btn-sm btn-success" disabled>Confirmed</button></td>
+                    @endif
+                  </form>
+                <td>{{$data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage/100*((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))))}}</td>
+                  
+                <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))) - ($data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage/100*((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])))))}}</td>              
               @else
               <td>0</td> 
               <td>0</td> 
@@ -155,10 +157,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {{array_sum($data['items_expense'])}}
               @else Pending @endif</td> 
               @if ($data['items_expense']!=null)
-              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{75 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{25 / 100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              
+              <td>{{$data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))}}</td>
+              <td>{{$data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage/100*((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))))}}</td>
+              {{-- <td>{{($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])))-(((array_sum($data['items_price']) - array_sum($data['items_expense']))*($data->complaint->user->percentage / 100)) - ((array_sum($data['items_price']) - array_sum($data['items_expense']))*($data->complaint->user->percentage / 100)*($data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage/100)))}}</td> --}}
+              {{-- <td>{{ ((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))))}}</td> --}}
+              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))) - ($data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage/100*((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense'])))))}}</td>
               @else 
               <td>0</td>
               <td>0</td>
@@ -176,23 +179,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @else Pending @endif
               </td> 
                 @if ($data['items_expense']!=null)
-              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}}</td>
-              <td>{{(array_sum($data['items_price']) - array_sum($data['items_expense'])) / 2}} 
+              <td>{{$data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))}}</td>
+              <td>{{((array_sum($data['items_price']) - array_sum($data['items_expense'])) - ($data->complaint->user->percentage /100 * (array_sum($data['items_price']) - array_sum($data['items_expense']))))}}
                 <form method="POST" action="/confirmed">
                   @csrf  
                   <input type="hidden" name="bill_id" value="{{$data->id}}">
                   @if ($data->confirmed_by_technician !==NULL)
-                  <button name="technician" value="1" class="btn btn-sm btn-success" disabled>Paid</button></td>   
+                   <button name="technician" value="1" class="btn btn-sm btn-success" disabled>Paid</button></td>   
                   @else
-                  <button name="technician" value="1" class="btn btn-sm btn-outline-danger">Pay</button></td>
+                   <button name="technician" value="1" class="btn btn-sm btn-outline-danger">Pay</button></td>
                   @endif
                 </form>
               @else 
               <td>0</td>
               <td>0</td>
-              
               @endif
-        </tr> 
+          </tr> 
            @endif
           @endforeach
           

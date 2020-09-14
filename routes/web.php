@@ -6,6 +6,7 @@ use App\City;
 use App\Role;
 use App\User;
 use App\Brand;
+use App\Inquiry;
 use App\Detail;
 use App\Manager;
 use App\Product;
@@ -53,21 +54,66 @@ Route::group(['middleware'=>'authenticated'],function(){
 
 // Admin Routes:
 Route::get('admindashboard', function(){
-   $status0=Complaint::where('status','=',0)->count();
-   $status1=Complaint::where('status','=',1)->count();
-   $status2=Complaint::where('status','=',2)->count();
-   $status3=Complaint::where('status','=',3)->count();
-   $status4=Complaint::where('status','=',4)->count();
-   $status5=Complaint::where('status','=',5)->count();
-   $status6=Complaint::where('status','=',6)->count();
-   $status7=Complaint::where('status','=',7)->count();
-   foreach(Auth::user()->products as $product) {
-      $items[] = $product->name;
-  }
-   // $complaints=Complaint::all();
-  $complaints=Complaint::all();
+   $complaints=Complaint::all();
+   foreach($complaints as $complaint) {
+                
+      if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $complaint->city->name)
+      
+      {
+         $total=Auth::user()->city->complaint->count();
+         
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+      if (Auth::user()->role->name == 'Technician' && Auth::user()->city->name == $complaint->city->name && Auth::user()->id == $complaint->user_id){
+         foreach(Auth::user()->products as $product) {
+           
+               $items[] = $product->name;
+         }
+         if(in_array($complaint->product->name,$items))
+         {
+         $total=Auth::user()->city->complaint->count();
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+      }
+      if (Auth::user()->role->name == 'Admin' && Auth::user()->city->name == $complaint->city->name)
+      
+      {
+
+         $total=Auth::user()->city->complaint->count();
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+   }
    
-   return view('admin.template.home.layout.admin', compact('items','complaints','status0','status1','status2','status3','status4','status5','status6','status7'));
 });
                Route::get('showproduct','LinkController@product');
                Route::get('showarea','LinkController@area');
@@ -88,6 +134,7 @@ Route::get('admindashboard', function(){
                Route::resource('areas','AreasController');
                Route::resource('brands','BrandsController');
                Route::resource('products','ProductsController');
+               Route::resource('editcomplaint','EditComplaintController');
                Route::resource('showcities','CitiesController');
                Route::get('assignproduct','LinkController@assignproduct');
                Route::get('showassignproduct','LinkController@showassignproduct');
@@ -95,6 +142,12 @@ Route::get('admindashboard', function(){
                Route::resource('upcoming', 'ComplaintsController');
                Route::get('working', 'LinkController@working');
                Route::get('completed', 'LinkController@completed');
+               Route::get('cancel', 'LinkController@cancel');
+               Route::get('showinquiry', 'LinkController@showinquiry');
+               Route::post('business', 'BusinessController@store');
+               Route::resource('business', 'BusinessController');
+               Route::post('storeproduct','TechnicianController@store');
+               Route::post('destroytechpro', 'TechnicianController@destroy');
 
 
                Route::any( '/search', function () {
@@ -115,6 +168,7 @@ Route::get('admindashboard', function(){
                Route::view('techdashboard', 'admin.template.home.layout.technician');
                Route::post('taken','ComplaintsController@update');
                Route::post('editstatus','ComplaintsController@edit');
+               Route::post('editcomplaint','ComplaintsController@edit');
                Route::post('invoice','InvoiceController@store');
                Route::post('invoice_edit','InvoiceController@edit');
                // Route::post('completedcomplaint','ComplaintsController@show');
@@ -127,6 +181,9 @@ Route::get('admindashboard', function(){
                   // return view('admin.template.home.layout.invoice', compact('complaint','array'));
                
                Route::resource('technicians','TechniciansController'); 
+               Route::resource('product','TechnicianController'); 
+                
+               // Route::post('assignproduct','TechnicianProductController@store'); 
                Route::get('bill/{id}', 'LinkController@bill');  
                Route::get('rrbill/{id}', 'LinkController@repeatedbill');  
                Route::post('repeatedbill', 'InvoiceController@update');  
@@ -146,12 +203,16 @@ Route::get('inquiry','LinkController@inquiry');
 Route::post('submit', 'ComplaintsController@store');
 Route::post('store', 'AssignController@store');
 Route::post('storearea', 'AreasController@store');
+Route::post('storebrand', 'AssignBrandController@store');
 Route::post('destroy', 'AssignController@destroy');
+Route::post('destroybrand', 'AssignBrandController@destroy');
 Route::post('destroycity', 'CitiesController@destroy');
 Route::post('destroyarea', 'AreasController@destroy');
 Route::post('destroyproduct', 'ProductsController@destroy');
-Route::post('destroybrand', 'BrandsController@destroy');
+// Route::post('destroybrand', 'BrandsController@destroy');
+Route::post('brand', 'BrandsController@store');
 Route::get('displayareas/{id}','LinkController@displayarea');
+Route::get('displaybrand/{id}','LinkController@displaybrand');
 
 Route::resource('data','DataController');
 
@@ -241,3 +302,4 @@ Route::get('complaint',function(){
       ]);
 });
 Route::get('login/{id}','UserController@login');
+

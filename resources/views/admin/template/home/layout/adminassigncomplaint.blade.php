@@ -12,29 +12,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
-  @if (Auth::check())
+  @include('admin.template.home.section.sidebar')
 
-
-  {{-- // return Auth::user()->role->name; --}}
-  {{ $role = Auth::user()->role->name }}
-
-  @switch($role)
-      @case('Manager')
-          @include('admin.template.home.section.sidebar2')
-          @break
-      @case('Technician')
-          @include('admin.template.home.section.sidebar3')
-          @break
-      @default
-          @include('admin.template.home.section.sidebar')
-  @endswitch
-  @endif
-
-  @if (Auth::check())
-            {{$role = Auth::user()->role->name}}
-            @switch($role)
-                @case('Admin')
-        
+  
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -43,12 +23,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">New Brand</h1>
+            <h1 class="m-0 text-dark">Update Complaint</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add Brand</li>
+              <li class="breadcrumb-item active"></li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -65,24 +45,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="card shadow p-3 mt-3 mb-5 ">
-                <form method="POST" action="/brand">
-                  @csrf
-                  <div class="form-group">
-                    {{-- <label>Select Product</label>
-                         <br>
-                         <select class="form-control" name="product_id">
-                          @foreach ($products as $product)
-                    
-                         <option value="{{$product->id}}">{{$product->name}}</option>
-                         @endforeach
-                         </select> --}}
+             
+            
+            <form method="POST" action="/taken">
+            @csrf
+            <div class="form-group">
+                    <input type="hidden" name="id" value="{{$complaint->id}}">
+                    {{-- <input type="hidden" name="id" value= "{{$complaint->id}}"> --}}
+                    <label>{{$complaint->product->name}} Complaint Assign:</label>
                     <br>
-                    <label>Brand Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="Enter your Brand Name">
-                  </div>
-                  <button type="submit" class="btn btn-success">Submit</button>
-    
-                </form>
+                    <select class="form-control" name="user_id">
+                      <option selected>Select Technician</option>
+                      @foreach($users as $user)
+                      @if ($complaint->city_id == $user->city->id && $user->role_id ==3)
+                      
+                        <option value="{{$user->id}}">{{$user->name}} @foreach ($user->products as $product)({{$loop->index+1}}) {{$product->name}}) @endforeach</option>
+                       
+                        @endif
+
+                      @endforeach   
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Assign</button>
+            </form>
+            
           </div>
           </div>
       </div>
@@ -104,11 +90,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   @include('admin.template.home.section.footer')
-  @break
-               @default
-               @include('admin.template.home.layout.invalid') 
-  @endswitch
-@endif
 </div>
 <!-- ./wrapper -->
 

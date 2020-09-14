@@ -77,10 +77,10 @@
       <ul class="dropdown-menu" role="menu">
         <li>
 
-            {{-- @foreach (Auth::user()->all() as $notification) --}}
-              {{-- @include('admin.template.home.layout.notifications.'.($notification->type)) --}}
-               {{-- <a href="#">{{$notification->data['user_id']}} has Cancel the Complaint!</a>
-            @endforeach --}}
+            @foreach (Auth::user()->all() as $notification)   
+                 {{-- @include('admin.template.home.layout.notifications.'.($notification->type)) --}}
+               <a href="#">{{$notification->data}} has Cancel the Complaint!<br></a>
+            @endforeach
         </li>
       </ul>
       {{-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\User;
 use App\Complaint;
 use Illuminate\Http\Request;
@@ -48,16 +49,18 @@ class ComplaintsController extends Controller
         
         // }
         $complaints=Complaint::all();
+        $users=User::all();
+        $cities=City::all();
         if (Auth::user()->role->name == 'Technician') {
             foreach(Auth::user()->products as $product) {
                 $items[] = $product->name;
             }
-            return view('admin.template.home.layout.upcoming',compact('complaints','items'));
+            return view('admin.template.home.layout.upcoming',compact('complaints','items','users','cities'));
         }
          
         
     
-        return view('admin.template.home.layout.upcoming',compact('complaints'));
+        return view('admin.template.home.layout.upcoming',compact('complaints','users','cities'));
     }
 
     /**
@@ -86,10 +89,11 @@ class ComplaintsController extends Controller
         $complaint->city_id=$request->city_id;
         $complaint->area=$request->area;
         $complaint->product_id=$request->product_id;
+        $complaint->brand_id=$request->brand_id;
+        $complaint->model=$request->model;
         // $complaint->status=$request->status;
         $complaint->comment=$request->comment;
         $complaint->save();
-
         
         return redirect('complaints');
     }
@@ -105,7 +109,7 @@ class ComplaintsController extends Controller
         
         $complaints = Complaint::findorFail($request->id);
         $complaints = $request->total_amount;
-         return "$complaints";
+         return $complaints;
         return redirect('completed');
     }
 
@@ -117,17 +121,35 @@ class ComplaintsController extends Controller
      */
     public function edit(Request $request)
     {
-        
+        // return $request;
+        if (isset($request->assign)==1) {
+            $users=User::all();
+            $complaint=Complaint::find($request->complaint_id);
+            
+                return view('admin.template.home.layout.adminassigncomplaint',compact('complaint','users'));
+            
+        }
+        if (isset($request->editcomplaint)==1) {
+            $complaint=Complaint::find($request->complaint_id);
+            return view('admin.template.home.layout.editcomplaint',compact('complaint'));
+        }
         $status = $request->complaint_status;
         $complaints = Complaint::findOrFail($request->id);
        
         // $users = User::where('role_id','1')->get();
         // $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
         
+        // return $request;
+        if ($complaints->user_id == 6) { //For Cancle Complaint 
+            return redirect('cancel');
+        }
         // Auth::user()->notify(User::all(),new NotificationForComplaints($complaints));
-        $complaints->update(["user_id"=> 0 ,"status"=> $status]);
+        $complaints->update(["user_id"=> 0 ,"status"=> $status]); //For Upcoming (New) Complaint
         $complaints->save();
-        return redirect('working');
+        if (isset($request->cancelcomplaint)==1) {
+        return redirect('upcoming');
+         }
+          return redirect('working');
         // Notification::send($user, new MyFirstNotification());
     }
 
@@ -140,14 +162,19 @@ class ComplaintsController extends Controller
      */
     public function update(Request $request)
     {
-        // return $request->all();
+        // return $request;
+        if (isset($request->updatecomplaint)==1) {
+          
+            $complaint=Complaint::find($request->complaint_id);
+            $complaint->name=$request->name;
+            $complaint->mobile=$request->mobile;
+            $complaint->address=$request->address;
+            $complaint->save();
+            return redirect('complaints'); 
+        }
         $user = $request->user_id;
         $complaints = Complaint::findOrFail($request->id);
-        if (isset($request->repeat)) {
-            $complaints->update(["user_id"=> $user ,"status"=> $request->repeat]);   
-        }else{
-            $complaints->update(["user_id"=> $user ,"status"=> 1]);
-        }
+        $complaints->update(["user_id"=> $user ,"status"=> 1]); //For Working Complaint
         $complaints->save();
         
         return redirect('working');

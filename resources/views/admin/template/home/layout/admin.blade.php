@@ -14,9 +14,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @include('admin.template.home.section.navbar')
 
- 
+  @if (Auth::check())
 
-  @include('admin.template.home.section.sidebar')
+
+  {{-- // return Auth::user()->role->name; --}}
+  {{ $role = Auth::user()->role->name }}
+
+  @switch($role)
+      @case('Manager')
+          @include('admin.template.home.section.sidebar2')
+          @break
+      @case('Technician')
+          @include('admin.template.home.section.sidebar3')
+          @break
+      @default
+          @include('admin.template.home.section.sidebar')
+  @endswitch
+  @endif
 
   
 
@@ -61,17 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               
               <div class="inner">
                 
-                @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->complaint)
-                <h3>{{Auth::user()->city->complaint->count()}}</h3>
-                @endif
-                   
-                @if (Auth::user()->role->name == 'Technician' && Auth::user()->city->complaint && Auth::user()->complaint->user_id == Auth::user()->id)
-                <h3>{{Auth::user()->city->complaint->count()}}</h3> 
-                @endif
-                
-                @if (Auth::user()->role->name == 'Admin')
-                <h3>{{count($complaints)}}</h3> 
-                @endif
+                <h3>{{$total}}</h3>
                  
                 <p>Total Complaints</p>
               </div>
@@ -103,22 +107,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->complaint)
-                <h3>{{$status3}}</h3>
-                @endif
+                
+                <h3>{{$status1}}</h3>
+                
                    
-                @if (Auth::user()->role->name == 'Technician' && Auth::user()->city->complaint && Auth::user('id')->complaint->user_id)
-                @if(in_array(Auth::user()->complaint->product->name,$items) && Auth::user()->complaint->status == 3)
-                
-                <h3>{{Auth::user()->id == Auth::user()->complaint->get()->count()}}</h3>
-                @endif
-                @endif
-                
-                @if (Auth::user()->role->name == 'Admin')
-                <h3>{{Auth::user()->city->complaint->$status3}}</h3>
-                @endif
-              
-
                 <p>Working Complaints</p>
               </div>
               <div class="icon">
