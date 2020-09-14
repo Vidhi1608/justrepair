@@ -60,6 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <input type="text" name="mobile" class="form-control" value="{{$complaint->mobile}}">
                 <label> Address</label>
                 <input type="text" name="address" class="form-control" value="{{$complaint->address}}">
+                
             
             </div>
                 <button type="submit" name="updatecomplaint" value="1" class="btn btn-success">Update</button>

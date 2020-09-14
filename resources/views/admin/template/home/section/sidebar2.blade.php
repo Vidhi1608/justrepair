@@ -136,7 +136,7 @@
             </ul>
           </li>
           <li class="nav-item has-treeview menu-open">
-            <a href="{{url('bill')}}" class="nav-link active">
+            <a href="{{url('bill')}}" class="nav-link">
               <p>
                 <i class="fas fa-file-invoice"></i>
                 Update Bill
@@ -145,7 +145,7 @@
             
           </li>
           <li class="nav-item has-treeview menu-open">
-            <a href="{{url('report')}}" class="nav-link active">
+            <a href="{{url('report')}}" class="nav-link">
               <p>
                 <i class="fas fa-coins"></i>
                 Show Financial Report

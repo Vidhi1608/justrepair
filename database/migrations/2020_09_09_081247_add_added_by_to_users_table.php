@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCityIdColumnToAreasTables extends Migration
+class AddAddedByToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCityIdColumnToAreasTables extends Migration
      */
     public function up()
     {
-        Schema::table('areas', function (Blueprint $table) {
-            $table->integer('city_id')->after('name');
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('added_by')->after('name');
         });
     }
 
@@ -25,9 +25,8 @@ class AddCityIdColumnToAreasTables extends Migration
      */
     public function down()
     {
-        Schema::table('areas', function (Blueprint $table) {
-            $table->dropColumn('city_id');
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('added_by');     
         });
     }
 }

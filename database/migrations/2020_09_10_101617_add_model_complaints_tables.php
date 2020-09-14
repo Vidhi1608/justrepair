@@ -14,7 +14,7 @@ class AddModelComplaintsTables extends Migration
     public function up()
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->integer('model')->after('brand_id');
+            $table->string('model')->after('brand_id');
         });
     }
 

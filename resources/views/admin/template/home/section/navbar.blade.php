@@ -75,7 +75,7 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
-        <span class="badge badge-warning navbar-badge">{{count(Auth::user()->unreadNotifications)}}</span>
+        {{-- <span class="badge badge-warning navbar-badge">{{count(Auth::user()->unreadNotifications)}}</span> --}}
       </a>
       <ul class="dropdown-menu" role="menu">
         <li>

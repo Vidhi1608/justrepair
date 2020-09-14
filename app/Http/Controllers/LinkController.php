@@ -27,16 +27,28 @@ class LinkController extends Controller
         $products=Product::all();
         return view('admin.template.home.layout.addcomplaint',compact('cities','products','brands'));
     }
+    public function newaddcomplaint($id)
+    {
+        // $arr_ip = geoip()->getLocation('103.85.8.126');
+        // dd($arr_ip);
+        $complaint=Complaint::find($id);
+        // return $complaint;
+        
+        $products=Product::all();
+        return view('admin.template.home.layout.newaddcomplaint',compact('complaint','products'));
+    }
     public function report()
     {
         $report=Bill::all();
-        // $array=json_decode($report, true);
-        // foreach ($report as $key => $value) {
-        //     $value['items_price'];
-        //     $divide = array_sum($value['items_price'])-array_sum($value['items_expense']); 
-        //     return $divide /2;
-        // }
-        
+        // // $array=json_decode($report, true);
+        // foreach ($report as $data) {
+        //     echo $data->complaint->city->users->first()->where('role_id','=',2)->where('city_id','=',$data->complaint->city->id)->first()->percentage;
+        //     echo '<br>';
+            // $percentage = User::where('city_id','=',$data->complaint->city->id)->where('role_id','=',2)->get('percentage');
+            
+        //  }
+        // return $percentage;
+        // exit();
         $complaints=Complaint::all();
         return view('admin.template.home.layout.report', compact('report','complaints'));
     }
@@ -239,12 +251,30 @@ class LinkController extends Controller
     public function makereport($id)
     {
         $complaint=Complaint::find($id);
-        $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
+        
+        $expense = $complaint->bill['items_expense'];
+        $name = $complaint->bill['items_name'];
+        $price = $complaint->bill['items_price'];
+        $array = array_combine($name,$price);
+        // foreach ($array as $values)  {
+        //     foreach ($values as $value)  {
+        //    $data[]=$value;
+        //     }
+        // }
+        // return $data;
+        // $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
         
     
         // return $complaint->bill['items_name'];
         // return $complaints;
-        return view('admin.template.home.layout.makereport',compact('complaint','array'));
+        return view('admin.template.home.layout.makereport',compact('complaint','expense','name','price','array'));
+    }
+    public function repeatedbill($id)
+    {
+        $complaint=Complaint::find($id);
+        $array= array_combine($complaint->bill['items_name'],$complaint->bill['items_price']);
+        
+        return view('admin.template.home.layout.repeatedbill',compact('complaint','array'));
     }
     public function showinquiry()
     {

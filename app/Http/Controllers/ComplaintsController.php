@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\User;
 use App\Complaint;
 use Illuminate\Http\Request;
@@ -48,16 +49,18 @@ class ComplaintsController extends Controller
         
         // }
         $complaints=Complaint::all();
+        $users=User::all();
+        $cities=City::all();
         if (Auth::user()->role->name == 'Technician') {
             foreach(Auth::user()->products as $product) {
                 $items[] = $product->name;
             }
-            return view('admin.template.home.layout.upcoming',compact('complaints','items'));
+            return view('admin.template.home.layout.upcoming',compact('complaints','items','users','cities'));
         }
          
         
     
-        return view('admin.template.home.layout.upcoming',compact('complaints'));
+        return view('admin.template.home.layout.upcoming',compact('complaints','users','cities'));
     }
 
     /**
@@ -106,7 +109,7 @@ class ComplaintsController extends Controller
         
         $complaints = Complaint::findorFail($request->id);
         $complaints = $request->total_amount;
-         return "$complaints";
+         return $complaints;
         return redirect('completed');
     }
 
@@ -118,8 +121,15 @@ class ComplaintsController extends Controller
      */
     public function edit(Request $request)
     {
- 
-        if (isset($request->complaint_id)==1) {
+        // return $request;
+        if (isset($request->assign)==1) {
+            $users=User::all();
+            $complaint=Complaint::find($request->complaint_id);
+            
+                return view('admin.template.home.layout.adminassigncomplaint',compact('complaint','users'));
+            
+        }
+        if (isset($request->editcomplaint)==1) {
             $complaint=Complaint::find($request->complaint_id);
             return view('admin.template.home.layout.editcomplaint',compact('complaint'));
         }
@@ -127,7 +137,8 @@ class ComplaintsController extends Controller
         $complaints = Complaint::findOrFail($request->id);
        
         // $users = User::where('role_id','1')->get();
-        $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
+        // $notifications = Notification::send(User::all(), new NotificationForComplaints($complaints));
+        
         // return $request;
         if ($complaints->user_id == 6) { //For Cancle Complaint 
             return redirect('cancel');
@@ -151,6 +162,7 @@ class ComplaintsController extends Controller
      */
     public function update(Request $request)
     {
+        // return $request;
         if (isset($request->updatecomplaint)==1) {
           
             $complaint=Complaint::find($request->complaint_id);

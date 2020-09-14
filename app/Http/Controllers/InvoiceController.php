@@ -42,8 +42,12 @@ class InvoiceController extends Controller
         $invoice->items_name=$request->product;
         $invoice->items_price=$request->price;
         $invoice->save();
-        $complaint=$invoice->complaint_id=$request->complaint_id;
-        return redirect('invoice/'.$complaint);
+        $complaint=Complaint::find($request->complaint_id);
+        
+        $complaint->update(["status"=> 2]);
+        $complaint->save();
+        
+        return redirect('completed');
     }
 
     /**
@@ -65,14 +69,32 @@ class InvoiceController extends Controller
      */
     public function edit(Request $request)
     {
-        $bill = Bill::find($request->bill_id);
+        // return $request->all();
+        if (isset($request->repeatreport)==7) {
+            
+            $complaints = Complaint::findOrFail($request->complaint_id);
+            $complaints->update(["status"=> 7]); // FOR REPEATED REPORTS
+            $complaints->save();
+            $bill = Bill::find($request->bill_id);
+            $expense=$request->price;
+            $bill->update(["items_expense" => $request->expense]);
+            $bill->save();
+            return redirect('completed');
+        }elseif(isset($request->newreport)==3) {
+                // return "new";
+                $complaints = Complaint::findOrFail($request->complaint_id);
+                $complaints->update(["status"=> 3]); // FOR FRESH REPORT
+                $complaints->save();
+                $bill = Bill::find($request->bill_id);
+                $expense=$request->price;
+                $bill->update(["items_expense" => $request->price]);
+                $bill->save();
+                return redirect('completed');
+        }
         
-        $expense=$request->price;
         
+       
         
-        $bill->update(["items_expense" => $request->price]);
-        $bill->save();
-        return redirect('completed');
     }
 
     /**
@@ -82,13 +104,29 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $complaint)
+    public function update(Request $request)
     {
-        // return $complaint;
-        $complaints = Complaint::findOrFail($complaint);
-        $complaints->update(["status"=> 2]);
-        $complaints->save();
-        return redirect('completed');
+
+        // return $request->all();
+        if (isset($request->rrbill)==5) {
+            $complaints = Complaint::findOrFail($request->complaint_id);
+            $complaints->update(["status"=> 5]); // FOR REPEATED BILLS
+            $complaints->save();
+            $bill = Bill::find($request->bill_id);
+            $bill->update(["items_price" => $request->price, "items_name" => $request->product]);
+            $bill->save();
+            return redirect('completed');
+        } elseif (isset($request->technician)==1) {
+            $bill=Bill::find($request->bill_id);
+            $bill->update(["confirmed_by_technician" => 1]); // PAYMENT CONFIRMATION UPDATE BY TECHNICIAN 
+            $bill->save();
+            return redirect('report');
+        } elseif (isset($request->manager)==1) {
+            $bill=Bill::find($request->bill_id);
+            $bill->update(["confirmed_by_manager" => 1]);   // PAYMENT RCVD FROM TECHNICIAN CONFIRMATION BY MANAGER 
+            $bill->save();
+            return redirect('report');
+        }
     }
 
     /**

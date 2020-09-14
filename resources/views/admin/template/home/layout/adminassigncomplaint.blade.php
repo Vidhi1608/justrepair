@@ -23,7 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Update User</h1>
+            <h1 class="m-0 text-dark">Update Complaint</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -47,32 +47,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="card shadow p-3 mt-3 mb-5 ">
              
             
-            <form method="POST" action="{{action('AdminController@update',$id)}}">
+            <form method="POST" action="/taken">
             @csrf
             <div class="form-group">
-                <label> Name</label>
-                <input type="text" name="name" class="form-control" value="{{$user->name}}">
-                {{-- <label> Role</label>
-                <input type="text" name="role" class="form-control" value="{{$user->role->name}}"> --}}
-                <label> Mobile</label>
-                <input type="text" name="mobile" class="form-control" value="{{$user->mobile}}">
-                <label> Email</label>
-                <input type="text" name="email" class="form-control" value="{{$user->email}}">
-                <label>Status</label>
-                <select class="form-control" name="status">
-                    <option value="Active">Active</option>
-                    <option value="InActive">InActive</option>
-                </select>
-                <label>Profile</label>
-                <input type="file" name="file" class="form-control" value="{{$user->file}}">
-                
-                
-                <label>Percentage</label>
-                <input type="number" name="percentage" class="form-control" value="{{$user->percentage}}">
-                
-            </div>
-                @method('PUT')
-                <button type="submit" class="btn btn-success">Update</button>
+                    <input type="hidden" name="id" value="{{$complaint->id}}">
+                    {{-- <input type="hidden" name="id" value= "{{$complaint->id}}"> --}}
+                    <label>{{$complaint->product->name}} Complaint Assign:</label>
+                    <br>
+                    <select class="form-control" name="user_id">
+                      <option selected>Select Technician</option>
+                      @foreach($users as $user)
+                      @if ($complaint->city_id == $user->city->id && $user->role_id ==3)
+                      
+                        <option value="{{$user->id}}">{{$user->name}} @foreach ($user->products as $product)({{$loop->index+1}}) {{$product->name}}) @endforeach</option>
+                       
+                        @endif
+
+                      @endforeach   
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Assign</button>
             </form>
             
           </div>

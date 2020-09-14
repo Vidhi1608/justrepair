@@ -94,16 +94,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <div class="form-group">
                 {!! Form::hidden('role_id', 2) !!}
+                {!! Form::hidden('user_id', Auth::user()->id) !!}
                 {!! Form::label('fname', 'First Name') !!}
                 {!! Form::text('fname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your First Name']) !!}
                 {!! Form::label('lname', 'Last Name') !!}
                 {!! Form::text('lname', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your Last Name']) !!}
                 {!! Form::label('mobile', 'Contact Number') !!}
-                {!! Form::text('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
+                {!! Form::tel('mobile', null, ['class'=>'form-control', 'placeholder'=>'Enter your Mobile Number']) !!}
                 {!! Form::label('email', 'Email') !!}
-                {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
+                {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                 {!! Form::label('password', 'Password') !!}
-                {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
+                {!! Form::password('password', ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
                 <br>
                 <div class="row">
                   <div class="col-md-2">
@@ -114,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="row ex2">
                       @foreach ($cities as $city)
                       <div class="col-md-4">
-                      {!! Form::checkbox('city_id', $city->id) !!}
+                      {!! Form::radio('city_id', $city->id) !!}
 
                       {!! Form::label('name', $city->name) !!}
                     </div>

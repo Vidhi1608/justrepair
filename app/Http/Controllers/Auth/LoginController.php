@@ -40,10 +40,10 @@ class LoginController extends Controller
                        return redirect('admindashboard');
                         break;
                     case 'Technician':
-                        return redirect('techdashboard');
+                        return redirect('admindashboard');
                         break;
                     case 'Manager':
-                        return redirect('managerdashboard');
+                        return redirect('admindashboard');
                         break;
                 }
             // return redirect()->route('chcking');

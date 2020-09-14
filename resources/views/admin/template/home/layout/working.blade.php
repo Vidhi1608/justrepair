@@ -124,9 +124,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @foreach($complaints as $complaint)
             
                 @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $complaint->city->name)
-                @if($complaint->status == 1)
+                @if($complaint->status == 1 || $complaint->status == 4)
                 <tr>
-                  <td>{{$complaint->id}}</td>
+                  <td>{{$complaint->id}}
+                    @if ($complaint->status == 4)
+                    <a class="btn btn-danger btn-sm repeat-bt">Repeated</a>
+                    @endif
+                  </td>
                   <td>{{$complaint->created_at}}</td>
                   <td>{{$complaint->name}}</td>
                   <td>{{$complaint->address}}</td>
@@ -180,9 +184,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
               @endif
 
                 @if(Auth::user()->role->name == 'Admin')
-                @if($complaint->status == 1)
+                @if($complaint->status == 1 || $complaint->status == 4)
                 <tr>
-                  <td>{{$complaint->id}}</td>
+                  <td>
+                    @if ($complaint->status == 4)
+                    <a style="pointer-events: none; cursor: default;" class="btn btn-danger btn-sm repeat-bt">Repeat</a>
+                    
+                    @endif
+                       {{$complaint->id}}
+                  </td>
                   <td>{{$complaint->created_at}}</td>
                   <td>{{$complaint->name}}</td> 
                   <td>{{$complaint->city->name}}</td>
@@ -196,19 +206,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
               @endif
               
               @if( Auth::user()->role->name == 'Technician'  && Auth::user()->city->name ==  $complaint->city->name && Auth::user()->id == $complaint->user_id)
-                @if(in_array($complaint->product->name,$items) && $complaint->status == 1 )
+                @if(in_array($complaint->product->name,$items) && $complaint->status == 1 || $complaint->status == 4 )
                   <tr>
-                    <td>{{$complaint->id}}</td>
+                    <td>
+                      @if ($complaint->status == 4)
+                      <a style="pointer-events: none; cursor: default;" class="btn btn-danger btn-sm repeat-bt">Repeat</a>
+                      
+                      @endif
+                         {{$complaint->id}}
+                    </td>
                     <td>{{$complaint->created_at}}</td>
                     <td>{{$complaint->name}}</td>
                     <td>{{$complaint->address}}</td>
-                    <td>{{$complaint->mobile}}</td>
+                    <td><a class="nav-item" href="tel:{{$complaint->mobile}}">
+                      <i class="fas fa-phone-alt color"></i><span class="ml-1 right badge badge-success p-1">CALL</span></a></td>
                     <td>{{$complaint->area}}</td>
                     <td>{{$complaint->product->name}}</td>
                     <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal{{$complaint->id}}">X</button>
-                        <a href="{{url('bill/'.$complaint->id)}}" class="btn btn-success btn-sm">+ Bill</a>                        
+                    <td class="btn-group">
+                        <button class="btn btn-danger btn-sm mr-2" data-toggle="modal" data-target="#modal{{$complaint->id}}">X</button>
+                        @if ($complaint->status == 4)
+                        <a href="{{url('rrbill/'.$complaint->id)}}" name="repeat" class="btn btn-success btn-sm">Bill</a>
+                        
+                        @else
+                        <a href="{{url('bill/'.$complaint->id)}}" class="btn btn-success btn-sm">Bill</a>                        
+                        @endif
                     </td>
                   </tr> 
                   <!-- The Modal -->

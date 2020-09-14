@@ -12,11 +12,12 @@ use App\Manager;
 use App\Product;
 use App\Complaint;
 use App\Technician;
+
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 
 // use Illuminate\Support\Facades\Input;
@@ -52,7 +53,68 @@ Route::get('services/{landing}/{area}', 'ServiceAreaController@view');
 Route::group(['middleware'=>'authenticated'],function(){
 
 // Admin Routes:
-               Route::view('admindashboard', 'admin.template.home.layout.admin');
+Route::get('admindashboard', function(){
+   $complaints=Complaint::all();
+   foreach($complaints as $complaint) {
+                
+      if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $complaint->city->name)
+      
+      {
+         $total=Auth::user()->city->complaint->count();
+         
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+      if (Auth::user()->role->name == 'Technician' && Auth::user()->city->name == $complaint->city->name && Auth::user()->id == $complaint->user_id){
+         foreach(Auth::user()->products as $product) {
+           
+               $items[] = $product->name;
+         }
+         if(in_array($complaint->product->name,$items))
+         {
+         $total=Auth::user()->city->complaint->count();
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+      }
+      if (Auth::user()->role->name == 'Admin' && Auth::user()->city->name == $complaint->city->name)
+      
+      {
+
+         $total=Auth::user()->city->complaint->count();
+         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
+         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
+         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
+         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         
+         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
+         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
+         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
+         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         
+         return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
+      }
+   }
+   
+});
                Route::get('showproduct','LinkController@product');
                Route::get('showarea','LinkController@area');
                Route::get('showbrand','LinkController@brand');
@@ -108,21 +170,30 @@ Route::group(['middleware'=>'authenticated'],function(){
                Route::post('editstatus','ComplaintsController@edit');
                Route::post('editcomplaint','ComplaintsController@edit');
                Route::post('invoice','InvoiceController@store');
-               Route::post('invoice_update','InvoiceController@edit');
+               Route::post('invoice_edit','InvoiceController@edit');
                // Route::post('completedcomplaint','ComplaintsController@show');
                
 // Manager Routes:
                Route::view('managerdashboard', 'admin.template.home.layout.manager');
+               Route::get('billing/{id}', 'PdfController@index');
+                  
+                 
+                  // return view('admin.template.home.layout.invoice', compact('complaint','array'));
+               
+               Route::resource('technicians','TechniciansController'); 
                Route::resource('product','TechnicianController'); 
                 
                // Route::post('assignproduct','TechnicianProductController@store'); 
                Route::get('bill/{id}', 'LinkController@bill');  
+               Route::get('rrbill/{id}', 'LinkController@repeatedbill');  
+               Route::post('repeatedbill', 'InvoiceController@update');  
+               Route::post('confirmed', 'InvoiceController@update');  
    
 
 Route::get('makereport/{id}', 'LinkController@makereport');
-Route::get('invoice/{complaint}','InvoiceController@update')->name('bill.update');
 
 Route::get('addcomplaint','LinkController@addcomplaint');
+Route::get('newcomplaint/{id}','LinkController@newaddcomplaint');
 
 Route::get('showcomplaint','LinkController@showcomplaint');
 Route::get('report','LinkController@report');

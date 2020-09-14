@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRoleIdColumnToUsersTables extends Migration
+class AddPercentageToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddRoleIdColumnToUsersTables extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->unsigned(); 
+            $table->integer('percentage')->after('name')->nullable();
         });
     }
 
@@ -26,8 +26,7 @@ class AddRoleIdColumnToUsersTables extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role_id');
-
+            $table->dropColumn('percentage');
         });
     }
 }

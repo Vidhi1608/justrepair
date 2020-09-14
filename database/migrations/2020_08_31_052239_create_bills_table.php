@@ -18,10 +18,10 @@ class CreateBillsTable extends Migration
             $table->integer('complaint_id');
             $table->json('items_name');
             $table->json('items_price');
-            $table->json('items_expense');
+            $table->json('items_expense')->nullable();
             $table->string('payment_method');
-            $table->integer('confirmed_by_manager');
-            $table->integer('confirmed_by_technician');
+            $table->integer('confirmed_by_manager')->nullable();
+            $table->integer('confirmed_by_technician')->nullable();
             $table->timestamps();
         });
     }
