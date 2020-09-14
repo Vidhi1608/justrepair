@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-        $users=User::paginate(5);
+        $users=User::paginate(20);
             
             foreach ($users as $value) {
                 $roles[]= $value->role;
@@ -64,12 +64,24 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+  
+       
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = ucfirst($request->fname . " " . $request->lname);
         $admin->mobile=$request->mobile;
         $admin->email=$request->email;
         $admin->password= Hash::make($request->password);
+        if ($file=$request->file('file')) {
+            $name=$file->getClientOriginalName();
+            $file->move('images',$name);
+            
+        }
+        $admin->file=$name;
+        
+        
+        // $admin->file=$request->file('file')->store('images');
+        
         
         
         if ($request->role_id!== 'Admin') {
@@ -86,7 +98,7 @@ class AdminController extends Controller
           $users->products()->attach($product);  
         }
     }
-    
+
         return redirect('admin');
     }
 

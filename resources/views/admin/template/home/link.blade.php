@@ -97,6 +97,25 @@
   50% { background-color: #FF0000; box-shadow: 0 0 10px #FF0000; }
   100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
 }
+/* .bg{
+  background-color: #0373f9;
+  color: white;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 29% 100%, 0 64%);
+
+
+}
+.profile{
+  background-color: white;
+  border-color: antiquewhite!important;
+  box-shadow: 0vmin!important;
+} */
+.profile {
+  border: 5px solid white!important;
+  margin-top: -6rem;
+  margin-bottom: 1rem;
+  max-width: 9rem;
+  margin-right: 20px;
+}
 
     </style>
   

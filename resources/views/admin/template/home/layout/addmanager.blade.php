@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-8">
               <div class="card shadow p-3 mt-3 mb-5 ">
             
-            {!! Form::open(['method'=>'post','action'=>'AdminController@store']) !!}
+            {!! Form::open(['method'=>'post','action'=>'AdminController@store','enctype'=>'multipart/form-data']) !!}
 
             <div class="form-group">
                 {!! Form::hidden('role_id', 2) !!}
@@ -125,6 +125,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   
                   
                 </div>
+                {!! Form::label('file', 'Profile') !!}
+                {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
                 <hr>
 
               

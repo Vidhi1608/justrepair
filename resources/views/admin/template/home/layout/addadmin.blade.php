@@ -67,7 +67,7 @@
                       <div class="card shadow p-3 mt-3 mb-5 ">
                      
                     
-                    {!! Form::open(['method'=>'post','action'=>'AdminController@store']) !!}
+                    {!! Form::open(['method'=>'post','action'=>'AdminController@store','files'=>true]) !!}
         
                     <div class="form-group">
                         {!! Form::hidden('role_id' , 1) !!}
@@ -82,6 +82,9 @@
                         {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                         {!! Form::label('password', 'Password') !!}
                         {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
+                        {!! Form::label('file', 'Profile') !!}
+                        {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
+                        
                     </div>
                     <div class="form-group text-center">
                         {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}

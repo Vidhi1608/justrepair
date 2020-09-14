@@ -127,6 +127,7 @@ Route::get('addcomplaint','LinkController@addcomplaint');
 Route::get('showcomplaint','LinkController@showcomplaint');
 Route::get('report','LinkController@report');
 Route::get('inquiry','LinkController@inquiry');
+Route::get('profile','LinkController@profile');
 
 
 Route::post('submit', 'ComplaintsController@store');
@@ -164,7 +165,36 @@ Route::any( '/find', function () {
    Alert::error('Sorry', 'Complaint not Found.!');
        return redirect('complaints');
 } );
-
+Route::any( '/get', function () {
+   $q = Input::get ( 'q' );
+   if($q != ""){
+   $complaints = Complaint::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'mobile', 'LIKE', '%' . $q . '%' )->orWhere ( 'status', 'LIKE', '%' . $q . '%' )->paginate(5)->setPath ( '' );
+   $pagination = $complaints->appends ( array (
+               'q' => Input::get ( 'q' ) 
+       ) );
+   if (count ( $complaints ) > 0)
+   return view('admin.template.home.layout.completed',compact('complaints'))->withQuery($q);
+      //  return view ( 'welcome' )->withDetails ( $user )->withQuery ( $q );
+   }
+   
+   Alert::error('Sorry', 'Complaint not Found.!');
+   return redirect('completed');
+} );
+Route::any( '/found', function () {
+   $q = Input::get ( 'q' );
+   if($q != ""){
+   $complaints = Complaint::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'mobile', 'LIKE', '%' . $q . '%' )->orWhere ( 'status', 'LIKE', '%' . $q . '%' )->paginate(5)->setPath ( '' );
+   $pagination = $complaints->appends ( array (
+               'q' => Input::get ( 'q' ) 
+       ) );
+   if (count ( $complaints ) > 0)
+   return view('admin.template.home.layout.working',compact('complaints'))->withQuery($q);
+      //  return view ( 'welcome' )->withDetails ( $user )->withQuery ( $q );
+   }
+   
+   Alert::error('Sorry', 'Complaint not Found.!');
+       return redirect('working');
+} );
 // Route::resource('data','AssignController');
 Route::get('logout', function(){
    Auth::logout();

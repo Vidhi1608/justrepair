@@ -63,6 +63,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <option value="Active">Active</option>
                     <option value="InActive">InActive</option>
                 </select>
+                <label>Profile</label>
+                <input type="file" name="file" class="form-control" value="{{$user->file}}">
             </div>
                 @method('PUT')
                 <button type="submit" class="btn btn-success">Update</button>

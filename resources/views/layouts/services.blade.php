@@ -12,11 +12,12 @@
     <div class="container-fluid">
 
       <div class="row">
-
+        
         <div class="col-6 btn-mobile bg-yelloww">
+          
 
-          <a class="btn cot-btn" onclick="gtag_report_conversion();" href="tel:9099880885"><i class="fas fa-phone-volume"></i> Call 9099880885</a>       
-
+          <a class="btn cot-btn" onclick="gtag_report_conversion();" href="tel:9099880885"><i class="fas fa-phone-volume"></i> Call {{(isset($mobile)) ? $mobile['mobile'] : '9099880885'}}</a>       
+          
         </div>
 
         <div class="col-6 btn-mobile bg-greeen">

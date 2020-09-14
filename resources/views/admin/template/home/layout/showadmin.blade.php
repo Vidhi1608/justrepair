@@ -153,12 +153,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Admin List</h1>
+            <h1 class="m-0 text-dark">User List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Admin List</li>
+              <li class="breadcrumb-item active">User List</li>
             </ol>
           </div><!-- /.col -->
           <div>
@@ -225,7 +225,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </thead>
            
             <tbody>
+              
             @foreach($users as $user)
+            @if (Auth::user()->role->name == 'Admin' )
             <tr>
                 <td>{{$user['id']}}</td>
                 <td>{{$user['created_at']}}</td>
@@ -241,6 +243,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </td>
                 
             </tr>
+            
+            @endif
+            {{-- @if (Auth::user()->role->name == 'Manager' ) --}}
+            @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $user->city->name)
+           
+             
+            
+            @if ($user->role->name == 'Technician' && $user->city->name==$user->city->name )
+            <tr>
+                <td>{{$user['id']}}</td>
+                <td>{{$user['created_at']}}</td>
+                <td>{{$user['name']}}</td>
+                <td>{{$user->role['name']}}</td>
+                <td>{{$user['mobile']}}</td>
+                <td>{{$user['email']}}</td>
+                <td>{{$user->city['name']}}</td>
+                <td>@foreach ($user->products as $product){{$product->name}}<br>@endforeach</td>
+                <td>{{$user['status']}}</td>
+                <td>
+                  <a href="{{action('AdminController@edit',$user['id'])}}" class="btn btn-success btn-sm">Edit</a>
+                </td>
+                
+            </tr>
+            @endif
+            @endif
             @endforeach
           </tbody>
              

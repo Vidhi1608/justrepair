@@ -252,4 +252,8 @@ class LinkController extends Controller
     
         return view('admin.template.home.layout.showinquiry',compact('inquiry'));
     }
+    public function profile(){
+        $users=Auth::user();
+        return  view('admin.template.home.layout.profile',compact('users'));
+    }
 }
