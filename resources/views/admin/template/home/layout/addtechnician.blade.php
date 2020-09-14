@@ -94,17 +94,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {!! Form::password('password', ['class'=>'form-control' ,'placeholder'=>'Your Password', 'required']) !!}
              
                 </div>
+                <hr>
                 {{-- ------------FOR MANAGER------------ --}}
                   @foreach ($cities as $city)
                   @if (Auth::user()->role->name == 'Manager' && Auth::user()->city->name == $city->name)
-                  <div class="row">
-                    <div class="col-md-6">
+                  
+                    
                       <input type="hidden" name="city_id" value="{{$city->id}}">
-                      <label>City</label>
-                      <input type="text" class="form-control" placeholder="{{$city->name}}" readonly>
-                    </div>
+                      {{-- <label>City</label>
+                      <input type="text" class="form-control" placeholder="{{$city->name}}" readonly> --}}
+                    
                       
-                    <div class="col-md-6">
+                   
                       <label>Select Product</label>
                       <select class="form-control" name="product_id">
                         {{-- @foreach ($cities as $city) --}}
@@ -115,10 +116,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                        @endforeach
                        
                        </select>
-                    </div>
+                    
                    
                   
-                  </div> 
+                  
                   @endif
                   @endforeach
                   
@@ -126,27 +127,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <div class="row text-center">
                   @foreach ($cities as $city)
                   @if (Auth::user()->role->name == 'Admin')
-                  <div class="col"> 
+                  <div class="col text-left"> 
                     <label>
                       <input type="radio" name="city_id" value="{{$city->id}}"> {{$city->name}}
                     </label>
-                   <select class="form-control" name="product_id">
-                    {{-- @foreach ($cities as $city) --}}
-                    
-                    @foreach ($city->products as $product)
+                    <hr>
+                  @foreach ($city->products as $product)
+                  {{-- <select class="form-control" name="product_id[]">
                     
                     <option value="{{$product->id}}">{{$product->name}}</option>
-                   @endforeach
-                   
-                   </select>
+                    
+                  </select> --}}
+                  <input type="checkbox" name="product_id[]" value="{{$product->id}}"> {{$product->name}}<br>
+                  @endforeach
                   
                   </div>
                   @endif
                   @endforeach
                 </div>
+                <hr>
                 {!! Form::label('file', 'Profile') !!}
                 {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
-                 </div>
+                 
                   
                 <hr>
             

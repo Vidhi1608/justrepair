@@ -95,7 +95,7 @@ Route::get('admindashboard', function(){
          return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
       }
       }
-      if (Auth::user()->role->name == 'Admin' && Auth::user()->city->name == $complaint->city->name)
+      if (Auth::user()->role->name == 'Admin')
       
       {
 

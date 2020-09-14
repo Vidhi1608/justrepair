@@ -64,7 +64,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        return $request->all();
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = ucfirst($request->fname . " " . $request->lname);
@@ -89,15 +89,16 @@ class AdminController extends Controller
         }
             
         $admin->save();
-        if ($request->role_id== 3) {
+        // return $admin;
+        if ($admin->role_id== 3) {
         $users =User::find($admin->id);
-        // $products=Product::find($request->product_id);
+        $products=Product::find($request->product_id);
         
-        // foreach ($products as $product) {
+        foreach ($products as $product) {
             
         //   $users->products()->attach($product);  
-        // }
-        $users->products()->sync($request->product_id);  
+          $users->products()->attach($product);  
+        }
     }
 
         return redirect('admin');

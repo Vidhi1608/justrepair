@@ -126,6 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   
                   
                 </div>
+                <br>
                 {!! Form::label('file', 'Profile') !!}
                 {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
                 <hr>

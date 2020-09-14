@@ -82,10 +82,11 @@
                         {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                         {!! Form::label('password', 'Password') !!}
                         {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
-                        {!! Form::label('file', 'Profile') !!}
-                        {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
                         
                     </div>
+                    {!! Form::label('file', 'Profile') !!}
+                    {!! Form::file('file', null, ['class'=>'form-control' ,'placeholder'=>'Your profile']) !!}
+
                     <div class="form-group text-center">
                         {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
                     </div>    
