@@ -51,6 +51,20 @@ class ComplaintsController extends Controller
         $complaints=Complaint::all();
         $users=User::all();
         $cities=City::all();
+        
+            // foreach ($users as $user) 
+            // {
+            //     if($complaints->city_id == $user->city->id && $user->role_id == 3)
+            //     {
+                   
+            //         foreach ($user->products as $product) {
+            //             if($product->id == $complaints->product_id)
+            //             echo $user->name, $product.'<br>';
+            //         }
+            //     }
+            // }
+        
+            // exit();
         if (Auth::user()->role->name == 'Technician') {
             foreach(Auth::user()->products as $product) {
                 $items[] = $product->name;
@@ -123,13 +137,13 @@ class ComplaintsController extends Controller
     public function edit(Request $request)
     {
         // return $request;
-        if (isset($request->assign)==1) {
-            $users=User::all();
-            $complaint=Complaint::find($request->complaint_id);
+        // if (isset($request->assign)==1) {
+        //     $users=User::all();
+        //     $complaint=Complaint::find($request->complaint_id);
             
-                return view('admin.template.home.layout.adminassigncomplaint',compact('complaint','users'));
+        //         return view('admin.template.home.layout.adminassigncomplaint',compact('complaint','users'));
             
-        }
+        // }
         if (isset($request->editcomplaint)==1) {
             $complaint=Complaint::find($request->complaint_id);
             return view('admin.template.home.layout.editcomplaint',compact('complaint'));
@@ -145,11 +159,16 @@ class ComplaintsController extends Controller
             return redirect('cancel');
         }
         // Auth::user()->notify(User::all(),new NotificationForComplaints($complaints));
+        
         $complaints->update(["user_id"=> 0 ,"status"=> $status]); //For Upcoming (New) Complaint
         $complaints->save();
-        if (isset($request->cancelcomplaint)==1) {
-        return redirect('upcoming');
-         }
+        
+        if (isset($request->cancelcomplaint)==1) {  //upcoming page route for admin & manager
+        
+            return redirect('upcoming');
+         
+        }
+
           return redirect('working');
         // Notification::send($user, new MyFirstNotification());
     }
@@ -164,6 +183,14 @@ class ComplaintsController extends Controller
     public function update(Request $request)
     {
         // return $request;
+        if(isset($request->repeat)==4) {
+            $user = $request->user_id;
+            $complaints = Complaint::findOrFail($request->id);
+            $complaints->update(["user_id"=> $user ,"status"=> 4]); //For Repeated Complaints
+            $complaints->save();
+            
+            return redirect('working');
+        }
         if (isset($request->updatecomplaint)==1) {
           
             $complaint=Complaint::find($request->complaint_id);
@@ -175,7 +202,7 @@ class ComplaintsController extends Controller
         }
         $user = $request->user_id;
         $complaints = Complaint::findOrFail($request->id);
-        $complaints->update(["user_id"=> $user ,"status"=> 1]); //For Working Complaint
+        $complaints->update(["user_id"=> $user ,"status"=> 1]); //For Working Complaints
         $complaints->save();
         
         return redirect('working');

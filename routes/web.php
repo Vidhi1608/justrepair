@@ -99,16 +99,16 @@ Route::get('admindashboard', function(){
       
       {
 
-         $total=Auth::user()->city->complaint->count();
-         $status0=Auth::user()->city->complaint->where('status','=',0)->count();
-         $status1=Auth::user()->city->complaint->where('status','=',1)->count();
-         $status2=Auth::user()->city->complaint->where('status','=',2)->count();
-         $status3=Auth::user()->city->complaint->where('status','=',3)->count();
+         $total=Complaint::all()->count();
+         $status0=Complaint::where('status','=',0)->count();
+         $status1=Complaint::where('status','=',1)->count();
+         $status2=Complaint::where('status','=',2)->count();
+         $status3=Complaint::where('status','=',3)->count();
          
-         $status4=Auth::user()->city->complaint->where('status','=',4)->count();
-         $status5=Auth::user()->city->complaint->where('status','=',5)->count();
-         $status6=Auth::user()->city->complaint->where('status','=',6)->count();
-         $status7=Auth::user()->city->complaint->where('status','=',7)->count();
+         $status4=Complaint::where('status','=',4)->count();
+         $status5=Complaint::where('status','=',5)->count();
+         $status6=Complaint::where('status','=',6)->count();
+         $status7=Complaint::where('status','=',7)->count();
          
          return view('admin.template.home.layout.admin', compact('complaints','total','status0','status1','status2','status3','status4','status5','status6','status7'));
       }

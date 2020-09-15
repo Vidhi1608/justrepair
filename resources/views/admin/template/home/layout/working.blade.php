@@ -119,6 +119,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>product</th>
                   <th>Brand(model)</th>
                   <th>Technician Name</th>
+                  <th>Action</th>
                   @endif
                 </thead>
                 @foreach($complaints as $complaint)
@@ -128,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <tr>
                   <td>{{$complaint->id}}
                     @if ($complaint->status == 4)
-                    <a class="btn btn-danger btn-sm repeat-bt">Repeated</a>
+                    <a class="btn btn-danger btn-sm repeat-bt">Repeat</a>
                     @endif
                   </td>
                   <td>{{$complaint->created_at}}</td>
@@ -139,7 +140,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                   <td>{{$complaint->user->name}}</td>
                   <td>
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2">Cancel</button>
+                    
+                    @if ($complaint->status == 4)
+                      <div class="btn-group">
+                      <button class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#myModal-{{$complaint->id}}">Assign</button>
+                      <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal-{{$complaint->id}}">Cancel</button>
+                      @else 
+                    </div>
+                      <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal-{{$complaint->id}}">Cancel</button>
+                      
+                      @endif                  
                   </td>
                    <!-- The Modal -->
                    <div class="modal fade" id="myModal2">
@@ -179,6 +189,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                   </div>
                 <!-- The Modal -->
+                <!-- The Modal -->
+                <div class="modal fade" id="myModal-{{$complaint->id}}">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Assign Complaint to Technician</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+  
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        <form class="form-group" action="/taken" method="Post">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$complaint->id}}">
+                          {{-- <input type="hidden" name="id" value= "{{$complaint->id}}"> --}}
+                        <label>Complaint Assign for {{$complaint->product->name}}:</label>
+                          <br>
+                          <select class="form-control" name="user_id">
+                            <option selected>Select Technician</option>
+                            @foreach($users as $user)
+                            @if ($complaint->city_id == $user->city->id && $user->role_id == 3)
+                           @foreach ($user->products as $product)
+                           @if ($product->id == $complaint->product_id)
+                               
+                           <option value="{{$user->id}}">{{$user->name}}</option>    
+                           @endif
+                           @endforeach 
+                            @endif
+                            @endforeach
+                          </select>
+                          <button type="submit" class="btn btn-success mt-3" name="repeat" value="4">Assign</button>
+                        </form>
+                        </div>
+                      
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+  
+                      </div>
+                    
+  
+                    </div>
+                  </div>
+                </div>
+              <!-- The Modal -->
               </tr>
               @endif
               @endif
@@ -200,7 +256,101 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td>{{$complaint->product->name}}</td>
                   <td>{{$complaint->brand['name']}}({{$complaint->model}})</td>
                   <td>{{$complaint->user->name}}</td>
-                  
+                  <td>
+                    @if ($complaint->status == 4)
+                      <div class="btn-group">
+                      <button class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#myModal-{{$complaint->id}}">Assign</button>
+                      <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2-{{$complaint->id}}">Cancel</button>
+                      @else 
+                    </div>
+                  <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2-{{$complaint->id}}">Cancel</button>
+                      
+                      @endif
+                  </td>
+                   <!-- The Modal -->
+                <div class="modal fade" id="myModal2-{{$complaint->id}}">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                      
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Cancel Reason</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          <form class="form-group" action="/editstatus" method="Post">
+                            @csrf
+                          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                            <input type="hidden" name="id" value= "{{$complaint->id}}">
+                            <label>Reason:</label>
+                            <br>
+                            <select class="form-control" name="complaint_status">
+
+                              <option value="6">Complaint canceled by Customer</option>
+                              <option value="0">Not Reachable</option>
+                            </select>
+                            <button type="submit" class="btn btn-success mt-3">Submit</button>
+                          </form>
+                          </div>
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+
+                        </div>
+                      
+
+                      </div>
+                    </div>
+                  </div>
+                <!-- The Modal -->
+                <!-- The Modal -->
+                <div class="modal fade" id="myModal-{{$complaint->id}}">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Assign Complaint to Technician</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+  
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        <form class="form-group" action="/taken" method="Post">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$complaint->id}}">
+                          {{-- <input type="hidden" name="id" value= "{{$complaint->id}}"> --}}
+                        <label>Complaint Assign for {{$complaint->product->name}}:</label>
+                          <br>
+                          <select class="form-control" name="user_id">
+                            <option selected>Select Technician</option>
+                            @foreach($users as $user)
+                            @if ($complaint->city_id == $user->city->id && $user->role_id == 3)
+                           @foreach ($user->products as $product)
+                           @if ($product->id == $complaint->product_id)
+                               
+                           <option value="{{$user->id}}">{{$user->name}}</option>    
+                           @endif
+                           @endforeach 
+                            @endif
+                            @endforeach
+                          </select>
+                          <button type="submit" class="btn btn-success mt-3" name="repeat" value="4">Assign</button>
+                        </form>
+                        </div>
+                      
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+  
+                      </div>
+                    
+  
+                    </div>
+                  </div>
+                </div>
+              <!-- The Modal -->
               </tr>
               @endif
               @endif

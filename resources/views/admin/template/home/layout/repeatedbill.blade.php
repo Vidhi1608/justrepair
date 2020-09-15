@@ -106,9 +106,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                       @foreach ($array as $key => $value)
                                         <tr id='addr0'>
                                             <td class="text-center"></td>
-                                            <td><input type="text" name='product[]' placeholder='Enter Item' class="form-control" required value="{{$key}}"></td>
-                                            <td class="d-none"><input type="number" name='qty[]' placeholder='Enter Qty' class="form-control qty" step="0" min="0" value="1" /></td>
-                                            <td><input type="number" name='price[]' placeholder='Enter Price' class="form-control price" step="0.00" min="0" required value="{{$value}}"></td>
+                                            <td><input type="text" name='product[]' placeholder='Enter Item' class="form-control" required value="{{$key}}" readonly></td>
+                                            <td class="d-none"><input type="number" name='qty[]' placeholder='Enter Qty' class="form-control qty" step="0" min="0" value="1"  readonly/></td>
+                                            <td><input type="number" name='price[]' placeholder='Enter Price' class="form-control price" step="0.00" min="0" required value="{{$value}}" readonly></td>
                                             <td class="d-none"><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
                                         </tr>
                                         @endforeach

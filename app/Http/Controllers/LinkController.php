@@ -186,6 +186,7 @@ class LinkController extends Controller
     }
     public function working()
     {
+        $users=User::all();
         $complaints=Complaint::all();
         
         //  $users->notify(new NotificationForComplaints($complaints));
@@ -195,7 +196,7 @@ class LinkController extends Controller
            
             // return $notifications;
             // exit();
-            return view('admin.template.home.layout.working',compact('complaints',));
+            return view('admin.template.home.layout.working',compact('complaints','users'));
         }
         if (Auth::user()->role->name == 'Technician') {
             foreach(Auth::user()->products as $product) {
