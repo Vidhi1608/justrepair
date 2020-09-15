@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -40,7 +40,7 @@ class LoginController extends Controller
                        return redirect('admindashboard');
                         break;
                     case 'Technician':
-                        return redirect('admindashboard');
+                        return redirect('techdashboard');
                         break;
                     case 'Manager':
                         return redirect('managerdashboard');
@@ -61,11 +61,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    // protected function credentials(Request $request)
-    // {
-    //     if(is_numeric($request->get('email'))){
-    //         return ['phone'=>$request->get('email'),'password'=>$request->get('password')];
-    //     }
-    //     return $request->only($this->username(), 'password');
-    // }
+    /**
+       * Get the needed authorization credentials from the request.
+       *
+       * @param  \Illuminate\Http\Request  $request
+       * @return array
+       */
+      protected function credentials(Request $request)
+      {
+        if(is_numeric($request->get('email'))){
+          return ['mobile'=>$request->get('email'),'password'=>$request->get('password')];
+        }
+        elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+          return ['email' => $request->get('email'), 'password'=>$request->get('password')];
+        }
+        return ['username' => $request->get('email'), 'password'=>$request->get('password')];
+      }
 }

@@ -107,15 +107,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       
                    
                       <label>Select Product</label>
-                      <select class="form-control" name="product_id">
+                      
+                      <div class="col text-left">
                         {{-- @foreach ($cities as $city) --}}
                         
                         @foreach ($city->products as $product)
-                        
-                        <option value="{{$product->id}}">{{$product->name}}</option>
+                        <input type="checkbox" name="product_id[]" value="{{$product->id}}"> {{$product->name}}<br>
+                        <!-- <option value="{{$product->id}}">{{$product->name}}</option> -->
                        @endforeach
+                      </div>
                        
-                       </select>
+                      
                     
                    
                   

@@ -81,10 +81,11 @@ class ComplaintsController extends Controller
      */
     public function store(Request $request)
     {
-      
+    //   return $request->all();
         $complaint= new Complaint;
         $complaint->name=ucfirst($request->name);
         $complaint->mobile=$request->mobile;
+        $complaint->user_id=$request->user_id;
         $complaint->address=$request->address;
         $complaint->city_id=$request->city_id;
         $complaint->area=$request->area;

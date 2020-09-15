@@ -91,6 +91,12 @@
                   <p class="p-cont">Show Technicians</p>
                 </a>
               </li>
+              <li class="nav-item">
+              <a href="{{url('product')}}" class="nav-link">
+                <i class="fab fa-product-hunt"></i>
+                <p class="p-cont2">Product_Technician</p>
+              </a>
+            </li>
             </ul>
           </li>
           <li class="nav-item has-treeview menu-open">

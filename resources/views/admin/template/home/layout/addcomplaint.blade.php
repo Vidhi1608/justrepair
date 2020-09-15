@@ -66,6 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="form-group">
                     <label>Name</label>
                      <input type="text" name="name" class="form-control text-capitalize" placeholder="Enter your name">
+                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                      <label>Contact Number</label>
                      <input type="tel" name="mobile" class="form-control" placeholder="Enter your Mobile Number">
                      
@@ -104,21 +105,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      <div class="row text-center">
                       @foreach ($cities as $city)
                       @if (Auth::user()->role->name == 'Admin')
-                      <div class="col"> 
-                        <label>
-                          <input type="radio" name="city_id" value="{{$city->id}}"> {{$city->name}}
-                        </label>
-                       <select class="form-control" name="product_id">
-                        {{-- @foreach ($cities as $city) --}}
-                        
-                        @foreach ($city->products as $product)
-                        
-                        <option value="{{$product->id}}">{{$product->name}}</option>
-                       @endforeach
-                       
-                       </select>
-                      
-                      </div>
+                      <div class="col text-left"> 
+                    <label>
+                      <input type="radio" name="city_id" value="{{$city->id}}"> {{$city->name}}
+                    </label>
+                    <hr>
+                  @foreach ($city->products as $product)
+                  {{-- <select class="form-control" name="product_id[]">
+                    
+                    <option value="{{$product->id}}">{{$product->name}}</option>
+                    
+                  </select> --}}
+                  <input type="checkbox" name="product_id" value="{{$product->id}}"> {{$product->name}}<br>
+                  @endforeach
+                  
+                  </div>
                       @endif
                       @endforeach
                      </div> 
