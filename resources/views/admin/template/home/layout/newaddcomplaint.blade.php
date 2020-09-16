@@ -17,9 +17,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break

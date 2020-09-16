@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Role;
-use App\User;
 
 class LoginController extends Controller
 {
@@ -71,10 +72,39 @@ class LoginController extends Controller
       {
         if(is_numeric($request->get('email'))){
           return ['mobile'=>$request->get('email'),'password'=>$request->get('password')];
+          
         }
         elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
           return ['email' => $request->get('email'), 'password'=>$request->get('password')];
         }
-        return ['username' => $request->get('email'), 'password'=>$request->get('password')];
+            
+       }
+     
+       /*
+       * Method override to send correct error messages
+       * Get the failed login response instance.
+       *
+       * @param \Illuminate\Http\Request  $request
+       * @return \Illuminate\Http\Response
+       */
+      protected function sendFailedLoginResponse(Request $request)
+      {
+  
+          if ( ! User::where('email', $request->email)->first() ) {
+              return redirect()->back()
+                  ->withInput($request->only($this->username(), 'remember'))
+                  ->withErrors([
+                      $this->username() => Lang::get('auth.email'),
+                  ]);
+          }
+  
+          if ( ! User::where('email', $request->email)->where('password', bcrypt($request->password))->first() ) {
+              return redirect()->back()
+                  ->withInput($request->only($this->username(), 'remember'))
+                  ->withErrors([
+                      'password' => Lang::get('auth.password'),
+                  ]);
+          }
+  
       }
 }

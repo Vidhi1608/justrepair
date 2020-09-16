@@ -32,6 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
     <a href="{{url('logout')}}" class="nav-link"><i class="fas fa-power-off "></i></a>
+    <div class="nav-link">
+      <a href="{{url('profile')}}"><i class="fas fa-user-circle"></i></a>
+    </div>
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-comments"></i>

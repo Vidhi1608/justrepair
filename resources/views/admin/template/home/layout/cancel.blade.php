@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -36,7 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @case('Admin') 
                                                                                                                                                                                                                                                                                                       --}}
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="overflow: hidden">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">

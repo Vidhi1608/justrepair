@@ -137,7 +137,7 @@
 
            <div>
 
-           <a class="btn form-control btn-background-color" href="tel:9099880885">Call Now And Buy</a>
+           <a class="btn form-control btn-background-color" href="tel:{{(isset($mobile)) ? $mobile['mobile'] : '9099880885'}}">Call Now And Buy</a>
 
            </div>
 

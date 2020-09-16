@@ -5,7 +5,11 @@
         -->
         <html lang="en">
         <head>
+          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+          <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+          
           @include('admin.template.home.link')
+      
         </head>
         <body class="hold-transition sidebar-mini over">
         <div class="wrapper">
@@ -15,9 +19,9 @@
         
         
             {{-- // return Auth::user()->role->name; --}}
-            {{ $role = Auth::user()->role->name }}
+            {{-- {{ $role = Auth::user()->role->name }} --}}
         
-            @switch($role)
+            @switch(Auth::user()->role->name)
                 @case('Manager')
                     @include('admin.template.home.section.sidebar2')
                     @break
@@ -30,8 +34,8 @@
             @endif
         
             @if (Auth::check())
-            {{$role = Auth::user()->role->name}}
-            @switch($role)
+            {{-- {{$role = Auth::user()->role->name}} --}}
+            @switch(Auth::user()->role->name)
                 @case('Admin')
         
           <!-- Content Wrapper. Contains page content -->
@@ -81,7 +85,7 @@
                         {!! Form::label('email', 'Email') !!}
                         {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                         {!! Form::label('password', 'Password') !!}
-                        {!! Form::text('password', null, ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
+                        {!! Form::password('password', ['data-toggle'=>'password','class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
                         
                     </div>
                     {!! Form::label('file', 'Profile') !!}
@@ -122,6 +126,7 @@
         <!-- ./wrapper -->
         
         <!-- REQUIRED SCRIPTS -->
+     
         @include('admin.template.home.script')
         @include('sweetalert::alert')
         </body>

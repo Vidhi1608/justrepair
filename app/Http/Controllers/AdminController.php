@@ -64,7 +64,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $admin= new User;
         $admin->role_id = $request->role_id;
         $admin->name = ucfirst($request->fname . " " . $request->lname);

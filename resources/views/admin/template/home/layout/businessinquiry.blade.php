@@ -1,138 +1,12 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#419eaa">
-
-    @yield('meta-data')
-	@include('includes.header')
-	<style>
-		.image 
-		{
-			width: 100%;
-    		height: 100vh;				
-    		background-repeat: no-repeat;
-    		background-size: cover;
-    		position: relative;
-    		animation-name: animate;
-    		animation-direction: alternate-reverse;
-    		animation-duration: 3s;
-    		animation-fill-mode: forwards;
-    		animation-iteration-count: infinite;
-    		animation-play-state: running;
-    		animation-timing-function: ease-in-out;
-		}
-		@keyframes animate {
-    		0% {
-    		    background-image: url(/images/inquiry/1.jpg);
-    		}
-    		100% {
-    		    background-image: url(/images/inquiry/2.jpg);
-    		}
-		}
-
-		.bg-green 
-		{
-			background-color: #419eaa;
-			color: white;
-		}
-	</style>
-</head>
-<body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=1049909768686087&autoLogAppEvents=1"></script>
-  
-    @include('includes.navbar')
-
-    <div class="main">
-		<div class="container image">
-			<div class="row">
-				<div class="col-md-6 p-0">
-					<div class="card">
-						<div class="card-header bg-green text-center">
-						  Business Inquiry
-						</div>
-						<div class="card-body">
-							<form>
-								<div class="form-row">
-								  <div class="form-group col-md-6">
-									<label for="inputEmail4">Email</label>
-									<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-								  </div>
-								  <div class="form-group col-md-6">
-									<label for="inputPassword4">Password</label>
-									<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-								  </div>
-								</div>
-								<div class="form-group">
-								  <label for="inputAddress">Address</label>
-								  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-								</div>
-								<div class="form-group">
-								  <label for="inputAddress2">Address 2</label>
-								  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-								</div>
-								<div class="form-row">
-								  <div class="form-group col-md-6">
-									<label for="inputCity">City</label>
-									<input type="text" class="form-control" id="inputCity">
-								  </div>
-								  <div class="form-group col-md-4">
-									<label for="inputState">State</label>
-									<select id="inputState" class="form-control">
-									  <option selected>Choose...</option>
-									  <option>...</option>
-									</select>
-								  </div>
-								  <div class="form-group col-md-2">
-									<label for="inputZip">Zip</label>
-									<input type="text" class="form-control" id="inputZip">
-								  </div>
-								</div>
-								<div class="form-group">
-								  <div class="form-check">
-									<input class="form-check-input" type="checkbox" id="gridCheck">
-									<label class="form-check-label" for="gridCheck">
-									  Check me out
-									</label>
-								  </div>
-								</div>
-								<button type="submit" class="btn btn-primary">Sign in</button>
-							  </form>
-						</div>
-						<div class="card-footer text-muted">
-						  2 days ago
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 p-0 text-center">
-					<div>
-						<h1 class="text-light">
-							helo
-						</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-    @include('includes.footer')
-</body>
-</html> --}}
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Contact V17</title>
+	<title>Business Inquiry</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="{{url('assets/inquiry/images/icons/favicon.ico')}}"/>
+	<link rel="shortcut icon" type="image/png" href="{{url('images/fevicon.png')}}" />
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url('assets/inquiry/vendor/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
@@ -193,6 +67,7 @@
 	<div class="container-contact100">
 		<div class="wrap-contact100 shadow">
 			<div class="contact100-more flex-col-c-m image" id="particles-js">
+				<div>
 				<div class="flex-w size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-map-marker"></span>
@@ -204,7 +79,7 @@
 						</span>
 
 						<span class="txt2">
-							Mada Center 8th floor, 379 Hudson St, New York, NY 10018 US
+							636, City Gate, South Vasna, Ahmedabad, Gujarat
 						</span>
 					</div>
 				</div>
@@ -219,9 +94,11 @@
 							Lets Talk
 						</span>
 
-						<span class="txt3">
-							+1 800 1236879
-						</span>
+						<a href="tel:+919099880885">
+							<span class="txt3">
+								+91 9099880885
+							</span>
+						</a>
 					</div>
 				</div>
 
@@ -235,16 +112,20 @@
 							General Support
 						</span>
 
-						<span class="txt3">
-							contact@example.com
-						</span>
+						<a href="mailto:justrepairit636@gmail.com">
+							<span class="txt3">
+								justrepairit636@gmail.com
+							</span>
+						</a>
 					</div>
 				</div>
 			</div>
-			<form class="pt-5 pr-4 pb-5" action="/business" method="POST">
+			</div>
+			<form class="pt-5 pr-4 pb-5 pl-4" action="/business" method="POST">
 				@csrf
 				<span class="contact100-form-title">
 					Make An Inquiry 
+					
 				</span>
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -465,100 +346,6 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Inquiry</button>
 			  </form>
-			{{-- <form class="contact100-form validate-form">
-				<span class="contact100-form-title">
-					Send Us A Message
-				</span>
-
-				<label class="label-input100" for="first-name">Tell us your name *</label>
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Type first name">
-					<input id="first-name" class="input100" type="text" name="first-name" placeholder="First name">
-					<span class="focus-input100"></span>
-				</div>
-				<div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Type last name">
-					<input class="input100" type="text" name="last-name" placeholder="Last name">
-					<span class="focus-input100"></span>
-				</div>
-				<label class="label-input100" for="first-name">Date of Birth of Applicant</label>
-				<div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Type last name">
-					<select class="input100" name="month[]">
-						<option selected></option>
-						<option value="January">January</option>
-						<option value="February">February</option>
-						<option value="March">March</option>
-						<option value="April">April</option>
-						<option value="May">May</option>
-						<option value="June">June</option>
-						<option value="July">July</option>
-						<option value="August">August</option>
-						<option value="September">September</option>
-						<option value="October">October</option>
-						<option value="November">November</option>
-						<option value="December">December</option>
-					</select>
-					<span class="focus-input100"></span>
-				</div>
-				<div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Type last name">
-					<select class="input100" name="month[]">
-						<option selected></option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
-					</select>
-					<span class="focus-input100"></span>
-				</div>
-				<label class="label-input100" for="email">Enter your email *</label>
-				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-					<input id="email" class="input100" type="text" name="email" placeholder="Eg. example@email.com">
-					<span class="focus-input100"></span>
-				</div>
-
-				<label class="label-input100" for="phone">Enter phone number</label>
-				<div class="wrap-input100">
-					<input id="phone" class="input100" type="text" name="phone" placeholder="Eg. +1 800 000000">
-					<span class="focus-input100"></span>
-				</div>
-
-				<label class="label-input100" for="message">Message *</label>
-				<div class="wrap-input100 validate-input" data-validate = "Message is required">
-					<textarea id="message" class="input100" name="message" placeholder="Write us a message"></textarea>
-					<span class="focus-input100"></span>
-				</div>
-
-				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
-						Send Message
-					</button>
-				</div>
-			</form> --}}
 		</div>
 	</div>
 

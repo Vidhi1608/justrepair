@@ -72,11 +72,11 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{url('addarea')}}" class="nav-link">
                 <i class="fas fa-plus icon2"></i>
                 <p class="p-cont2">Add Area</p>
-              </a>
+              </a> --}}
             </li>
             <li class="nav-item">
               <a href="{{URL::to('areas')}}" class="nav-link">
@@ -95,12 +95,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{url('addcity')}}" class="nav-link">
                   <i class="fas fa-plus icon2"></i>
                   <p class="p-cont2">Add City</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{url('showcities')}}" class="nav-link">
                   <i class="far fa-eye nav-icon icon"></i>
@@ -124,12 +124,12 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-           <li class="nav-item">
+           {{-- <li class="nav-item">
              <a href="{{url('addproduct')}}" class="nav-link">
                <i class="fas fa-plus icon2"></i>
                <p class="p-cont2">Add Product</p>
              </a>
-           </li>
+           </li> --}}
            <li class="nav-item">
              <a href="{{URL::to('products')}}" class="nav-link">
                <i class="far fa-eye nav-icon icon"></i>
@@ -147,12 +147,12 @@
            </p>
          </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{url('addbrand')}}" class="nav-link">
                 <i class="fas fa-plus icon2"></i>
                 <p class="p-cont2">Add Brand</p>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <a href="{{URL::to('brands')}}" class="nav-link">
                 <i class="far fa-eye nav-icon icon"></i>

@@ -42,6 +42,8 @@ class CitiesController extends Controller
     {
         $city= City::firstOrNew(['name' => $request->name]);
         $city->name=ucfirst($request->name);
+        $city->email=$request->email;
+        $city->address=$request->address;
         $city->mobile=$request->mobile;
         $city->save();
         return redirect('cities');
@@ -85,6 +87,9 @@ class CitiesController extends Controller
         ]);
         $city=City::find($id);
         $city->name=$request->name;
+        $city->email=$request->email;
+        $city->address=$request->address;
+        $city->mobile=$request->mobile;
         $city->save();
         return redirect('cities'); 
     }
@@ -99,11 +104,12 @@ class CitiesController extends Controller
     {
         $product=Product::find($request->get('product_id'));
         $city=City::find($request->get('city_id'));
-       
-        foreach ($product as $products) {
-        $city->products()->detach($product);
-       }
-        
+       if(isset($request->product_id)) {
+
+            foreach ($product as $products) {
+            $city->products()->detach($product);
+            }
+        } 
         $city->delete();
         return redirect('/cities');
     }

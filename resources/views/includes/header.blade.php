@@ -1,6 +1,7 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script data-ad-client="ca-pub-4527611656269144" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157026226-1"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

@@ -18,9 +18,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
   {{-- // return Auth::user()->role->name; --}}
-  {{ $role = Auth::user()->role->name }}
+  {{-- {{ $role = Auth::user()->role->name }} --}}
 
-  @switch($role)
+  @switch(Auth::user()->role->name)
       @case('Manager')
           @include('admin.template.home.section.sidebar2')
           @break
@@ -126,10 +126,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <hr>
                             <h4>Email</h4>
                             <h6 class="mb-2 ">{{$users->email}}</h6>
+                            @if (isset($users->city->name))
                             <hr>
+                                
                             <h4>City</h4>
                             <h6 class="mb-2 ">{{$users->city->name}}</h6>
                             <hr>   
+                            @endif
                             </div>
                     {{-- </div>
             </div>

@@ -46,11 +46,11 @@ class AssignBrandController extends Controller
         
         // return $data;
         if (is_null($data)) {
-            Alert::success('Product Added Successfully.!');
             $product->brands()->attach($brand);
+            Alert::success('Brand Added Successfully.!');
         }
         
-
+        
         // return redirect('displaybrand/'.$request->product_id);
         return redirect()->back();
     }

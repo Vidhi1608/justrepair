@@ -17,9 +17,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -32,8 +32,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @endif
 
     @if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
+    {{-- {{$role = Auth::user()->role->name}} --}}
+    @switch(Auth::user()->role->name)
         @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -207,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>     
           </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>

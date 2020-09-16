@@ -5,6 +5,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
 <head>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
   @include('admin.template.home.link')
   <style>
     div.ex2 {
@@ -25,9 +28,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -54,8 +57,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   {{-- @include('admin.template.home.section.sidebar') --}}
   @if (Auth::check())
-  {{$role = Auth::user()->role->name}}
-  @switch($role)
+  {{-- {{$role = Auth::user()->role->name}} --}}
+  @switch(Auth::user()->role->name)
       @case('Admin')
 
   <!-- Content Wrapper. Contains page content -->
@@ -104,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {!! Form::label('email', 'Email') !!}
                 {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Enter your Email Address']) !!}
                 {!! Form::label('password', 'Password') !!}
-                {!! Form::password('password', ['class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
+                {!! Form::password('password', ['data-toggle'=>'password','class'=>'form-control' ,'placeholder'=>'Your Password']) !!}
                 <br>
                 <div class="row">
                   <div class="col-md-2">

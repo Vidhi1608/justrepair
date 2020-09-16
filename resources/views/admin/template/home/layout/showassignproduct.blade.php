@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
     @switch($role)
         @case('Manager')
@@ -32,11 +32,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @endif
 
     @if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
+    {{-- {{$role = Auth::user()->role->name}} --}}
+    @switch(Auth::user()->role->name)
         @case('Admin')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="overflow: hidden">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="card">
           <div class="card-header">
             <div class="row">
-              <div class="col-md-12 searchbar-corner">
+              <div class="col-md-6">
                 <form class="form-inline ml-3">
                   <div class="input-group input-group-sm">
                     <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>     
           </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>

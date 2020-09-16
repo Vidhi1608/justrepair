@@ -52,6 +52,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="form-group">
                 <label>City Name</label>
                 <input type="text" name="name" class="form-control" value="{{$city->name}}">
+                <label>Address</label>
+                <input type="text" name="address" class="form-control" value="{{$city->address}}">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" value="{{$city->email}}">
+                <label>Mobile Number</label>
+                <input type="tel" name="mobile" class="form-control" value="{{$city->mobile}}">
             </div>
                 @method('PUT')
                 <button type="submit" class="btn btn-success">Update</button>

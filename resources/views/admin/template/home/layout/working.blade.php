@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -82,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>     
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   @if (Auth::user()->role->name == 'Technician' )

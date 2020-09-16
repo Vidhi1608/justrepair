@@ -14,7 +14,7 @@ class AddFileColumnUsersTables extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('file')->after('name');
+            $table->string('file')->after('name')->nullable();
         });
     }
 

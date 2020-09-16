@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProductIdColumnBrandsTables extends Migration
+class AddAddressCitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddProductIdColumnBrandsTables extends Migration
      */
     public function up()
     {
-        Schema::table('brands', function (Blueprint $table) {
-            $table->integer('product_id')->after('name');
+        Schema::table('cities', function (Blueprint $table) {
+            $table->longText('address')->after('name');
         });
     }
 
@@ -25,8 +25,8 @@ class AddProductIdColumnBrandsTables extends Migration
      */
     public function down()
     {
-        Schema::table('brands', function (Blueprint $table) {
-            $table->dropColumn('product_id');
+        Schema::table('cities', function (Blueprint $table) {
+            $table->dropColumn('address');
         });
     }
 }

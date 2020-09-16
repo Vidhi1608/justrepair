@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
   {{-- // return Auth::user()->role->name; --}}
-  {{ $role = Auth::user()->role->name }}
+  {{-- {{ $role = Auth::user()->role->name }} --}}
 
-  @switch($role)
+  @switch(Auth::user()->role->name)
       @case('Manager')
           @include('admin.template.home.section.sidebar2')
           @break
@@ -105,7 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <table class="table table-hover" id="tab_logic" cellpadding="1">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">  </th>
+                                            <th class="text-center">No.</th>
                                             <th class="" style="width: 60%;"> Items </th>
                                             <th class="text-center d-none"> Qty </th>
                                             <th class=""> Price </th>
@@ -120,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     
                                         <tr id='addr0'> 
 
-                                            <td class="text-center"></td>
+                                        <td class="text-center">{{$loop->index+1}}</td>
                                             @if ($i < sizeof($name)) <td><input type="text" name="product[]" value="{{$name[$i]}}" class="form-control" readonly></td>@endif
                                             @if ($i < sizeof($price))<td><input type="number" name="price[]" value="{{$price[$i]}}" class="form-control" readonly></td>@endif
                                             <td class="d-none"><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" value="1" readonly></td>
@@ -135,7 +135,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                         <tr id='addr0'> 
                                         
-                                          <td class="text-center"></td>
+                                        <td class="text-center">{{$loop->index +1}}</td>
                                           <td><input type="text" placeholder="{{$key}}" class="form-control" disabled></td>
                                           <td><input type="number" placeholder="{{$value}}" class="form-control" disabled></td>
                                           <td class="d-none"><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" value="1" disabled></td>

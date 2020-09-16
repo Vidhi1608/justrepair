@@ -49,7 +49,7 @@ Route::get('who-we-are', function(){
 Route::get('services', 'ServiceController@view');
 Route::get('services/{landing}', 'ServiceLandingController@view');
 Route::get('services/{landing}/{area}', 'ServiceAreaController@view');
-
+Route::get('inquiry','LinkController@inquiry');
 Route::group(['middleware'=>'authenticated'],function(){
 
 // Admin Routes:
@@ -197,7 +197,7 @@ Route::get('newcomplaint/{id}','LinkController@newaddcomplaint');
 
 Route::get('showcomplaint','LinkController@showcomplaint');
 Route::get('report','LinkController@report');
-Route::get('inquiry','LinkController@inquiry');
+
 Route::get('profile','LinkController@profile');
 
 

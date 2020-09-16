@@ -17,9 +17,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -31,6 +31,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @endswitch
     @endif
 
+  @if (Auth::user()->role->name !== 'Technician')
+      
   
 
   <!-- Content Wrapper. Contains page content -->
@@ -154,7 +156,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+  @else 
+  <h1 class="text-center text-danger mt-3"><strong>You are not authorized..!</strong></h1>
+  @endif
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

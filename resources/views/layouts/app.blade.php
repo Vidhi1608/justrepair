@@ -6,8 +6,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <title>JustRepairIt</title>
     <link rel="icon" href="{{url('images/fevicon.png')}}">
     <!-- Scripts -->
@@ -142,5 +142,8 @@
        
        </div>
     </footer> --}}
+    <script type="text/javascript">
+        $("#password").password('toggle');
+    </script>
 </body>
 </html>

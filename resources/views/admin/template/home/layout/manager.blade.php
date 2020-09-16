@@ -18,8 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   @include('admin.template.home.section.sidebar2')
 
   @if (Auth::check())
-  {{$role = Auth::user()->role->name}}
-  @switch($role)
+  {{-- {{$role = Auth::user()->role->name}} --}}
+  @switch(Auth::user()->role->name)
       @case('Manager')
       
   <!-- Content Wrapper. Contains page content -->

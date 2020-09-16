@@ -32,10 +32,10 @@
                     <ul style="list-style-type: none; padding-left: 0rem" class="text-left">
                         <h3 class="text-muted">From</h3>
                         <h3><strong><span style="color: #419eaa">JUST REPAIR</span><span style="color: #fcc71f"> IT</span></strong></h3>                            
-                        <li>636, City Gate, South Vasna</li>                            
-                        <li>Ahmedabad, Gujarat</li>                            
-                        <li><a href="tel:+919099880885">+91 9099880885</a></li>                                                        
-                        <li><a href="mailto:justrepairit636@gmail.com">justrepairit636@gmail.com</a></li>                                                        
+                        <li>{{$complaint->city->address}}</li>                            
+                                                    
+                    <li><a href="tel:+91{{$complaint->city->mobile}}">{{$complaint->city->mobile}}</a></li>                                                        
+                    <li><a href="mailto:{{$complaint->city->email}}">{{$complaint->city->email}}</a></li>                                                        
                         <li class="text-capitalize"><a href="https://justrepairit.in">justrepairit.in</a></li>                                                        
                     </ul>
                 </div>

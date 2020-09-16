@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- // return Auth::user()->role->name; --}}
-    {{ $role = Auth::user()->role->name }}
+    {{-- {{ $role = Auth::user()->role->name }} --}}
 
-    @switch($role)
+    @switch(Auth::user()->role->name)
         @case('Manager')
             @include('admin.template.home.section.sidebar2')
             @break
@@ -31,8 +31,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @endif
 
     @if (Auth::check())
-    {{$role = Auth::user()->role->name}}
-    @switch($role)
+    {{-- {{$role = Auth::user()->role->name}} --}}
+    @switch(Auth::user()->role->name)
         @case('Admin')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -65,10 +65,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="card">
           <div class="card-header">
             <div class="row">
-              <div class="col-md-12 searchbar-corner">
-                <form class="form-inline ml-3">
-                  <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="col-md-6 text-left">
+                <button class="btn btn-primary btn-sm shadow mb-2" data-toggle="modal" data-target="#myModal2">Add Product</button>
+                   <!-- The Modal -->
+                  <div class="modal fade" id="myModal2">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                      
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Add Product</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                      
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          {!! Form::open(['method'=>'post','action'=>'ProductsController@store']) !!}
+
+                          <div class="form-group">
+                              
+                              
+                              {!! Form::label('name', 'Product Name') !!}
+                              {!! Form::text('name', null, ['class'=>'form-control text-capitalize', 'placeholder'=>'Enter your Product Name']) !!}
+                             
+                          </div>
+                          <div class="form-group">
+                              {!! Form::submit('Submit', ['class'=>'btn btn-success']) !!}
+                          </div>    
+                          {!! Form::close() !!}
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <!-- The Modal -->
+              </div>
+              <div class="col-md-6">
+                <form class="form-inline" action="/find" method="POST" role="search" style="justify-content: flex-end">
+                  @csrf
+                  <div class="input-group input-group-sm text-right">
+                    <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
                       <button class="btn btn-cyan" type="submit">
                         <i class="fas fa-search"></i>
